@@ -1,0 +1,80 @@
+import type {FC} from 'react';
+import PropTypes from 'prop-types';
+import {format} from 'date-fns';
+import {Avatar, Box, Paper, Typography} from '@material-ui/core';
+import type {Member} from '../models/kanban';
+import {useKanban} from "../zustand";
+
+interface KanbanCommentProps {
+    createdAt: number;
+    memberId: string;
+    message: string;
+}
+
+
+const KanbanComment: FC<KanbanCommentProps> = (props) => {
+    const {
+        createdAt,
+        memberId,
+        message,
+        ...other
+    } = props;
+    const members = useKanban(state => state.members);
+    const member = members.byId[memberId];
+
+    return (
+        <Box
+            sx={{
+                display: 'flex',
+                mb: 2
+            }}
+            {...other}
+        >
+            <Avatar src={member.avatar}/>
+            <Box
+                sx={{
+                    ml: 2,
+                    flexGrow: 1
+                }}
+            >
+                <Typography
+                    color="textPrimary"
+                    variant="subtitle2"
+                >
+                    {member.name}
+                </Typography>
+                <Paper
+                    sx={{
+                        backgroundColor: 'background.default',
+                        mt: 1,
+                        p: 2
+                    }}
+                    variant="outlined"
+                >
+                    <Typography
+                        color="textPrimary"
+                        variant="body2"
+                    >
+                        {message}
+                    </Typography>
+                </Paper>
+                <Typography
+                    color="textSecondary"
+                    component="p"
+                    sx={{mt: 1}}
+                    variant="caption"
+                >
+                    {format(createdAt, 'MMM dd, yyyy \'at\' hh:mm a')}
+                </Typography>
+            </Box>
+        </Box>
+    );
+};
+
+KanbanComment.propTypes = {
+    createdAt: PropTypes.number.isRequired,
+    memberId: PropTypes.string.isRequired,
+    message: PropTypes.string.isRequired
+};
+
+export default KanbanComment;
