@@ -16,6 +16,13 @@ import * as serviceWorker from "./serviceWorker";
 import { SettingsInitializer } from "./modules/settings/components/settings-initializer";
 import React from "react";
 import { AuthListener } from "./modules/authentication/components/auth-listener";
+import axios from 'axios';
+
+// axios.defaults.baseURL = 'https://slark-backend.herokuapp.com/'
+axios.defaults.baseURL = "localhost:4000/api/services";
+axios.defaults.headers.common["Authorization"] =
+    "Bearer " + localStorage.getItem('token') || null;
+axios.defaults.headers.get["Accepts"] = "application/json";
 
 ReactDOM.render(
   <StrictMode>

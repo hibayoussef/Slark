@@ -1,11 +1,11 @@
 import * as Yup from "yup";
 import { Formik } from "formik";
-// import { useState } from 'react';
+import { useEffect } from 'react';
+
 import {
   Box,
   Button,
   Checkbox,
-  Divider,
   FormHelperText,
   Link,
   TextField,
@@ -19,6 +19,7 @@ import DraftsOutlinedIcon from "@material-ui/icons/DraftsOutlined";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Login from '../../../authentication/pages/Login-Pag';
 
+
  const RegisterCom = () => {
 
     const isMountedRef = useIsMountedRef();
@@ -29,6 +30,16 @@ import Login from '../../../authentication/pages/Login-Pag';
         (state) => state.createUserWithNameAndEmailAndPassword
     );
 
+    const shouldNavigate = useAuthModule(
+        (state) => state.shouldNavigate
+    );
+
+
+    useEffect(() =>{
+        if(shouldNavigate){
+           console.log('jjjjjjjjjj');
+        }
+    }, [shouldNavigate]);
   return(
       <>
       <Formik

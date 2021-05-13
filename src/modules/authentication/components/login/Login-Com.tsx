@@ -2,29 +2,31 @@ import type { FC } from 'react';
 import * as Yup from 'yup';
 import { Formik } from 'formik';
 import {
-    Alert,
     Box,
     Button,
-    Divider,
     FormHelperText,
-    TextField,
-    Typography
+    TextField
 } from '@material-ui/core';
 import useIsMountedRef from '../../../../hooks/useIsMountedRef';
 import {useAuthModule} from "../../zustand";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import DraftsOutlinedIcon from "@material-ui/icons/DraftsOutlined";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
+import {useNavigate} from "react-router-dom";
+import {useEffect} from "react";
 
 const LoginFirebase: FC = (props) => {
     const isMountedRef = useIsMountedRef();
-    const user = useAuthModule((state) => state.userLogin);
+    const {user, loginUserWithEmailAndPassword, loginError} = useAuthModule((state) => state);
     console.log("this is the user from the state 1 from Reg-Com: ", user);
+    const navigation =  useNavigate();
+    useEffect(() => {
+        if(user) {
+            console.log('logged in user: ', user);
+            navigation('/dashboard');
+        }
+    } , [user])
 
-
-    const loginUserWithEmailAndPassword = useAuthModule(
-        (state) => state.loginUserWithEmailAndPassword
-    );
 
     return (
         <>
@@ -158,6 +160,7 @@ const LoginFirebase: FC = (props) => {
                             </Button>
 
                         </Box>
+                        {loginError && <p>{loginError}</p> }
                         {/*<Box sx={{ mt: 2 }}>*/}
                         {/*    <Alert severity="info">*/}
                         {/*        <div>*/}

@@ -15,7 +15,6 @@ import {
     Typography
 } from '@material-ui/core';
 import DotsHorizontalIcon from '../../../icons/DotsHorizontal';
-import type {Column} from '../models/kanban';
 import KanbanCard from './KanbanCard';
 import KanbanCardAdd from './KanbanCardAdd';
 import {useKanban} from "../zustand";

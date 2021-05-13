@@ -14,8 +14,10 @@ import routes from './routes';
 import { createTheme } from './theme';
 import {useAuthModule} from "./modules/authentication/zustand";
 import {useSettings} from "./modules/settings/zustand";
+
 import React from 'react';
 const App: FC = () => {
+
   const content = useRoutes(routes);
   const settings = useSettings(state => state.settings);
   const isInitialized = useAuthModule(state => state.isInitialized);
@@ -27,6 +29,8 @@ const App: FC = () => {
     roundedCorners: settings.roundedCorners,
     theme: settings.theme
   });
+
+
 
   return (
     <ThemeProvider theme={theme}>

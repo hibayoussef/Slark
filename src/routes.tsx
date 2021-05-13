@@ -18,10 +18,25 @@ const Loadable = (Component) => (props) => (
 // Authentication pages
 const LogIn = Loadable(lazy(() => import('./modules/authentication/pages/Login-Pag')));
 const SignUp = Loadable(lazy(() => import('./modules/authentication/pages/Register-Pag')));
+const ConfirmEmail =  Loadable(lazy(() => import('./modules/authentication/pages/ConfirmEmail')));
+
+const WorkspacePlayWithSlark = Loadable(lazy(() => import('./modules/workspaces/pages/playWithSlark')));
 
 // Dashboard pages
 const Account = Loadable(lazy(() => import('./pages/dashboard/Account')));
 const Kanban = Loadable(lazy(() => import('./modules/kanban/Kanban')));
+
+const WorkspaceCreate = Loadable(lazy(() => import('./pages/dashboard/WorkspaceCreate')));
+const WorkspaceUploadImage = Loadable(lazy(() => import('./pages/dashboard/WorkspaceUploadImage')));
+const WorkspaceFinishAll =  Loadable(lazy(() => import('./pages/dashboard/WorkspaceFinishAll')));
+const WorkspaceCard = Loadable(lazy(() => import('./components/dashboard/workspace/WorkspaceCard')));
+const WorkspaceBrowseHeader = Loadable(lazy(() => import('./pages/dashboard/WorkspaceBrowseHeader')));
+
+const WorkspacePage = Loadable(lazy(() => import('./modules/workspaces/pages/WorkspaceCreate-Page')));
+const WorkspaceBrowse = Loadable(lazy(() => import('./pages/dashboard/WorkspaceBrowse')));
+const WorkspaceDetails = Loadable(lazy(() => import('./modules/workspaces/pages/CreateWorkspaceDetails-Page')));
+
+
 
 
 // Error pages
@@ -31,7 +46,7 @@ const NotFound = Loadable(lazy(() => import('./pages/NotFound')));
 const ServerError = Loadable(lazy(() => import('./pages/ServerError')));
 
 
-// const Workspace = Loadable(lazy(() => import('../src/modules/workspaces/components/workspace')));
+
 // Other pages
 
 const Contact = Loadable(lazy(() => import('./pages/Contact')));
@@ -43,11 +58,38 @@ const routes: PartialRouteObject[] = [
             {
                 path: 'Workspace',
                 element: (
-                    <GuestGuard>
-                        {/* <Workspace></Workspace> */}
-                    </GuestGuard>
+                         <WorkspacePage />
+                )
+            },
+            {
+                path: 'WorkspaceCard',
+                element: (
+                    <WorkspaceCard />
+                )
+            },
+            {
+                path: 'WorkspaceBrowse',
+                element: (
+                    <WorkspaceBrowse />
                 )
             }
+            ,
+            {
+                path: 'WorkspaceDetails',
+                element: (
+                    <WorkspaceDetails />
+                )
+            },
+
+
+
+            {
+                path: 'WorkspacePlayWithSlark',
+                element: (
+                    <WorkspacePlayWithSlark />
+                )
+            },
+
         ]
     },
     {
@@ -69,9 +111,16 @@ const routes: PartialRouteObject[] = [
                         <LogIn />
                     </GuestGuard>
                 )
+            },
+            {
+                path: 'confirmemail',
+                element: (
+                        <ConfirmEmail />
+                )
             }
         ]
     },
+
     {
         path: 'contact',
         element: <Contact/>
@@ -96,6 +145,48 @@ const routes: PartialRouteObject[] = [
                 path: 'kanban',
                 element: <Kanban/>
             },
+            // {
+            //     path: 'workspaces',
+            //     children: [
+            //         // {
+            //         //     path: '/',
+            //         //     element: <ProductList />
+            //         // },
+            //         {
+            //             path: 'new',
+            //             element: <WorkspaceCreate />
+            //         }
+            //     ]
+            // },
+            {
+                path: 'workspaces',
+                children: [
+                    {
+                        path: 'new',
+                        element: <WorkspaceCreate />
+                    },
+                    {
+                        path:'upload',
+                        element: <WorkspaceUploadImage />
+                    },
+                    {
+                        path:'finish',
+                        element: <WorkspaceFinishAll />
+                    },
+                    {
+                        path:'browse',
+                        element: <WorkspaceBrowse />
+                    },
+                    {
+                        path:'card',
+                        element: <WorkspaceCard />
+                    },
+                    {
+                        path:'header',
+                        element: <WorkspaceBrowseHeader />
+                    }
+                ]
+            }
         ]
     },
     {

@@ -2,7 +2,6 @@ import type {FC} from 'react';
 import PropTypes from 'prop-types';
 import {format} from 'date-fns';
 import {Avatar, Box, Paper, Typography} from '@material-ui/core';
-import type {Member} from '../models/kanban';
 import {useKanban} from "../zustand";
 
 interface KanbanCommentProps {
