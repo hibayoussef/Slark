@@ -53,12 +53,14 @@ const WorkspaceBrowseResults: FC = () => {
             <Grid
                 container
                 spacing={1}
+                md={12}
+                xs={12}
             >
                 {workspace.map(workspace => (
                     <Grid
                         item
                         key={workspace.id}
-                        md={3}
+                        md={4}
                         // sm={mode === 'grid' ? 6 : 12}
                         xs={12}
                     >

@@ -33,7 +33,6 @@ const config = (set) => ({
         }).catch(err => {
             console.log(err)
         })
-        console.log('response at the end of create function inside zustand: ', response);
     },
 
     loginUserWithEmailAndPassword: async (userData) => {

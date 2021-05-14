@@ -43,15 +43,14 @@ const WorkspaceCreate: FC = () => {
 
         <Formik
             initialValues={{
-                workspaceName: '',
-                userEmail: '',
-                submit: null
+                name: '',
+                userEmail: ''
             }}
             validationSchema={
                 Yup
                     .object()
                     .shape({
-                        workspaceName: Yup
+                        name: Yup
                             .string()
                             .min(3, 'Must be at least 3 characters')
                             .max(255)
@@ -69,9 +68,7 @@ const WorkspaceCreate: FC = () => {
                 try {
                     await createWorkspace(
                         values
-                    ).then(() => {
-                        console.log('inside Component 2:');
-                    })
+                    )
 
                     await inviteUserByEmail(
                         values
@@ -79,7 +76,7 @@ const WorkspaceCreate: FC = () => {
                         console.log('inside Component 2:');
                     })
 
-                    // console.log("The Values that i want to display them: ",values.email,values.password , values.name)
+                    console.log('values' , values)
                     if (isMountedRef.current) {
                         setStatus({success: true});
                         setSubmitting(false);
@@ -89,7 +86,7 @@ const WorkspaceCreate: FC = () => {
                     console.error(err);
                     if (isMountedRef.current) {
                         setStatus({success: false});
-                        setErrors({submit: err.message});
+                        // setErrors({submit: err.message});
                         setSubmitting(false);
                     }
                 }
@@ -105,6 +102,7 @@ const WorkspaceCreate: FC = () => {
                   values
               }): JSX.Element => (
                 <form
+                    noValidate
                     onSubmit={handleSubmit}
 
                 >
@@ -121,7 +119,7 @@ const WorkspaceCreate: FC = () => {
                                     sx={{ mt:1.6 ,  ml: 1.8 , mr: 1.6}}
 
                                 >
-                                    <h3>Project details</h3>
+                                    <h3>Workspaces details</h3>
                                     <Typography sx={{mt: 3}}
                                                 color="textSecondary"
                                                 // variant="overline"
@@ -132,13 +130,13 @@ const WorkspaceCreate: FC = () => {
 
                                     <Box sx={{mt: 2}}>
                                         <TextField
-                                            error={Boolean(touched.workspaceName && errors.workspaceName)}
-                                            helperText={touched.workspaceName && errors.workspaceName}
+                                            error={Boolean(touched.name && errors.name)}
+                                            helperText={touched.name && errors.name}
                                             fullWidth
                                             onBlur={handleBlur}
                                             onChange={handleChange}
-                                            value={values.workspaceName}
-                                            name="workspaceName"
+                                            value={values.name}
+                                            name="name"
                                             variant="outlined"
                                             placeholder="Workspace Name"
                                         />
@@ -165,58 +163,6 @@ const WorkspaceCreate: FC = () => {
                                         />
                                     </Box>
 
-
-                                    {/*<Typography sx={{mt: 3}}*/}
-                                    {/*            color="textSecondary"*/}
-                                    {/*    // variant="overline"*/}
-                                    {/*>*/}
-                                    {/*    Customize your Workspace's avatar:*/}
-                                    {/*</Typography>*/}
-                                    {/*<Box sx={{mt: 2}}>*/}
-                                    {/*    <div>*/}
-
-                                    {/*        <Avatar*/}
-                                    {/*            variant="circular"*/}
-                                    {/*            style={{*/}
-                                    {/*                width: 160, height: 160,*/}
-                                    {/*                border: '1px dashed #cccdde',*/}
-                                    {/*                borderRadius: '140px',*/}
-                                    {/*                backgroundColor: '#222b36',*/}
-                                    {/*            }}*/}
-                                    {/*            // onChange={ UploadImageClick }*/}
-                                    {/*        >*/}
-
-                                    {/*              <Box style={{ marginBottom: '4rem',*/}
-                                    {/*                  marginLeft: '2rem'}}>*/}
-                                    {/*                  <BackupOutlinedIcon*/}
-                                    {/*                      style={{*/}
-                                    {/*                          width: '1.7rem',*/}
-                                    {/*                          color: "#BDBDBD",*/}
-
-                                    {/*                      }}*/}
-                                    {/*                  />*/}
-
-                                    {/*              </Box>*/}
-
-                                    {/*          <Box>*/}
-                                    {/*              <Typography style={ {  fontSize: '0.9rem',*/}
-                                    {/*                  color: '#777', paddingTop: '2rem'*/}
-                                    {/*                  ,paddingRight: '2rem'*/}
-                                    {/*              }}>*/}
-                                    {/*                  Drop an image or {' '}*/}
-                                    {/*                  /!*<Link to="/" onClick={}>*!/*/}
-                                    {/*                  /!*    Browse*!/*/}
-                                    {/*                  /!*</Link>*!/*/}
-                                    {/*              </Typography>*/}
-
-                                              {/*</Box>*/}
-
-                                            {/*</Avatar>*/}
-
-                                        {/*</div>*/}
-                                    {/*</Box>*/}
-
-
                                     <Box
                                         sx={{
                                             display: 'flex',
@@ -227,7 +173,7 @@ const WorkspaceCreate: FC = () => {
                                         <Box sx={{flexGrow: 1}}/>
                                         <Button
                                             color="primary"
-                                            onClick={onNext}
+                                            // onClick={onNext}
                                             disabled={isSubmitting}
                                             type="submit"
                                             variant="contained"

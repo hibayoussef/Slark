@@ -13,6 +13,7 @@ import {
 import UsersIcon from '../../../icons/Users';
 import type { Workspace } from '../workspace/types/workspace';
 import ViewComfyRoundedIcon from '@material-ui/icons/ViewComfyRounded';
+import {useAuthModule} from "../../../modules/authentication/zustand";
 
 
 interface WorkspaceCardProps {
@@ -22,6 +23,9 @@ interface WorkspaceCardProps {
 const WorkspaceCard: FC<WorkspaceCardProps> = (props) => {
 
     const { workspace } = props;
+
+    const user = useAuthModule((state) => state.user.user);
+    console.log('user' , user.name)
     const fileSelectedHandler = event => {
         console.log(event)
     }
@@ -91,7 +95,8 @@ const WorkspaceCard: FC<WorkspaceCardProps> = (props) => {
                                     variant="subtitle2"
                                 >
                                     {/*{workspace.author.name}*/}
-                                    hiba youssef
+                                    {/*hiba youssef*/}
+                                    {user.name}
                                 </Link>
 
                             </Typography>
