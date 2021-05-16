@@ -1,29 +1,28 @@
+import { useEffect } from 'react';
 import type { FC } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import {
     Box,
     Breadcrumbs,
+    Button,
     Container,
     Grid,
     Link,
     Typography
 } from '@material-ui/core';
 import  WorkspaceCreateComp from '../../components/dashboard/workspace/WorkspaceCreate';
+import ArrowLeftIcon from '../../icons/ArrowLeft';
 import ChevronRightIcon from '../../icons/ChevronRight';
 
-const WorkspaceCreate: FC = () => {
+const WorkspaceCreate:FC = () => {
 
-    // useEffect(() => {
-    //     gtm.push({ event: 'page_view' });
-    // }, []);
 
     return (
         <>
             <Helmet>
-                <title>Dashboard: Create Workspace</title>
+                <title>Dashboard: Workspace Create</title>
             </Helmet>
-
             <Box
                 sx={{
                     backgroundColor: 'background.default',
@@ -31,9 +30,8 @@ const WorkspaceCreate: FC = () => {
                     py: 8
                 }}
             >
-                <Container maxWidth='xl'>
+                <Container maxWidth= 'xl' >
                     <Grid
-                        alignItems="center"
                         container
                         justifyContent="space-between"
                         spacing={3}
@@ -43,7 +41,7 @@ const WorkspaceCreate: FC = () => {
                                 color="textPrimary"
                                 variant="h5"
                             >
-                                Create Workspace
+                                Create a new workspace
                             </Typography>
                             <Breadcrumbs
                                 aria-label="breadcrumb"
@@ -58,13 +56,30 @@ const WorkspaceCreate: FC = () => {
                                 >
                                     Dashboard
                                 </Link>
-                                <Typography
-                                    color="textSecondary"
+                                <Link
+                                    color="textPrimary"
+                                    component={RouterLink}
+                                    to="/workspaces"
                                     variant="subtitle2"
                                 >
                                     Workspaces
-                                </Typography>
+                                </Link>
+
                             </Breadcrumbs>
+                        </Grid>
+                        <Grid item>
+                            <Box sx={{ m: -1 }}>
+                                <Button
+                                    color="primary"
+                                    component={RouterLink}
+                                    startIcon={<ArrowLeftIcon fontSize="small" />}
+                                    sx={{ mt: 1 }}
+                                    to="/dashboard/products"
+                                    variant="outlined"
+                                >
+                                    Cancel
+                                </Button>
+                            </Box>
                         </Grid>
                     </Grid>
                     <Box sx={{ mt: 3 }}>

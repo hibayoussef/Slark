@@ -19,6 +19,7 @@ import Logo from '../Logo';
 import NavSection from '../NavSection';
 import Scrollbar from '../Scrollbar';
 import {useAuthModule} from "../../modules/authentication/zustand";
+import WorkspaceGroup from '../../components/dashboard/WorkspaceSettings/WorkspacesGroup'
 
 interface DashboardSidebarProps {
     onMobileClose: () => void;
@@ -81,7 +82,8 @@ const sections = [
 
 
     ],
-    }
+    },
+
 ]
 
 const DashboardSidebar
@@ -185,29 +187,9 @@ const DashboardSidebar
                     ))}
                 </Box>
                 <Divider/>
-                <Box sx={{p: 2}}>
-                    <Typography
-                        color="textPrimary"
-                        variant="subtitle2"
-                    >
-                        Need Help?
-                    </Typography>
-                    <Typography
-                        color="textSecondary"
-                        variant="body2"
-                    >
-                        Check our docs
-                    </Typography>
-                    <Button
-                        color="primary"
-                        component={RouterLink}
-                        fullWidth
-                        sx={{mt: 2}}
-                        to="/docs"
-                        variant="contained"
-                    >
-                        Documentation
-                    </Button>
+                <Box sx={{p: 2}} style={{ marginTop: '12rem'}}>
+                    <Divider/>
+                    <WorkspaceGroup />
                 </Box>
             </Scrollbar>
         </Box>

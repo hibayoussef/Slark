@@ -32,18 +32,18 @@ const config = (set) => ({
         }).catch(err =>{
             console.log(err)
         })
-        console.log(response)
     },
-    inviteUsersByEmail: async({userEmail, workspaceId , workspaceName}) =>{
-        console.log('User Email invite to workspace is: ', {userEmail, workspaceId , workspaceName});
-        const response = await api.post('workspace/invite-user', {userEmail , workspaceId , workspaceName})
+    inviteUsersByEmail: async(userEmail) =>{
+        console.log('User Email invite to workspace is: ', userEmail);
+        const response = await api.post('workspace/invite-user', {userEmail})
             .then(res =>{
-                console.log('values inside zustand 2: ', userEmail , workspaceId , workspaceName);
-                console.log('response inside zustand 3: ', res);
+                console.log('values inside zustand 4: ', userEmail);
+                console.log('response inside zustand 5: ', res);
 
                 set(state =>{
-                    state.message = res.data
+                    state.message = res.data.message
                 })
+                console.log('res.data.messageeeeeeeee:' , res.data.message)
             }).catch(err =>{
                 console.log(err);
             })

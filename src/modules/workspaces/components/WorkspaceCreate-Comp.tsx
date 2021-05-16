@@ -117,56 +117,6 @@ const WorkspaceCreateComp: FC = () => {
                                         />
                                     </Box>
 
-                                    {/*<Typography sx={{mt: 3}}*/}
-                                    {/*            color="textSecondary"*/}
-                                    {/*    // variant="overline"*/}
-                                    {/*>*/}
-                                    {/*    Customize your Workspace's avatar:*/}
-                                    {/*</Typography>*/}
-                                    {/*<Box sx={{mt: 2}}>*/}
-                                    {/*    <div>*/}
-
-                                    {/*        <Avatar*/}
-                                    {/*            variant="circular"*/}
-                                    {/*            style={{*/}
-                                    {/*                width: 160, height: 160,*/}
-                                    {/*                border: '1px dashed #cccdde',*/}
-                                    {/*                borderRadius: '140px',*/}
-                                    {/*                backgroundColor: '#222b36',*/}
-                                    {/*            }}*/}
-                                    {/*            // onChange={ UploadImageClick }*/}
-                                    {/*        >*/}
-
-                                    {/*              <Box style={{ marginBottom: '4rem',*/}
-                                    {/*                  marginLeft: '2rem'}}>*/}
-                                    {/*                  <BackupOutlinedIcon*/}
-                                    {/*                      style={{*/}
-                                    {/*                          width: '1.7rem',*/}
-                                    {/*                          color: "#BDBDBD",*/}
-
-                                    {/*                      }}*/}
-                                    {/*                  />*/}
-
-                                    {/*              </Box>*/}
-
-                                    {/*          <Box>*/}
-                                    {/*              <Typography style={ {  fontSize: '0.9rem',*/}
-                                    {/*                  color: '#777', paddingTop: '2rem'*/}
-                                    {/*                  ,paddingRight: '2rem'*/}
-                                    {/*              }}>*/}
-                                    {/*                  Drop an image or {' '}*/}
-                                    {/*                  /!*<Link to="/" onClick={}>*!/*/}
-                                    {/*                  /!*    Browse*!/*/}
-                                    {/*                  /!*</Link>*!/*/}
-                                    {/*              </Typography>*/}
-
-                                              {/*</Box>*/}
-
-                                            {/*</Avatar>*/}
-
-                                        {/*</div>*/}
-                                    {/*</Box>*/}
-
 
                                     <Box
                                         sx={{

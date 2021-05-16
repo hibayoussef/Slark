@@ -1,60 +1,53 @@
 import type {FC} from 'react';
+import {useNavigate} from 'react-router-dom';
 import * as Yup from 'yup';
 import {Formik} from 'formik';
+import {useSnackbar} from 'notistack';
 import {
     Box,
-    Card,
     Button,
+    Card,
     CardContent,
+    CardHeader,
+    FormHelperText,
     Grid,
     TextField,
-    Typography
 } from '@material-ui/core';
 import {useWorkspaceModule} from './zustand';
+import WorkspaceUploadImage from './WorkspaceUploadImage'
 import useIsMountedRef from "../../../hooks/useIsMountedRef";
-import {useNavigate} from "react-router-dom";
 
-
-const WorkspaceCreate: FC = () => {
-
+const WorkspacesCreateForm: FC = (props) => {
     const isMountedRef = useIsMountedRef();
-    const workspaceData = useWorkspaceModule((state) => state.workspace)
-    const userEmail = useWorkspaceModule((state) => state.userEmail)
-    console.log('userEmail:', userEmail);
+    const navigate = useNavigate();
+    const {enqueueSnackbar} = useSnackbar();
 
+
+    const workspaceData = useWorkspaceModule((state) => state.workspace)
 
     console.log("inside component 1: ", workspaceData);
-
     const createWorkspace = useWorkspaceModule(
         (state) => state.createWorkspace
     );
+
     const inviteUserByEmail = useWorkspaceModule(
         (state) => state.inviteUsersByEmail
     );
 
-    const navigation =  useNavigate();
-    const onNext = () =>{
-        console.log('Create')
-        navigation('/dashboard/workspaces/upload');
-    }
-
     return (
-
-
         <Formik
             initialValues={{
+                // images: [],
                 name: '',
-                userEmail: ''
+                userEmail:'',
+                submit: null
             }}
             validationSchema={
                 Yup
                     .object()
                     .shape({
-                        name: Yup
-                            .string()
-                            .min(3, 'Must be at least 3 characters')
-                            .max(255)
-                            .required('Required'),
+                        // images: Yup.array(),
+                        name: Yup.string().max(255).required(),
                         userEmail: Yup.string()
                             .email("Must be a valid email")
                             .max(255)
@@ -66,27 +59,34 @@ const WorkspaceCreate: FC = () => {
                 setSubmitting
             }): Promise<void> => {
                 try {
+                    // NOTE: Make API request
                     await createWorkspace(
                         values
                     )
 
                     await inviteUserByEmail(
                         values
-                    ).then(() => {
-                        console.log('inside Component 2:');
-                    })
+                    )
 
-                    console.log('values' , values)
+
                     if (isMountedRef.current) {
-                        setStatus({success: true});
+                        setStatus({ success: true });
                         setSubmitting(false);
                     }
 
+                    enqueueSnackbar('Workspaces Created', {
+                        anchorOrigin: {
+                            horizontal: 'right',
+                            vertical: 'top'
+                        },
+                        variant: 'success'
+                    });
+                    navigate('/dashboard/workspaces/header');
                 } catch (err) {
                     console.error(err);
                     if (isMountedRef.current) {
                         setStatus({success: false});
-                        // setErrors({submit: err.message});
+                        setErrors({submit: err.message});
                         setSubmitting(false);
                     }
                 }
@@ -98,101 +98,134 @@ const WorkspaceCreate: FC = () => {
                   handleChange,
                   handleSubmit,
                   isSubmitting,
+                  setFieldValue,
                   touched,
                   values
               }): JSX.Element => (
                 <form
-                    noValidate
                     onSubmit={handleSubmit}
-
+                    {...props}
                 >
-                    <Card>
-                        <CardContent>
-                            <Grid
-                                container
-                                spacing={3}
-                            >
-                                <Grid
-                                    item
-                                    md={12}
-                                    xs={12}
-                                    sx={{ mt:1.6 ,  ml: 1.8 , mr: 1.6}}
+                    <Grid
+                        container
+                        spacing={3}
+                    >
+                        <Grid
+                            item
+                            lg={8}
+                            md={6}
+                            xs={12}
+                        >
+                            <Card>
+                                <CardHeader title="Name your Workspace:"/>
+                                <CardContent>
 
-                                >
-                                    <h3>Workspaces details</h3>
-                                    <Typography sx={{mt: 3}}
-                                                color="textSecondary"
-                                                // variant="overline"
-                                    >
-                                        Name your Workspace:
-                                    </Typography>
+                                    <TextField
+                                        error={Boolean(touched.name && errors.name)}
+                                        fullWidth
+                                        helperText={touched.name && errors.name}
+                                        name="name"
+                                        onBlur={handleBlur}
+                                        onChange={handleChange}
+                                        value={values.name}
+                                        variant="outlined"
+                                        placeholder="Workspace Name"
+                                    />
 
+                                </CardContent>
+                            </Card>
 
-                                    <Box sx={{mt: 2}}>
-                                        <TextField
-                                            error={Boolean(touched.name && errors.name)}
-                                            helperText={touched.name && errors.name}
-                                            fullWidth
-                                            onBlur={handleBlur}
-                                            onChange={handleChange}
-                                            value={values.name}
-                                            name="name"
-                                            variant="outlined"
-                                            placeholder="Workspace Name"
-                                        />
-                                    </Box>
+                            {/*Upload Image*/}
+                            <Box sx={{mt: 3}}>
+                                <WorkspaceUploadImage/>
+                            </Box>
 
-                                    <Typography sx={{mt: 3}}
-                                                color="textSecondary"
-                                        // variant="overline"
-                                    >
-                                        Invite people to your Workspace:
-                                    </Typography>
+                            {/*invite User*/}
+                            <Box sx={{mt: 3}}>
 
-                                    <Box sx={{mt: 2}}>
+                                <Card>
+                                    <CardHeader title="  Invite people to your Workspace"/>
+                                    <CardContent>
+
                                         <TextField
                                             error={Boolean(touched.userEmail && errors.userEmail)}
-                                            helperText={touched.userEmail && errors.userEmail}
                                             fullWidth
+                                            helperText={touched.userEmail && errors.userEmail}
+                                            name="userEmail"
                                             onBlur={handleBlur}
                                             onChange={handleChange}
                                             value={values.userEmail}
-                                            name="userEmail"
                                             variant="outlined"
                                             placeholder="Enter email addresses (or past multiple)"
                                         />
-                                    </Box>
 
-                                    <Box
-                                        sx={{
-                                            display: 'flex',
-                                            mt: 3
-                                        }}
-                                    >
-
-                                        <Box sx={{flexGrow: 1}}/>
-                                        <Button
-                                            color="primary"
-                                            // onClick={onNext}
-                                            disabled={isSubmitting}
-                                            type="submit"
-                                            variant="contained"
+                                        <Box
+                                            sx={{
+                                                display: 'flex',
+                                                mt: 3
+                                            }}
                                         >
-                                            Next
-                                        </Button>
-                                    </Box>
 
-                                </Grid>
-                            </Grid>
+                                            {/*{errors.submit && (*/}
+                                            {/*    <Box sx={{mt: 3}}>*/}
+                                            {/*        <FormHelperText error>*/}
+                                            {/*            {errors.submit}*/}
+                                            {/*        </FormHelperText>*/}
+                                            {/*    </Box>*/}
+                                            {/*)}*/}
+                                            <Box sx={{flexGrow: 1}}/>
+                                            {/*<Button*/}
+                                            {/*    color="primary"*/}
+                                            {/*    // onClick={onNext}*/}
+                                            {/*    // disabled={isSubmitting}*/}
+                                            {/*    // type="submit"*/}
+                                            {/*    variant="contained"*/}
+                                            {/*>*/}
+                                            {/*    invite*/}
+                                            {/*</Button>*/}
+                                        </Box>
+                                    </CardContent>
+                                </Card>
 
-                        </CardContent>
-                    </Card>
+                            </Box>
+
+                        </Grid>
+                        <Grid
+                            item
+                            lg={4}
+                            md={6}
+                            xs={12}
+                        >
+
+                            {errors.submit && (
+                                <Box sx={{mt: 3}}>
+                                    <FormHelperText error>
+                                        {errors.submit}
+                                    </FormHelperText>
+                                </Box>
+                            )}
+                            <Box
+                                sx={{
+                                    display: 'flex',
+                                    justifyContent: 'flex-end',
+                                    mt: 3
+                                }}
+                            >
+                                <Button
+                                    color="primary"
+                                    disabled={isSubmitting}
+                                    type="submit"
+                                    variant="contained"
+                                >
+                                    Create Workspace
+                                </Button>
+                            </Box>
+                        </Grid>
+                    </Grid>
                 </form>
             )}
         </Formik>
     );
 };
 
-
-export default WorkspaceCreate;
-
+export default WorkspacesCreateForm;
