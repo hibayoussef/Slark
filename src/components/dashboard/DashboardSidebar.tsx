@@ -48,13 +48,29 @@ const sections = [
             ]
         },
         {
-            title: 'General',
+            title: 'Settings',
             items: [
                 {
-                    title: 'My Settings',
-                    path: '/setting/workspace',
-                    icon: <UserIcon fontSize="small"/>
+                    title: 'Settings',
+                    path: '/dashboard/settings-sidebar/oneLineSettings'
+                },
+                {
+                    title: 'People',
+                    path: '/dashboard/settings-sidebar/twoLineSettings'
+                },
+                {
+                    title: 'Space',
+                    path: '/dashboard/settings-sidebar/space'
+                },
+                {
+                    title: 'List',
+                    path: '/dashboard/settings-sidebar/list'
                 }
+                // {
+                //     title: 'My Settings',
+                //     path: '/workspaces/workspace-sidebar',
+                //     icon: <UserIcon fontSize="small"/>
+                // }
             ]
         },
         {
@@ -77,12 +93,24 @@ const sections = [
                             title: 'Browse',
                             path: '/dashboard/workspaces/header'
                         }
+                        ,
+
                 ]
-        }
+        },
 
 
     ],
     },
+    // {
+    //     title: '',
+    //     items: [{
+    //         title: '',
+    //         path: 'modal',
+    //         icon: <BriefcaseIcon fontSize="small"/>,
+    //
+    //     }]
+    // },
+
 
 ]
 

@@ -4,6 +4,12 @@ import {combineAndImmer, zustandLogger} from "@scandinavia/ts-zustand";
 import api from "../../../../axiosWithDelimiterFile";
 
 const initialState = {
+    selectedCustomers:null,
+    page: null,
+    limit: null,
+    query: null,
+    filters:null,
+    Members: null,
     workspace: null,
     userEmail:null,
     Invitemessage:null,
@@ -33,6 +39,7 @@ const config = (set) => ({
             console.log(err)
         })
     },
+
     inviteUsersByEmail: async(userEmail) =>{
         console.log('User Email invite to workspace is: ', userEmail);
         const response = await api.post('workspace/invite-user', {userEmail})
@@ -65,7 +72,7 @@ const config = (set) => ({
                     })
                 console.log(response);
             })
-    }
+    },
 });
 const createState = combineAndImmer(initialState, zustandLogger(config));
 export const useWorkspaceModule = create(devtools(createState));

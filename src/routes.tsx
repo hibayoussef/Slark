@@ -7,6 +7,7 @@ import GuestGuard from './modules/authentication/components/guards/guest-guard';
 import LoadingScreen from './components/LoadingScreen';
 import MainLayout from './components/MainLayout';
 import React from 'react';
+import WorkspaceSidebar from "./components/dashboard/WorkspaceSettings/Settings/WorkspaceSidebar";
 
 const Loadable = (Component) => (props) => (
     <Suspense fallback={<LoadingScreen/>}>
@@ -14,9 +15,18 @@ const Loadable = (Component) => (props) => (
     </Suspense>
 );
 
-const Modal = Loadable(lazy(() => import('./components/dashboard/WorkspaceSettings/WorkspacesGroup')));
+const WorkspacesGroup = Loadable(lazy(() => import('./components/dashboard/WorkspaceSettings/WorkspacesGroup')));
 const WorkspaceSideBar = Loadable(lazy(() => import('./components/dashboard/WorkspaceSettings/Settings/WorkspaceSidebar')));
-const Settings = Loadable(lazy(() => import('./components/dashboard/WorkspaceSettings/Settings/WorkspaceSettings')))
+
+const IE = Loadable(lazy(() => import('./pages/dashboard/IE')));
+const MySettings = Loadable(lazy(() => import('./pages/dashboard/MySettings')));
+const Notifications = Loadable(lazy(() => import('./pages/dashboard/Notifications')));
+
+const Rewards = Loadable(lazy(() => import('./pages/dashboard/Rewards')));
+const SecurityPermissions = Loadable(lazy(() => import('./pages/dashboard/Security-Permissions')));
+
+const Teams = Loadable(lazy(() => import('./pages/dashboard/Teams')));
+
 // Authentication pages
 const LogIn = Loadable(lazy(() => import('./modules/authentication/pages/Login-Pag')));
 const SignUp = Loadable(lazy(() => import('./modules/authentication/pages/Register-Pag')));
@@ -38,8 +48,11 @@ const WorkspaceInviteUser = Loadable(lazy(() => import('./components/dashboard/w
 const WorkspacePage = Loadable(lazy(() => import('./modules/workspaces/pages/WorkspaceCreate-Page')));
 const WorkspaceBrowse = Loadable(lazy(() => import('./pages/dashboard/WorkspaceBrowse')));
 const WorkspaceDetails = Loadable(lazy(() => import('./modules/workspaces/pages/CreateWorkspaceDetails-Page')));
-
-
+//settings
+const WorkspaceSettings = Loadable(lazy(() => import('./pages/dashboard/Settings')));
+const People = Loadable(lazy(() => import('./pages/dashboard/People')));
+const Space = Loadable(lazy(() => import('./pages/dashboard/Spaces')));
+const List =  Loadable(lazy(() => import('./pages/dashboard/List')));
 // Error pages
 
 const AuthorizationRequired = Loadable(lazy(() => import('./pages/AuthorizationRequired')));
@@ -120,17 +133,39 @@ const routes: PartialRouteObject[] = [
             {
                 path: 'modal',
                 element: (
-                    <Modal/>
-                )
-            }
+                    <WorkspacesGroup/>
+                ),
+            },
+            // {
+            //     path: 'workspace-sidebar',
+            //     element: (
+            //         <WorkspaceSidebar/>
+            //     ),
+            //     children:[
+            //
+            //         {
+            //
+            //             path: 'settings',
+            //             element: <Settings/>
+            //         },
+            //         {
+            //
+            //             path: 'people',
+            //             element: <People/>
+            //         }
+            //
+            //     ]
+            // },
 
         ]
     },
+
 
     {
         path: 'contact',
         element: <Contact/>
     },
+
     {
         path: 'dashboard',
         element: (
@@ -151,6 +186,7 @@ const routes: PartialRouteObject[] = [
                 path: 'kanban',
                 element: <Kanban/>
             },
+
             // {
             //     path: 'workspaces',
             //     children: [
@@ -164,6 +200,34 @@ const routes: PartialRouteObject[] = [
             //         }
             //     ]
             // },
+
+            {
+                path: 'settings-sidebar',
+                children: [{
+                    path: 'oneLineSettings',
+                    element: <WorkspaceSettings/>
+                },{
+                   path:'twoLineSettings' ,
+                    element: <People />
+                },
+                    {
+                        path: 'space',
+                        element: <Space />,
+                        children:[{
+                            path:'hhh',
+                            element: <IE />
+                        }]
+                    },
+                    {
+                        path:'list',
+                        element: <List />
+                    }
+
+
+                ]
+
+
+            },
             {
                 path: 'workspaces',
                 children: [
@@ -196,9 +260,10 @@ const routes: PartialRouteObject[] = [
                         element: <WorkspaceInviteUser/>
                     },
 
+                ],
 
-                ]
             },
+
         ]
     },
     {
@@ -233,19 +298,8 @@ const routes: PartialRouteObject[] = [
         ],
 
     },
-    {
-        path: 'Settings',
-        children: [{
-            path: 'mySettings',
-            element: <WorkspaceSideBar/>
-        },
-            {
-                path: 'workspaceSettings',
-                element: <Settings/>
-            }
-        ]
 
-    }
+
 ];
 
 export default routes;

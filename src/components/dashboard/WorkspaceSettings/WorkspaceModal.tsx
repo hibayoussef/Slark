@@ -37,7 +37,7 @@ const WorkspacesInviteUser: FC = (props) => {
 
     const onMySettings=() =>{
         console.log('Clicked on My settings');
-        navigation('/settings/mysettings');
+        navigation('/authentication/workspace-sidebar/settings');
     }
     return (<>
         <Card style={{maxWidth: '35rem',minWidth: '35rem', borderRadius: '0.6rem', background: 'rgb(0 0 0 / 50%)' }}>
@@ -96,7 +96,7 @@ const WorkspacesInviteUser: FC = (props) => {
                             <ListItemText>Ali Baba {/*Workspaces*/}</ListItemText>
                         </ListItem>
 
-                        <ListItem button>
+                        <ListItem button >
                             <ListItemText primary="Settings"/>
                         </ListItem>
                         <ListItem button>
@@ -133,8 +133,8 @@ const WorkspacesInviteUser: FC = (props) => {
                             <ListItemText>Ali Baba</ListItemText>
                         </ListItem>
 
-                        <ListItem button>
-                            <ListItemText primary="My Settings" onClick={onMySettings}/>
+                        <ListItem button onClick={onMySettings}>
+                            <ListItemText primary="My Settings" />
                         </ListItem>
                         <ListItem button>
                             <ListItemText primary="Notifications"/>
