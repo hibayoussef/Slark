@@ -1,9 +1,10 @@
 import React, {FC} from 'react';
-import {makeStyles, createStyles, Theme} from '@material-ui/core/styles';
+import {makeStyles, createStyles, Theme, MuiThemeProvider, createMuiTheme} from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import {Avatar, TextField, Container, Button, AppBar, Toolbar, Typography} from "@material-ui/core";
 import {Link as RouterLink} from "react-router-dom";
+import {grey} from "@material-ui/core/colors";
 
 const drawerWidth = 240;
 
@@ -29,6 +30,7 @@ const useStyles = makeStyles((theme: Theme) =>
             fontSize: '1rem',
             fontFamily: 'Gotham Pro,Proxima Nova,arial,serif',
         },
+
         textField: {
             color: '#828588',
             background: 'transparent',
@@ -38,16 +40,25 @@ const useStyles = makeStyles((theme: Theme) =>
             [theme.breakpoints.up('sm')]: {
                 width: `calc(100% - ${drawerWidth}px)`,
                 marginLeft: drawerWidth,
+                position: "fixed",
+                bottom: 0,
+                background: '#384047',
+                height: '7rem'
             },
         },
         dot: {
             height: '25px',
             width: '25px',
             borderRadius: '50%',
-            display: 'inline-block'
+            display: 'inline-block',
+            transition: 'all .2s cubic-bezier(.785,.135,.15,.86) 0s'
+        },
+        bottomApp: {
+            backgroundColor: 'deepPurple'
         }
     }),
 );
+
 
 const MySettings: FC = () => {
 
@@ -144,7 +155,7 @@ const MySettings: FC = () => {
                         <Typography style={{color: '#d5d6d7', fontWeight: 640, fontSize: '1.8rem'}}>
                             Your color theme
                         </Typography>
-                        <Grid item spacing={8} container  style={{marginTop: '0.6rem'}}>
+                        <Grid item spacing={8} container style={{marginTop: '0.6rem'}}>
                             <Grid item>
                                 <span className={classes.dot} style={{backgroundColor: 'rgb(123, 104, 238)'}}></span>
                             </Grid>
@@ -189,51 +200,111 @@ const MySettings: FC = () => {
                             </Grid>
                         </Grid>
                     </Grid>
+                    <Grid>
+
+                    </Grid>
                 </Grid>
+                <Grid container item >
+                    <AppBar className={classes.appBar} style={{top: "auto", bottom: 0}}>
+                            <Toolbar>
+                                <Button
+                                    color="primary"
+                                    component={RouterLink}
+                                    to="/dashboard/workspaces/1"
+                                    variant="contained"
+                                    style={{
+                                        minWidth: '13rem',
+                                        minHeight: '4.1rem',
+                                        fontSize: '1.4rem',
+                                        backgroundColor: '#7b68ee',
+                                        borderRadius: 6,
+                                        marginLeft: '80rem',
+                                        marginTop:'1.5rem'
+                                    }}
+                                >
+                                    Save changes
+                                </Button>
+
+                    </Toolbar>
+            </AppBar>
+
+        </Grid>
 
 
-            </Grid>
-            {/*/!*<Grid container spacing={5} direction="row"  mt={14}>*!/*/}
-            {/*/!*    <Grid item xs>*!/*/}
-            {/*/!*        <Button style={{*!/*/}
-            {/*/!*            minWidth: '10rem',*!/*/}
-            {/*/!*            fontSize: '1.5rem',*!/*/}
-            {/*/!*            height: '44px',*!/*/}
-            {/*/!*            fontWeight: 400,*!/*/}
-            {/*/!*            textShadow: 'none',*!/*/}
-            {/*/!*            color: '#fd71af',*!/*/}
-            {/*/!*            border: 0,*!/*/}
-            {/*/!*            background: 'none'*!/*/}
+</Grid>
+    {/*/!*<Grid container spacing={5} direction="row"  mt={14}>*!/*/
+    }
+    {/*/!*    <Grid item xs>*!/*/
+    }
+    {/*/!*        <Button style={{*!/*/
+    }
+    {/*/!*            minWidth: '10rem',*!/*/
+    }
+    {/*/!*            fontSize: '1.5rem',*!/*/
+    }
+    {/*/!*            height: '44px',*!/*/
+    }
+    {/*/!*            fontWeight: 400,*!/*/
+    }
+    {/*/!*            textShadow: 'none',*!/*/
+    }
+    {/*/!*            color: '#fd71af',*!/*/
+    }
+    {/*/!*            border: 0,*!/*/
+    }
+    {/*/!*            background: 'none'*!/*/
+    }
 
-            {/*/!*        }}>Delete Workspace</Button>*!/*/}
+    {/*/!*        }}>Delete Workspace</Button>*!/*/
+    }
 
-            {/*/!*    </Grid>*!/*/}
-            {/*/!*    <Grid item >*!/*/}
-            {/*/!*        <Button*!/*/}
-            {/*/!*            color="primary"*!/*/}
-            {/*/!*            component={RouterLink}*!/*/}
-            {/*/!*            to="/dashboard/workspaces/1"*!/*/}
-            {/*/!*            variant="contained"*!/*/}
-            {/*/!*            style={{*!/*/}
-            {/*/!*                minWidth: '13rem',*!/*/}
-            {/*/!*                minHeight: '4.3rem',*!/*/}
-            {/*/!*                fontSize: '1.4rem',*!/*/}
-            {/*/!*                backgroundColor: '#7b68ee',*!/*/}
-            {/*/!*                borderRadius: 6,*!/*/}
-            {/*/!*                marginLeft:'60rem'*!/*/}
+    {/*/!*    </Grid>*!/*/
+    }
+    {/*/!*    <Grid item >*!/*/
+    }
+    {/*/!*        <Button*!/*/
+    }
+    {/*/!*            color="primary"*!/*/
+    }
+    {/*/!*            component={RouterLink}*!/*/
+    }
+    {/*/!*            to="/dashboard/workspaces/1"*!/*/
+    }
+    {/*/!*            variant="contained"*!/*/
+    }
+    {/*/!*            style={{*!/*/
+    }
+    {/*/!*                minWidth: '13rem',*!/*/
+    }
+    {/*/!*                minHeight: '4.3rem',*!/*/
+    }
+    {/*/!*                fontSize: '1.4rem',*!/*/
+    }
+    {/*/!*                backgroundColor: '#7b68ee',*!/*/
+    }
+    {/*/!*                borderRadius: 6,*!/*/
+    }
+    {/*/!*                marginLeft:'60rem'*!/*/
+    }
 
-            {/*/!*            }}*!/*/}
-            {/*/!*        >*!/*/}
-            {/*/!*            Saved*!/*/}
-            {/*/!*        </Button>*!/*/}
+    {/*/!*            }}*!/*/
+    }
+    {/*/!*        >*!/*/
+    }
+    {/*/!*            Saved*!/*/
+    }
+    {/*/!*        </Button>*!/*/
+    }
 
 
-            {/*/!*    </Grid>*!/*/}
+    {/*/!*    </Grid>*!/*/
+    }
 
-            {/*</Grid>*/}
+    {/*</Grid>*/
+    }
 
-        </div>
-    );
+</div>
+);
 }
 
 export default MySettings;
