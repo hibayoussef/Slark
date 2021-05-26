@@ -8,6 +8,7 @@ import WorkspaceSettingsCom from "../../components/dashboard/WorkspaceSettings/S
 
 const Settings: FC = () => {
 
+    console.log('Hi')
     return (
         <>
             <Helmet>
@@ -27,10 +28,11 @@ const Settings: FC = () => {
                         justifyContent="space-between"
                         spacing={3}
                     >
-                        <Grid item style={{paddingLeft: '3rem', paddingBottom: '2rem'}}>
+                        <Grid item style={{paddingLeft: '3rem'}}>
                             <Typography
                                 color="textPrimary"
-                                variant="h4"
+                                // variant="h4"
+                                style={{ color: '#d5d6d7', fontWeight:600, fontSize: '2rem'}}
                             >
                                 Workspace Settings
                             </Typography>

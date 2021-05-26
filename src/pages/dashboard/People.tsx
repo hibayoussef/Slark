@@ -4,7 +4,6 @@ import { Helmet } from 'react-helmet-async';
 import {
     Box,
     Breadcrumbs,
-    Button,
     Container,
     Grid, InputAdornment,
     Link, TextField,
@@ -13,9 +12,6 @@ import {
 import  PeopleList  from '../../components/dashboard/WorkspaceSettings/Settings/PeopleList';
 import useIsMountedRef from '../../hooks/useIsMountedRef';
 import ChevronRightIcon from '../../icons/ChevronRight';
-import PlusIcon from '../../icons/Plus';
-import DownloadIcon from '../../icons/Download';
-import UploadIcon from '../../icons/Upload';
 import SearchIcon from "../../icons/Search";
 import ButtonGroup from "../../components/dashboard/WorkspaceSettings/Settings/ButtonGroup";
 import React from "react";
@@ -27,9 +23,9 @@ const useStyles = makeStyles({
         [`& fieldset`]: {
             borderRadius: 1
         },
-        paddingLeft: '1.4rem',
-        color: '#d5d6d7',
-        background: '#1e272e',
+        marginLeft: '1.4rem',
+        // color: '#d5d6d7',
+        // background: '#1e272e',
         fontSize: '14px',
         lineHeight: 1,
         fontWeight: 400

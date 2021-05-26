@@ -5,9 +5,8 @@ import PropTypes from 'prop-types';
 import {
     Avatar,
     Box,
-    Button,
     Divider,
-    Drawer,
+    Drawer, Fab,
     Hidden,
     Link,
     Typography
@@ -19,7 +18,7 @@ import Logo from '../Logo';
 import NavSection from '../NavSection';
 import Scrollbar from '../Scrollbar';
 import {useAuthModule} from "../../modules/authentication/zustand";
-import WorkspaceGroup from '../../components/dashboard/WorkspaceSettings/WorkspacesGroup'
+import Dialog from '../../components/dashboard/WorkspaceSettings/Settings/DialogSetttt';
 
 interface DashboardSidebarProps {
     onMobileClose: () => void;
@@ -27,79 +26,79 @@ interface DashboardSidebarProps {
 }
 
 const sections = [
-        {
-            title: 'General',
-            items: [
-                {
-                    title: 'Account',
-                    path: '/dashboard/account',
-                    icon: <UserIcon fontSize="small"/>
-                }
-            ]
-        },
-        {
-            title: 'Apps',
-            items: [
-                {
-                    title: 'Kanban',
-                    path: '/dashboard/kanban',
-                    icon: <ClipboardListIcon fontSize="small"/>
-                },
-            ]
-        },
-        {
-            title: 'Settings',
-            items: [
-                {
-                    title: 'Settings',
-                    path: '/dashboard/settings-sidebar/oneLineSettings'
-                },
-                {
-                    title: 'People',
-                    path: '/dashboard/settings-sidebar/twoLineSettings'
-                },
-                {
-                    title: 'Space',
-                    path: '/dashboard/settings-sidebar/space'
-                },
-                {
-                    title: 'List',
-                    path: '/dashboard/settings-sidebar/list'
-                }
-                // {
-                //     title: 'My Settings',
-                //     path: '/workspaces/workspace-sidebar',
-                //     icon: <UserIcon fontSize="small"/>
-                // }
-            ]
-        },
-        {
-            title: 'Platforms',
-            items: [
-                {
-                    title: 'Workspaces',
-                    path: '/dashboard/workspaces',
-                    icon: <BriefcaseIcon fontSize="small"/>,
-                    children: [
+    {
+        title: 'General',
+        items: [
+            {
+                title: 'Account',
+                path: '/dashboard/account',
+                icon: <UserIcon fontSize="small"/>
+            }
+        ]
+    },
+    {
+        title: 'Apps',
+        items: [
+            {
+                title: 'Kanban',
+                path: '/dashboard/kanban',
+                icon: <ClipboardListIcon fontSize="small"/>
+            },
+        ]
+    },
+    {
+        title: 'Settings',
+        items: [
+            {
+                title: 'Settings',
+                path: '/dashboard/settings-sidebar/oneLineSettings'
+            },
+            {
+                title: 'People',
+                path: '/dashboard/settings-sidebar/twoLineSettings'
+            },
+            {
+                title: 'Space',
+                path: '/dashboard/settings-sidebar/space'
+            },
+            {
+                title: 'List',
+                path: '/dashboard/settings-sidebar/list'
+            }
+            // {
+            //     title: 'My Settings',
+            //     path: '/workspaces/workspace-sidebar',
+            //     icon: <UserIcon fontSize="small"/>
+            // }
+        ]
+    },
+    {
+        title: 'Platforms',
+        items: [
+            {
+                title: 'Workspaces',
+                path: '/dashboard/workspaces',
+                icon: <BriefcaseIcon fontSize="small"/>,
+                children: [
 
 
-                        {
-                            title: 'Create',
-                            path: '/dashboard/workspaces/new'
-                        },
+                    {
+                        title: 'Create',
+                        path: '/dashboard/workspaces/new'
+                    },
 
 
-                        {
-                            title: 'Browse',
-                            path: '/dashboard/workspaces/header'
-                        }
-                        ,
+                    {
+                        title: 'Browse',
+                        path: '/dashboard/workspaces/header'
+                    }
+                    ,
 
                 ]
-        },
+            },
 
 
-    ],
+        ],
     },
     // {
     //     title: '',
@@ -215,9 +214,16 @@ const DashboardSidebar
                     ))}
                 </Box>
                 <Divider/>
+                {/*<Box sx={{p: 2}} style={{ marginTop: '12rem'}}>*/}
+                {/*    <Divider/>*/}
+                {/*    <WorkspaceGroup />*/}
+                {/*</Box>*/}
                 <Box sx={{p: 2}} style={{ marginTop: '12rem'}}>
                     <Divider/>
-                    <WorkspaceGroup />
+
+                        <Dialog />
+
+
                 </Box>
             </Scrollbar>
         </Box>

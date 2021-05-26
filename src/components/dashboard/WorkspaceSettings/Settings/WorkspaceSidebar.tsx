@@ -1,24 +1,23 @@
-import React from 'react';
-import AppBar from '@material-ui/core/AppBar';
+import React, {forwardRef} from 'react';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Divider from '@material-ui/core/Divider';
 import Drawer from '@material-ui/core/Drawer';
 import Hidden from '@material-ui/core/Hidden';
-import IconButton from '@material-ui/core/IconButton';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import MailIcon from '@material-ui/icons/Mail';
-import MenuIcon from '@material-ui/icons/Menu';
-import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import SidebarItems from "../SidebarItems";
-import { makeStyles, useTheme, Theme, createStyles } from '@material-ui/core/styles';
+import {makeStyles, useTheme, Theme, createStyles} from '@material-ui/core/styles';
+import Box from '@material-ui/core/Box';
+import Button from "@material-ui/core/Button";
+import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
+import {Link} from 'react-router-dom'
+import { NavLink, NavLinkProps } from 'react-router-dom'
+import {Container} from "@material-ui/core";
+import SettingsPage from '../../../../pages/dashboard/Settings'
 
-
-const drawerWidth = 334;
+const drawerWidth = 300;
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -30,6 +29,9 @@ const useStyles = makeStyles((theme: Theme) =>
                 width: drawerWidth,
                 flexShrink: 0,
             },
+        },
+        fontSize: {
+            fontSize: 18
         },
         appBar: {
             [theme.breakpoints.up('sm')]: {
@@ -56,15 +58,15 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 interface Props {
-    /**
-     * Injected by the documentation to work in an iframe.
-     * You won't need it on your project.
-     */
+    className?: string
+    link?: string | null // because the InferProps props allows alows null value
+    onClick?: (event: React.MouseEvent<HTMLElement>) => void
     window?: () => Window;
 }
 
+
 export default function ResponsiveDrawer(props: Props) {
-    const { window } = props;
+    const {window , link} = props;
     const classes = useStyles();
     const theme = useTheme();
     const [mobileOpen, setMobileOpen] = React.useState(false);
@@ -74,26 +76,131 @@ export default function ResponsiveDrawer(props: Props) {
     };
 
     const drawer = (
-        <div>
-            <div className={classes.toolbar} />
-            <Divider />
-            <List>
-                {SidebarItems.ItemsList.map((text, index) => (
-                    <ListItem button key={text.title}>
-                        <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-                        <ListItemText primary={text.title} />
-                    </ListItem>
-                ))}
-            </List>
-            <Divider />
-            <List>
-                {SidebarItems.ItemsSecond.map((text, index) => (
-                    <ListItem button key={text.title}>
-                        <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-                        <ListItemText primary={text.title} />
-                    </ListItem>
-                ))}
-            </List>
+        <div style={{/*boxShadow: 'inset 0 0 10px'*/  boxShadow: 'rgba(0, 0, 0, 0.15) 1.95px 25px 2.6px'}}>
+            <div className={classes.toolbar}/>
+            <Button startIcon={<ArrowBackIosIcon/>}
+                    style={{marginLeft: '3.5rem', borderRadius: 24, background: '#7b68ee', fontSize: '1.4rem'}}
+                    variant="contained">
+                Back
+            </Button>
+            <Box sx={{p: 5}}>
+
+                <h1 style={{paddingLeft: '1rem', fontSize: '2rem', color: '#d5d6d7'}}>Settings</h1>
+                {/*workspace Name*/}
+                <Typography style={{
+                    paddingLeft: '1rem',
+                    fontSize: '1.6rem',
+                    color: '#7b68ee',
+                    fontWeight: 700
+                }}>Slark</Typography>
+                <List>
+                    <Link to='/setting/sidebar/oneLineSettings' style={{textDecoration: 'none', color: 'red'}}>
+                    {/*<NavLink exact  to='/setting/sidebar/settings' component={SettingsPage} >*/}
+                        <ListItem button >
+                            <ListItemText
+                                style={{color: '#d5d6d7'}}
+                                classes={{
+                                  primary: classes.fontSize,
+                                }} primary="Settings"/>
+                        </ListItem>
+                    {/*</NavLink>*/}
+                    </Link>
+                    <Link to='/setting/sidebar/people' style={{textDecoration: 'none', color: 'red'}}>
+                        <ListItem button>
+                            <ListItemText
+                                style={{color: '#d5d6d7'}}
+                                classes={{
+                                    primary: classes.fontSize,
+                                }} primary="People"/>
+                        </ListItem>
+                    </Link>
+                    <Link to='/setting/sidebar/teams' style={{textDecoration: 'none', color: 'red'}}>
+                        <ListItem button>
+                            <ListItemText
+                                style={{color: '#d5d6d7'}}
+                                classes={{
+                                    primary: classes.fontSize,
+                                }} primary="Teams"/>
+                        </ListItem>
+                    </Link>
+                    <Link to='/setting/sidebar/spaces' style={{textDecoration: 'none', color: 'red'}}>
+                        <ListItem button>
+                            <ListItemText
+                                style={{color: '#d5d6d7'}}
+                                classes={{
+                                    primary: classes.fontSize,
+                                }} primary="Spaces"/>
+                        </ListItem>
+                    </Link>
+                    <Link to='/setting/sidebar/IE' style={{textDecoration: 'none', color: 'red'}}>
+                        <ListItem button>
+                            <ListItemText
+                                style={{color: '#d5d6d7'}}
+                                classes={{
+                                    primary: classes.fontSize,
+                                }} primary="Import/Export"/>
+                        </ListItem>
+                    </Link>
+                    <Link to='/setting/sidebar/securityPerm' style={{textDecoration: 'none', color: 'red'}}>
+                        <ListItem button>
+                            <ListItemText
+                                style={{color: '#d5d6d7'}}
+                                classes={{
+                                    primary: classes.fontSize,
+                                }} primary="Security & Permissions"/>
+                        </ListItem>
+                    </Link>
+
+                </List>
+                <Divider/>
+                <List>
+                    <Link to='/setting/sidebar/my-settings' style={{textDecoration: 'none', color: 'red'}}>
+                        <ListItem button>
+                            <ListItemText
+                                style={{color: '#d5d6d7'}}
+                                classes={{
+                                    primary: classes.fontSize,
+                                }} primary="My Settings"/>
+                        </ListItem>
+                    </Link>
+                    <Link to='/setting/sidebar/Workspaces' style={{textDecoration: 'none', color: 'red'}}>
+                        <ListItem button>
+                            <ListItemText
+                                style={{color: '#d5d6d7'}}
+                                classes={{
+                                    primary: classes.fontSize,
+                                }} primary="Workspaces"/>
+                        </ListItem>
+                    </Link>
+                    <Link to='/setting/sidebar/notifications' style={{textDecoration: 'none', color: 'red'}}>
+                        <ListItem button>
+                            <ListItemText
+                                style={{color: '#d5d6d7'}}
+                                classes={{
+                                    primary: classes.fontSize,
+                                }} primary="Notifications"/>
+                        </ListItem>
+                    </Link>
+                    <Link to='/setting/sidebar/rewards' style={{textDecoration: 'none', color: 'red'}}>
+                        <ListItem button>
+                            <ListItemText
+                                style={{color: '#d5d6d7'}}
+                                classes={{
+                                    primary: classes.fontSize,
+                                }} primary="Rewards"/>
+                        </ListItem>
+                    </Link>
+                    <Link to='/setting/sidebar/log-out' style={{textDecoration: 'none', color: 'red'}}>
+                        <ListItem button>
+                            <ListItemText
+                                style={{color: '#d5d6d7'}}
+                                classes={{
+                                    primary: classes.fontSize,
+                                }} primary="Log out"/>
+                        </ListItem>
+                    </Link>
+                </List>
+            </Box>
         </div>
     );
 
@@ -101,25 +208,9 @@ export default function ResponsiveDrawer(props: Props) {
 
     return (
         <div className={classes.root}>
-            <CssBaseline />
-            <AppBar position="fixed" className={classes.appBar}>
-                <Toolbar>
-                    <IconButton
-                        color="inherit"
-                        aria-label="open drawer"
-                        edge="start"
-                        onClick={handleDrawerToggle}
-                        className={classes.menuButton}
-                    >
-                        <MenuIcon />
-                    </IconButton>
-                    <Typography variant="h6" noWrap>
-                        Responsive drawer
-                    </Typography>
-                </Toolbar>
-            </AppBar>
+            <CssBaseline/>
+
             <nav className={classes.drawer} aria-label="mailbox folders">
-                {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
                 <Hidden smUp implementation="css">
                     <Drawer
                         container={container}
@@ -150,11 +241,27 @@ export default function ResponsiveDrawer(props: Props) {
                 </Hidden>
             </nav>
             <main className={classes.content}>
-                <div className={classes.toolbar} />
-                <Drawer>
 
-                </Drawer>
+                <Container maxWidth="lg">
+
+                    {/*<Switch>*/}
+                    {/*    <Route path="/setting/sidebar/my-settings" exact component={SettingsPage} />*/}
+                    {/*</Switch>*/}
+
+                </Container>
             </main>
         </div>
     );
 }
+
+
+const routes = [
+    {
+        path: "/first-comp",
+        element: () => <div>First comp</div>
+    },
+    {
+        path: "/second-comp",
+        element: () => <div>Second comp</div>
+    }
+];

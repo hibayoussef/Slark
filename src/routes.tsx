@@ -7,7 +7,6 @@ import GuestGuard from './modules/authentication/components/guards/guest-guard';
 import LoadingScreen from './components/LoadingScreen';
 import MainLayout from './components/MainLayout';
 import React from 'react';
-import WorkspaceSidebar from "./components/dashboard/WorkspaceSettings/Settings/WorkspaceSidebar";
 
 const Loadable = (Component) => (props) => (
     <Suspense fallback={<LoadingScreen/>}>
@@ -15,7 +14,7 @@ const Loadable = (Component) => (props) => (
     </Suspense>
 );
 
-const WorkspacesGroup = Loadable(lazy(() => import('./components/dashboard/WorkspaceSettings/WorkspacesGroup')));
+
 const WorkspaceSideBar = Loadable(lazy(() => import('./components/dashboard/WorkspaceSettings/Settings/WorkspaceSidebar')));
 
 const IE = Loadable(lazy(() => import('./pages/dashboard/IE')));
@@ -52,7 +51,7 @@ const WorkspaceDetails = Loadable(lazy(() => import('./modules/workspaces/pages/
 const WorkspaceSettings = Loadable(lazy(() => import('./pages/dashboard/Settings')));
 const People = Loadable(lazy(() => import('./pages/dashboard/People')));
 const Space = Loadable(lazy(() => import('./pages/dashboard/Spaces')));
-const List =  Loadable(lazy(() => import('./pages/dashboard/List')));
+const List = Loadable(lazy(() => import('./pages/dashboard/List')));
 // Error pages
 
 const AuthorizationRequired = Loadable(lazy(() => import('./pages/AuthorizationRequired')));
@@ -67,7 +66,11 @@ const Contact = Loadable(lazy(() => import('./pages/Contact')));
 const routes: PartialRouteObject[] = [
     {
         path: '/setting',
-        children: [
+        children: [{
+            path: 'sidebar',
+            element: <WorkspaceSideBar/>,
+
+        },
             {
                 path: 'Workspace',
                 element: (
@@ -130,12 +133,7 @@ const routes: PartialRouteObject[] = [
                     <ConfirmEmail/>
                 )
             },
-            {
-                path: 'modal',
-                element: (
-                    <WorkspacesGroup/>
-                ),
-            },
+
             // {
             //     path: 'workspace-sidebar',
             //     element: (
@@ -207,20 +205,20 @@ const routes: PartialRouteObject[] = [
                     path: 'oneLineSettings',
                     element: <WorkspaceSettings/>
                 },{
-                   path:'twoLineSettings' ,
-                    element: <People />
+                    path: 'twoLineSettings',
+                    element: <People/>
                 },
                     {
                         path: 'space',
-                        element: <Space />,
-                        children:[{
-                            path:'hhh',
-                            element: <IE />
+                        element: <Space/>,
+                        children: [{
+                            path: 'hhh',
+                            element: <IE/>
                         }]
                     },
                     {
-                        path:'list',
-                        element: <List />
+                        path: 'list',
+                        element: <List/>
                     }
 
 

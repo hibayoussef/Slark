@@ -63,7 +63,7 @@ export default function BasicTable() {
                     sx={{
                         position: 'relative',
                         '&:after': {
-                            backgroundColor: 'primary.main',
+                            backgroundColor: '#7b68ee',
                             bottom: '-8px',
                             content: '" "',
                             height: '3px',

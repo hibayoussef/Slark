@@ -21,9 +21,6 @@ const useStyles = makeStyles({
         [`& fieldset`]: {
             borderRadius: 1
         },
-
-        color: '#d5d6d7',
-        background: '#1e272e',
         fontSize: '14px',
         lineHeight: 1,
         fontWeight: 400
@@ -59,7 +56,7 @@ const SplitButton: FC = () => {
         setOpen((prevOpen) => !prevOpen);
     };
 
-    const handleClose = (event: React.MouseEvent<Document, MouseEvent>) => {
+    const handleClose = (event: MouseEvent | TouchEvent) => {
         if (anchorRef.current && anchorRef.current.contains(event.target as HTMLElement)) {
             return;
         }
@@ -95,9 +92,9 @@ const SplitButton: FC = () => {
 
 
 
-                    <Button className={classes.button} style={{ borderRadius: 1 }} onClick={handleClick}>{options[selectedIndex]}</Button>
+                    <Button  className={classes.button} style={{ borderRadius: 1 ,  backgroundColor: '#7b68ee'}} onClick={handleClick}>{options[selectedIndex]}</Button>
                     <Button
-                        style={{ borderRadius: 1 }}
+                        style={{ borderRadius: 1 ,  backgroundColor: '#7b68ee' }}
                         color="primary"
                         size="large"
                         aria-controls={open ? 'split-button-menu' : undefined}
@@ -108,37 +105,37 @@ const SplitButton: FC = () => {
                     >
                         <ArrowDropDownIcon />
                     </Button>
-                    <Button className={classes.button} style={{ borderRadius: 1 }}>Invite</Button>
+                    <Button className={classes.button} style={{ borderRadius: 1 ,  backgroundColor: '#7b68ee' }}>Invite</Button>
 
 
                 </ButtonGroup>
-                {/*<Popper open={open} anchorEl={anchorRef.current} role={undefined} transition disablePortal>*/}
-                {/*    {({ TransitionProps, placement }) => (*/}
-                {/*        <Grow*/}
-                {/*            {...TransitionProps}*/}
-                {/*            style={{*/}
-                {/*                transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom',*/}
-                {/*            }}*/}
-                {/*        >*/}
-                {/*            <Paper>*/}
-                {/*                <ClickAwayListener onClickAway={handleClose}>*/}
-                {/*                    <MenuList id="split-button-menu">*/}
-                {/*                        {options.map((option, index) => (*/}
-                {/*                            <MenuItem*/}
-                {/*                                key={option}*/}
-                {/*                                disabled={index === 2}*/}
-                {/*                                selected={index === selectedIndex}*/}
-                {/*                                onClick={(event) => handleMenuItemClick(event, index)}*/}
-                {/*                            >*/}
-                {/*                                {option}*/}
-                {/*                            </MenuItem>*/}
-                {/*                        ))}*/}
-                {/*                    </MenuList>*/}
-                {/*                </ClickAwayListener>*/}
-                {/*            </Paper>*/}
-                {/*        </Grow>*/}
-                {/*    )}*/}
-                {/*</Popper>*/}
+                <Popper open={open} anchorEl={anchorRef.current} role={undefined} transition disablePortal>
+                    {({ TransitionProps, placement }) => (
+                        <Grow
+                            {...TransitionProps}
+                            style={{
+                                transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom',
+                            }}
+                        >
+                            <Paper>
+                                <ClickAwayListener onClickAway={handleClose}>
+                                    <MenuList style={{ width:'13rem'}} id="split-button-menu">
+                                        {options.map((option, index) => (
+                                            <MenuItem
+                                                key={option}
+                                                disabled={index === 2}
+                                                selected={index === selectedIndex}
+                                                onClick={(event) => handleMenuItemClick(event, index)}
+                                            >
+                                                {option}
+                                            </MenuItem>
+                                        ))}
+                                    </MenuList>
+                                </ClickAwayListener>
+                            </Paper>
+                        </Grow>
+                    )}
+                </Popper>
             </Grid>
         </Grid>
     );
