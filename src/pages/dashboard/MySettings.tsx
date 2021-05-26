@@ -1,16 +1,18 @@
-import type { FC } from 'react';
-import { Helmet } from 'react-helmet-async';
+import type {FC} from 'react';
+import {Helmet} from 'react-helmet-async';
 import {
-    Box
+    Box, Container, Grid, Typography
 } from '@material-ui/core';
+import MySettingsCom from "../../components/dashboard/MySettings/my-settings";
 
 
 const MySettings: FC = () => {
 
+    console.log('Hi')
     return (
         <>
             <Helmet>
-                <title>Settings: My Settings</title>
+                <title>Dashboard:My Settings</title>
             </Helmet>
 
             <Box
@@ -20,9 +22,30 @@ const MySettings: FC = () => {
                     py: 8
                 }}
             >
+                <Container maxWidth='xl'>
+                    <Grid
+                        container
+                        justifyContent="space-between"
+                        spacing={3}
+                    >
+                        <Grid item style={{paddingLeft: '3rem'}}>
+                            <Typography
+                                color="textPrimary"
+                                // variant="h4"
+                                style={{ color: '#d5d6d7', fontWeight:600, fontSize: '2rem'}}
+                            >
+                                My Settings
+                            </Typography>
 
-                Hello I'm in MySettings Page
+                        </Grid>
+                    </Grid>
 
+
+                    <Box sx={{p: 4}}>
+                        <MySettingsCom/>
+                    </Box>
+
+                </Container>
             </Box>
         </>
     );

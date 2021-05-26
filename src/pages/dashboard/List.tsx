@@ -12,7 +12,6 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Avatar from '@material-ui/core/Avatar';
 import Box from '@material-ui/core/Box';
 import Globe from '../../../public/static/globe.jpg';
-import Tab from '../../components/dashboard/Space/tabs';
 import InputAdornment from "@material-ui/core/InputAdornment";
 
 const useStyles = makeStyles({

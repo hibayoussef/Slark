@@ -64,6 +64,10 @@ const sections = [
             {
                 title: 'List',
                 path: '/dashboard/settings-sidebar/list'
+            },
+            {
+                title: 'My Settings',
+                path: '/dashboard/settings-sidebar/MySettings'
             }
             // {
             //     title: 'My Settings',

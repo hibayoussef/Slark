@@ -18,7 +18,6 @@ const Loadable = (Component) => (props) => (
 const WorkspaceSideBar = Loadable(lazy(() => import('./components/dashboard/WorkspaceSettings/Settings/WorkspaceSidebar')));
 
 const IE = Loadable(lazy(() => import('./pages/dashboard/IE')));
-const MySettings = Loadable(lazy(() => import('./pages/dashboard/MySettings')));
 const Notifications = Loadable(lazy(() => import('./pages/dashboard/Notifications')));
 
 const Rewards = Loadable(lazy(() => import('./pages/dashboard/Rewards')));
@@ -52,6 +51,7 @@ const WorkspaceSettings = Loadable(lazy(() => import('./pages/dashboard/Settings
 const People = Loadable(lazy(() => import('./pages/dashboard/People')));
 const Space = Loadable(lazy(() => import('./pages/dashboard/Spaces')));
 const List = Loadable(lazy(() => import('./pages/dashboard/List')));
+const MySettings = Loadable(lazy(() => import('./pages/dashboard/MySettings')));
 // Error pages
 
 const AuthorizationRequired = Loadable(lazy(() => import('./pages/AuthorizationRequired')));
@@ -220,7 +220,10 @@ const routes: PartialRouteObject[] = [
                         path: 'list',
                         element: <List/>
                     }
-
+                    , {
+                    path:"MySettings",
+                        element: <MySettings />
+                    }
 
                 ]
 

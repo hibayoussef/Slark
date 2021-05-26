@@ -16,7 +16,10 @@ const useStyles = makeStyles((theme: Theme) =>
             color: theme.palette.text.secondary,
         },
         resize:{
-            fontSize:24
+            fontSize:24,
+            color: '#828588',
+            borderBottom: '1px solid #e4e4e4',
+            borderBottomColor: '#384047'
         }
     }),
 );
