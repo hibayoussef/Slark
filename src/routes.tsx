@@ -15,7 +15,7 @@ const Loadable = (Component) => (props) => (
 );
 
 
-const WorkspaceSideBar = Loadable(lazy(() => import('./components/dashboard/WorkspaceSettings/Settings/WorkspaceSidebar')));
+// const WorkspaceSideBar = Loadable(lazy(() => import('./components/dashboard/WorkspaceSettings/Settings/WorkspaceSidebar')));
 
 const IE = Loadable(lazy(() => import('./pages/dashboard/IE')));
 const Notifications = Loadable(lazy(() => import('./pages/dashboard/Notifications')));
@@ -52,6 +52,7 @@ const People = Loadable(lazy(() => import('./pages/dashboard/People')));
 const Space = Loadable(lazy(() => import('./pages/dashboard/Spaces')));
 const List = Loadable(lazy(() => import('./pages/dashboard/List')));
 const MySettings = Loadable(lazy(() => import('./pages/dashboard/MySettings')));
+const WorkspaceSideBar =  Loadable(lazy(() => import('./components/dashboard/WorkspaceSideBarNav')));
 // Error pages
 
 const AuthorizationRequired = Loadable(lazy(() => import('./pages/AuthorizationRequired')));
@@ -66,11 +67,7 @@ const Contact = Loadable(lazy(() => import('./pages/Contact')));
 const routes: PartialRouteObject[] = [
     {
         path: '/setting',
-        children: [{
-            path: 'sidebar',
-            element: <WorkspaceSideBar/>,
-
-        },
+        children: [
             {
                 path: 'Workspace',
                 element: (
@@ -134,27 +131,6 @@ const routes: PartialRouteObject[] = [
                 )
             },
 
-            // {
-            //     path: 'workspace-sidebar',
-            //     element: (
-            //         <WorkspaceSidebar/>
-            //     ),
-            //     children:[
-            //
-            //         {
-            //
-            //             path: 'settings',
-            //             element: <Settings/>
-            //         },
-            //         {
-            //
-            //             path: 'people',
-            //             element: <People/>
-            //         }
-            //
-            //     ]
-            // },
-
         ]
     },
 
@@ -163,7 +139,25 @@ const routes: PartialRouteObject[] = [
         path: 'contact',
         element: <Contact/>
     },
+    {
+       path:'workspace-sidebar',
+        element:(
 
+                <WorkspaceSideBar/>
+        ),
+        children: [
+            {
+                path: 'settings',
+                element: <WorkspaceSettings/>
+            },
+            {
+                path: 'people',
+                element: <People/>
+            }
+        ]
+
+
+    },
     {
         path: 'dashboard',
         element: (
@@ -199,36 +193,7 @@ const routes: PartialRouteObject[] = [
             //     ]
             // },
 
-            {
-                path: 'settings-sidebar',
-                children: [{
-                    path: 'oneLineSettings',
-                    element: <WorkspaceSettings/>
-                },{
-                    path: 'twoLineSettings',
-                    element: <People/>
-                },
-                    {
-                        path: 'space',
-                        element: <Space/>,
-                        children: [{
-                            path: 'hhh',
-                            element: <IE/>
-                        }]
-                    },
-                    {
-                        path: 'list',
-                        element: <List/>
-                    }
-                    , {
-                    path:"MySettings",
-                        element: <MySettings />
-                    }
 
-                ]
-
-
-            },
             {
                 path: 'workspaces',
                 children: [

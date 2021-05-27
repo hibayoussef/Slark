@@ -65,7 +65,7 @@ export default function FormDialog() {
 
     const onMySettings=() =>{
         console.log('Clicked on My settings');
-        navigation('/setting/sidebar');
+        navigation('/workspace-sidebar');
     }
 
     const handleClose = () => {
