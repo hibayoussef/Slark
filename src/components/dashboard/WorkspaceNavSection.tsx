@@ -1,8 +1,8 @@
-import type { FC, ReactNode } from 'react';
+import type {FC, ReactNode} from 'react';
 import PropTypes from 'prop-types';
-import { matchPath } from 'react-router-dom';
+import {matchPath} from 'react-router-dom';
 import {List, ListSubheader} from '@material-ui/core';
-import type { ListProps } from '@material-ui/core';
+import type {ListProps} from '@material-ui/core';
 import WorkspaceNavItem from './WorkspaceNavItem';
 import {createStyles, makeStyles, Theme} from "@material-ui/core/styles";
 
@@ -126,7 +126,6 @@ const reduceChildRoutes = ({
 
 const WorkspaceNavSection: FC<NavSectionProps> = (props) => {
 
-    const classes = useStyles();
 
     const {
         items,
