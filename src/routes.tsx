@@ -187,6 +187,10 @@ const routes: PartialRouteObject[] = [
                 path: 'settings-sidebar/twoLineSettings',
                 element: <People/>
             },
+            {
+                path: 'settings-sidebar/space',
+                element: <Space/>
+            },
             // {
             //     path: 'workspaces',
             //     children: [

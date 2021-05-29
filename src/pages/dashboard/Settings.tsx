@@ -4,9 +4,38 @@ import {
     Box, Container, Grid, Typography
 } from '@material-ui/core';
 import WorkspaceSettingsCom from "../../components/dashboard/WorkspaceSettings/Settings/Settings";
+import {createStyles, makeStyles, Theme} from "@material-ui/core/styles";
+const useStyles = makeStyles((theme: Theme) =>
+    createStyles({
+    text:{
+        [theme.breakpoints.down('sm')]: {
+            color: '#d5d6d7',
+            fontWeight:500,
+            fontSize: '1rem'
+        },
+        [theme.breakpoints.between('sm', 'md')]: {
+            color: '#d5d6d7',
+            fontWeight:500,
+            fontSize: '2rem'
+        },
+        [theme.breakpoints.between('md', 'lg')]: {
+            color: '#d5d6d7',
+            fontWeight:500,
+            fontSize: '2.6rem'
+        },
+        [theme.breakpoints.between('lg', 'xl')]: {
+            color: '#d5d6d7',
+            fontWeight:500,
+            fontSize: '2rem'
+        }
+    }
+    }),
+);
 
 
 const Settings: FC = () => {
+
+    const classes = useStyles();
 
     console.log('Hi')
     return (
@@ -30,11 +59,11 @@ const Settings: FC = () => {
                     >
                         <Grid item style={{paddingLeft: '3rem'}}>
                             <Typography
-                                color="textPrimary"
                                 // variant="h4"
-                                style={{ color: '#d5d6d7', fontWeight:600, fontSize: '2rem'}}
+                                className={ classes.text }
                             >
-                                Workspace Settings
+                                {/*Workspace Settings*/}
+                                Edit Workspace
                             </Typography>
 
                         </Grid>
