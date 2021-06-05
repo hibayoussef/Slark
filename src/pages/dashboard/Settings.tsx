@@ -5,6 +5,7 @@ import {
 } from '@material-ui/core';
 import WorkspaceSettingsCom from "../../components/dashboard/WorkspaceSettings/Settings/Settings";
 import {createStyles, makeStyles, Theme} from "@material-ui/core/styles";
+
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
     text:{
@@ -62,8 +63,8 @@ const Settings: FC = () => {
                                 // variant="h4"
                                 className={ classes.text }
                             >
-                                {/*Workspace Settings*/}
-                                Edit Workspace
+                                Workspace Settings
+                                {/*Edit Workspace*/}
                             </Typography>
 
                         </Grid>

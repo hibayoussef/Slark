@@ -13,6 +13,7 @@ import Box from '@material-ui/core/Box';
 import Button from "@material-ui/core/Button";
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import {Link} from 'react-router-dom'
+// import { Switch, Route } from 'react-router'
 import { NavLink, NavLinkProps } from 'react-router-dom'
 import {Container} from "@material-ui/core";
 import SettingsPage from '../../../../pages/dashboard/Settings'

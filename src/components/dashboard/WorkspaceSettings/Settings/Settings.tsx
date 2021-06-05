@@ -1,9 +1,9 @@
 import React, {FC} from 'react';
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
-import {Avatar, TextField, Container, Button, createMuiTheme} from "@material-ui/core";
+import {Avatar, TextField,  Button } from "@material-ui/core";
 import {Link as RouterLink} from "react-router-dom";
+import ModalDelete from '../../../../components/dashboard/workspace/ModalDelete';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -155,6 +155,22 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 const Settings: FC = () => {
+    const [open, setOpen] = React.useState(false);
+
+    const handleClickOpen = () => {
+        console.log('Open the Dialog...')
+        setOpen(true);
+    };
+
+    function cancelHandler(){
+        console.log('Close');
+        setOpen(false)
+    }
+
+    function confirmHandler(){
+        console.log('Close');
+        setOpen(false)
+    }
 
     const classes = useStyles();
 
@@ -199,15 +215,19 @@ const Settings: FC = () => {
                     <Button
                         className={classes.button}
                         style={{
-
-
                         fontWeight: 400,
                         textShadow: 'none',
                         color: '#fd71af',
                         border: 0,
                         background: 'none'
 
-                    }}>Delete Workspace</Button>
+                    }}
+                        onClick={handleClickOpen}
+                    >Delete Workspace
+                    </Button>
+
+                    { open && <ModalDelete onCancel={ cancelHandler } onConfirm={ confirmHandler } />  }
+
 
                 </Grid>
                 <Grid item
@@ -227,6 +247,7 @@ const Settings: FC = () => {
                 </Grid>
 
             </Grid>
+
             {/*</Container>*/}
         </div>
     );

@@ -12,8 +12,7 @@ import Box from '@material-ui/core/Box';
 import Button from "@material-ui/core/Button";
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import {Container} from "@material-ui/core";
-import WorkspaceNavSection from "./WorkspaceNavSection";
-
+import WorkspaceNavItem from './WorkspaceNavItem';
 const drawerWidth = 300;
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -63,58 +62,28 @@ interface Props {
 
 const sections = [
     {
-        title: '',
-        items: [
-            {
-                title: 'Settings',
-                path: '/workspace-sidebar/settings'
-            }
-        ]
+        title: 'Settings',
+        path: '/setting/settings-sidebar/oneLineSettings'
     },
     {
-        title: '',
-        items: [
-            {
-                title: 'People',
-                path: '/dashboard/account'
-            }
-        ]
+        title: 'People',
+        path: '/dashboard/account'
     },
     {
-        title: '',
-        items: [
-            {
-                title: 'Team',
-                path: '/dashboard/account'
-            }
-        ]
+        title: 'People',
+        path: '/dashboard/account'
     },
     {
-        title: '',
-        items: [
-            {
-                title: 'Spaces',
-                path: '/dashboard/account'
-            }
-        ]
+        title: 'Spaces',
+        path: '/dashboard/account'
     },
     {
-        title: '',
-        items: [
-            {
-                title: 'Import/Export',
-                path: '/dashboard/account'
-            }
-        ]
+        title: 'Import/Export',
+        path: '/dashboard/account'
     },
     {
-        title: '',
-        items: [
-            {
-                title: 'Security & Permission',
-                path: '/dashboard/account'
-            }
-        ]
+        title: 'Security & Permission',
+        path: '/dashboard/account'
     }
 ]
 
@@ -154,15 +123,10 @@ export default function ResponsiveDrawer(props: Props) {
                 }}>Slark</Typography>
                 <List>
                     {sections.map((section) => (
-                        <WorkspaceNavSection
-                            key={section.title}
-                            pathname={location.pathname}
-                            sx={{
-                                '& + &': {
-                                    mt: 3
-                                }
-                            }}
-                            {...section}
+                        <WorkspaceNavItem
+                         title={section.title}
+                         path={section.path}
+                         key={section.title}
                         />
                     ))}
                 </List>
@@ -211,9 +175,9 @@ export default function ResponsiveDrawer(props: Props) {
 
                 <Container maxWidth="lg">
 
-                    {/*<Switch>*/}
-                    {/*    <Route path="/setting/sidebar/my-settings" exact component={SettingsPage} />*/}
-                    {/*</Switch>*/}
+                   {/*<Switch>*/}
+                   {/*<Route path="/setting/sidebar/my-settings" exact component={ WorkspaceNavSection } />*/}
+                   {/*</Switch>*/}
 
                 </Container>
             </main>

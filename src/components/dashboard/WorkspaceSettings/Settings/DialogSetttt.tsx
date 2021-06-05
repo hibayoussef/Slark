@@ -20,7 +20,7 @@ import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
 
 const useStyles = makeStyles((theme)=>({
         dialogPaper: {
-
+                minWidth:'54rem'
         },
         border: {
             borderBottom: '10rem'

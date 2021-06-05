@@ -80,6 +80,11 @@ const routes: PartialRouteObject[] = [
                     <WorkspaceCard/>
                 )
             },
+
+            {
+                path: 'settings-sidebar/oneLineSettings',
+                element: <WorkspaceSettings/>
+            },
             {
                 path: 'WorkspaceBrowse',
                 element: (
@@ -139,25 +144,25 @@ const routes: PartialRouteObject[] = [
         path: 'contact',
         element: <Contact/>
     },
-    // {
-    //    path:'workspace-sidebar',
-    //     element:(
-    //
-    //             <WorkspaceSideBar/>
-    //     ),
-    //     children: [
-    //         {
-    //             path: 'settings',
-    //             element: <WorkspaceSettings/>
-    //         },
-    //         {
-    //             path: 'people',
-    //             element: <People/>
-    //         }
-    //     ]
-    //
-    //
-    // },
+    {
+       path:'workspace-sidebar',
+        element:(
+
+                <WorkspaceSideBar/>
+        ),
+        children: [
+            {
+                path: 'settings',
+                element: <WorkspaceSettings/>
+            },
+            {
+                path: 'people',
+                element: <People/>
+            }
+        ]
+
+
+    },
     {
         path: 'dashboard',
         element: (
@@ -179,10 +184,6 @@ const routes: PartialRouteObject[] = [
                 element: <Kanban/>
             },
 
-            {
-                        path: 'settings-sidebar/oneLineSettings',
-                        element: <WorkspaceSettings/>
-            },
             {
                 path: 'settings-sidebar/twoLineSettings',
                 element: <People/>

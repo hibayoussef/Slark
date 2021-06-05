@@ -6,12 +6,24 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import Box from '@material-ui/core/Box';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
+import { useTheme } from '@material-ui/core/styles';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme)=>({
     dialogPaper: {
-        minWidth: '54rem',
+        // minWidth: '54rem',
+        [theme.breakpoints.down('sm')]: {
+            minWidth: '10rem',
+        },
 
         // height: '43rem',
+    },
+    dialogContent:{
+        [theme.breakpoints.down('sm')]: {
+           width: '20rem'
+            // height:'20rem',
+
+        },
     },
     border: {
         borderRadius: 0,
@@ -26,9 +38,12 @@ const useStyles = makeStyles({
         background: '#384047',
         boxShadow: '0 0 0 4px #384047, 0 4px 4px black',
     }
-});
+    }),
+);
 
 export default function FormDialog() {
+    // const theme = useTheme();
+    // const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
     const classes = useStyles();
     const [open, setOpen] = React.useState(false);
 
@@ -45,17 +60,19 @@ export default function FormDialog() {
             <Button variant="outlined" color="primary" onClick={handleClickOpen}>
                 Open form dialog
             </Button>
-            <Dialog classes={{paper: classes.dialogPaper}} open={open} onClose={handleClose}
+            <Dialog
+                // fullScreen={fullScreen}
+                classes={{paper: classes.dialogPaper}} open={open} onClose={handleClose}
                     aria-labelledby="form-dialog-title">
                 <Box sx={{
-                    p: 8
+                    // p: 8
                 }}
                      style={{backgroundColor: '#384047'}}
                      className={classes.oneEdgeShadow}
                 >
-                    <DialogContent style={{paddingLeft: '12rem', paddingBottom: '2rem'}}>
+                    <DialogContent className={classes.dialogContent} >
 
-                        <img src="/static/images/globe-image.jpg" width="320" height="220" alt="Contemplative Reptile"/>
+                        <img src="/static/images/globe-image.jpg"  alt="Contemplative Reptile"/>
 
                     </DialogContent>
                 </Box>
