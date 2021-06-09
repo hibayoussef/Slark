@@ -176,9 +176,9 @@ const WorkspacesCreateForm: FC = (props) => {
                                             <Box sx={{flexGrow: 1}}/>
                                             {/*<Button*/}
                                             {/*    color="primary"*/}
-                                            {/*    // onClick={onNext}*/}
-                                            {/*    // disabled={isSubmitting}*/}
-                                            {/*    // type="submit"*/}
+                                            {/*    onClick={onNext}*/}
+                                            {/*    disabled={isSubmitting}*/}
+                                            {/*    type="submit"*/}
                                             {/*    variant="contained"*/}
                                             {/*>*/}
                                             {/*    invite*/}

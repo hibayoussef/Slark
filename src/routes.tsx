@@ -3,10 +3,13 @@ import type {PartialRouteObject} from 'react-router';
 import {Navigate} from 'react-router-dom';
 import AuthGuard from './modules/authentication/components/guards/auth-guard';
 import DashboardLayout from './components/dashboard/DashboardLayout';
+import WorkspaceSideBarLayout from './components/dashboard/WorkspaceSidebarLayout'
 import GuestGuard from './modules/authentication/components/guards/guest-guard';
 import LoadingScreen from './components/LoadingScreen';
 import MainLayout from './components/MainLayout';
 import React from 'react';
+import WorkspaceSideBarNav from "./components/dashboard/WorkspaceSideBarNav";
+import {Outlet} from "@material-ui/icons";
 
 const Loadable = (Component) => (props) => (
     <Suspense fallback={<LoadingScreen/>}>
@@ -16,7 +19,7 @@ const Loadable = (Component) => (props) => (
 
 
 // const WorkspaceSideBar = Loadable(lazy(() => import('./components/dashboard/WorkspaceSettings/Settings/WorkspaceSidebar')));
-
+// const WorkspaceSideBarLayout = Loadable(lazy(() => import('./components/dashboard/WorkspaceSidebarLayout')));
 const IE = Loadable(lazy(() => import('./pages/dashboard/IE')));
 const Notifications = Loadable(lazy(() => import('./pages/dashboard/Notifications')));
 
@@ -50,9 +53,8 @@ const WorkspaceDetails = Loadable(lazy(() => import('./modules/workspaces/pages/
 const WorkspaceSettings = Loadable(lazy(() => import('./pages/dashboard/Settings')));
 const People = Loadable(lazy(() => import('./pages/dashboard/People')));
 const Space = Loadable(lazy(() => import('./pages/dashboard/Spaces')));
-const List = Loadable(lazy(() => import('./pages/dashboard/List')));
 const MySettings = Loadable(lazy(() => import('./pages/dashboard/MySettings')));
-const WorkspaceSideBar =  Loadable(lazy(() => import('./components/dashboard/WorkspaceSideBarNav')));
+const WorkspaceSideBar = Loadable(lazy(() => import('./components/dashboard/WorkspaceSideBarNav')));
 // Error pages
 
 const AuthorizationRequired = Loadable(lazy(() => import('./pages/AuthorizationRequired')));
@@ -81,10 +83,10 @@ const routes: PartialRouteObject[] = [
                 )
             },
 
-            {
-                path: 'settings-sidebar/oneLineSettings',
-                element: <WorkspaceSettings/>
-            },
+            // {
+            //     path: 'settings-sidebar/oneLineSettings',
+            //     element: <WorkspaceSettings/>
+            // },
             {
                 path: 'WorkspaceBrowse',
                 element: (
@@ -144,24 +146,76 @@ const routes: PartialRouteObject[] = [
         path: 'contact',
         element: <Contact/>
     },
+    // {
+    //    path:'workspace-sidebar',
+    //     element:(
+    //
+    //             <WorkspaceSideBar/>
+    //     ),
+    //     children: [
+    //         {
+    //             path: 'settings',
+    //             element: <WorkspaceSettings/>
+    //         },
+    //         {
+    //             path: 'people',
+    //             element: <People/>
+    //         }
+    //     ]
+    //
+    //
+    // },
     {
-       path:'workspace-sidebar',
-        element:(
-
-                <WorkspaceSideBar/>
+        path: 'workspace-settings',
+        element: (
+            <WorkspaceSideBarLayout />
         ),
         children: [
             {
                 path: 'settings',
-                element: <WorkspaceSettings/>
+                element: <WorkspaceSettings />
             },
             {
                 path: 'people',
-                element: <People/>
+                element: <People />
+            },
+            {
+                path: 'teams',
+                element: <Teams/>
+            },
+            {
+                path: 'spaces',
+                element: <Space/>
+            },
+            {
+                path: 'ie',
+                element: <IE/>
+            },
+            {
+                path: 'security-permission',
+                element: <SecurityPermissions/>
+            },
+            {
+                path: 'my-Settings',
+                element: <MySettings/>
+            },
+            {
+                path: 'workspaces',
+                element: <></>
+            },
+            {
+                path: 'notifications',
+                element: <Notifications />
+            },
+            {
+                path: 'rewards',
+                element: <Rewards />
+            },
+            {
+                path: 'log-out',
+                element: <></>
             }
         ]
-
-
     },
     {
         path: 'dashboard',
@@ -183,15 +237,15 @@ const routes: PartialRouteObject[] = [
                 path: 'kanban',
                 element: <Kanban/>
             },
-
-            {
-                path: 'settings-sidebar/twoLineSettings',
-                element: <People/>
-            },
-            {
-                path: 'settings-sidebar/space',
-                element: <Space/>
-            },
+            //
+            // {
+            //     path: 'settings-sidebar/twoLineSettings',
+            //     element: <People/>
+            // },
+            // {
+            //     path: 'settings-sidebar/space',
+            //     element: <Space/>
+            // },
             // {
             //     path: 'workspaces',
             //     children: [

@@ -55,8 +55,8 @@ const config = (set) => ({
                 console.log(err);
             })
         console.log(response);
-    }
-    ,
+    },
+
     WorkspaceUploadImage: async (WorkspaceImage) =>{
         console.log('Workspcae image inside zustand is: ', WorkspaceImage);
         const response = await api.post('workspace/upload-image' , WorkspaceImage)

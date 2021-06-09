@@ -30,12 +30,14 @@ const WorkspaceNavItem: FC<WorkspaceNavItemProps> = (props) => {
                 sx={{
                     justifyContent: 'flex-start',
                     textAlign: 'left',
-                    pr: '8px',
-                    py: '12px',
+                    pr: '15px',
+                    py: '10px',
                     textTransform: 'none',
                     width: '100%',
-                    color: 'primary.main',
-                    fontWeight: 'fontWeightBold',
+                    color: '#828588',
+                    fontWeight: 400,
+                    fontSize:  '17px',
+                    fontFamily:'Gotham Pro,Proxima Nova,arial,serif',
                     '& svg': {
                         color: 'primary.main'
                     }

@@ -157,6 +157,7 @@ const useStyles = makeStyles((theme: Theme) =>
 const Settings: FC = () => {
     const [open, setOpen] = React.useState(false);
 
+    console.log('THIAN ABK ')
     const handleClickOpen = () => {
         console.log('Open the Dialog...')
         setOpen(true);

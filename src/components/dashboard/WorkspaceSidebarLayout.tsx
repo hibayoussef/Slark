@@ -2,9 +2,7 @@ import { useState } from 'react';
 import type { FC, ReactNode } from 'react';
 import { Outlet } from 'react-router-dom';
 import { experimentalStyled } from '@material-ui/core/styles';
-import DashboardNavbar from './DashboardNavbar';
-import DashboardSidebar from './DashboardSidebar';
-
+import WorkspaceSideBarNav from "./WorkspaceSideBarNav";
 interface DashboardLayoutProps {
     children?: ReactNode;
 }
@@ -49,15 +47,12 @@ const DashboardLayoutContent = experimentalStyled('div')({
     WebkitOverflowScrolling: 'touch'
 });
 
-const DashboardLayout: FC<DashboardLayoutProps> = () => {
+const WorkspaceSidebarLayout: FC<DashboardLayoutProps> = () => {
     const [isSidebarMobileOpen, setIsSidebarMobileOpen] = useState<boolean>(false);
 
     return (
         <DashboardLayoutRoot>
-            <DashboardNavbar
-                onSidebarMobileOpen={(): void => setIsSidebarMobileOpen(true)}
-            />
-            <DashboardSidebar
+            <WorkspaceSideBarNav
                 onMobileClose={(): void => setIsSidebarMobileOpen(false)}
                 openMobile={isSidebarMobileOpen}
             />
@@ -72,4 +67,4 @@ const DashboardLayout: FC<DashboardLayoutProps> = () => {
     );
 };
 
-export default DashboardLayout;
+export default WorkspaceSidebarLayout;
