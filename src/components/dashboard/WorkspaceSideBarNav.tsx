@@ -224,7 +224,7 @@ const WorkspaceSidebar: FC<WorkspaceSidebarProps> = (props) => {
                     {drawer}
                 </Drawer>
             </Hidden>
-            <Hidden xsDown implementation="css">
+            <Hidden lgDown implementation="css">
                 <Drawer
                     classes={{
                         paper: classes.drawerPaper,
