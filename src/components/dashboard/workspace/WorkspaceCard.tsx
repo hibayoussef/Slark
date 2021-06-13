@@ -11,34 +11,50 @@ import {
     Typography
 } from '@material-ui/core';
 import UsersIcon from '../../../icons/Users';
-import type { Workspace } from '../workspace/types/workspace';
+import type {Workspace} from '../workspace/types/workspace';
 import ViewComfyRoundedIcon from '@material-ui/icons/ViewComfyRounded';
 import {useAuthModule} from "../../../modules/authentication/zustand";
+// import {makeStyles} from "@material-ui/core/styles";
 
 
 interface WorkspaceCardProps {
     workspace: Workspace;
 }
 
-const WorkspaceCard: FC<WorkspaceCardProps> = (props) => {
+// const useStyles = makeStyles((theme) => ({
+//         root: {
+//             maxWidth: '24rem',
+//             [theme.breakpoints.down("md")]: {
+//                 maxWidth: '24rem'
+//             },
+//             [theme.breakpoints.down("sm")]: {
+//                 maxWidth: '24rem'
+//             }
+//         },
+//     }),
+// );
 
-    const { workspace } = props;
+
+const WorkspaceCard: FC<WorkspaceCardProps> = (props) => {
+    // const classes = useStyles();
+    const {workspace} = props;
 
     const user = useAuthModule((state) => state.user.user);
-    console.log('user' , user.name)
+    console.log('user', user.name)
     const fileSelectedHandler = event => {
         console.log(event)
     }
 
-    const fileUploadHandler = ()=>{
+    const fileUploadHandler = () => {
 
     }
 
     return (
 
         <Container
+            // className={classes.root}
             style={{maxWidth: "24rem"}}
-            sx={{py: '80px'}}
+            sx={{py: '4px' , pt: '4rem'}}
         >
             <Card>
                 <Box sx={{p: 3}}>
@@ -61,7 +77,7 @@ const WorkspaceCard: FC<WorkspaceCardProps> = (props) => {
                             onChange={fileSelectedHandler}
                             style={{height: "5.6rem", width: "5.6rem"}}
                             alt="Author"
-                             src="https://t4.ftcdn.net/jpg/01/42/10/39/360_F_142103920_HX5XxEAHvaHG4uP7YfgHMM05A25Jjm2q.jpg"
+                            src="https://t4.ftcdn.net/jpg/01/42/10/39/360_F_142103920_HX5XxEAHvaHG4uP7YfgHMM05A25Jjm2q.jpg"
                             //    src={workspace.author.avatar}
                         >
                             {/*{getInitials(workspace.author.name)}*/}

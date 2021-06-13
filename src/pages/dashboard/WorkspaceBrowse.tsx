@@ -60,7 +60,7 @@ const WorkspaceBrowseResults: FC = () => {
                     <Grid
                         item
                         key={workspace.id}
-                        md={4}
+                        md={3}
                         // sm={mode === 'grid' ? 6 : 12}
                         xs={12}
                     >
