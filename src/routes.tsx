@@ -201,7 +201,7 @@ const routes: PartialRouteObject[] = [
             },
             {
                 path: 'workspaces',
-                element: <></>
+                element: <WorkspaceBrowseHeader/>
             },
             {
                 path: 'notifications',
@@ -284,10 +284,7 @@ const routes: PartialRouteObject[] = [
                         path: 'card',
                         element: <WorkspaceCard/>
                     },
-                    {
-                        path: 'header',
-                        element: <WorkspaceBrowseHeader/>
-                    },
+
                     {
                         path: 'invite-user',
                         element: <WorkspaceInviteUser/>

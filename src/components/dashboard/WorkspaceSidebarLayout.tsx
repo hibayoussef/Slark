@@ -3,6 +3,7 @@ import type { FC, ReactNode } from 'react';
 import { Outlet } from 'react-router-dom';
 import { experimentalStyled } from '@material-ui/core/styles';
 import WorkspaceSideBarNav from "./WorkspaceSideBarNav";
+import WorkspaceSidebarMobileIcon from "./WorkspaceSideBarMobileIcon";
 interface DashboardLayoutProps {
     children?: ReactNode;
 }
@@ -52,6 +53,9 @@ const WorkspaceSidebarLayout: FC<DashboardLayoutProps> = () => {
 
     return (
         <DashboardLayoutRoot>
+            <WorkspaceSidebarMobileIcon
+                onSidebarMobileOpen={(): void => setIsSidebarMobileOpen(true)}
+            />
             <WorkspaceSideBarNav
                 onMobileClose={(): void => setIsSidebarMobileOpen(false)}
                 openMobile={isSidebarMobileOpen}

@@ -47,7 +47,8 @@ const MemberList: FC = () => {
                 sx={{
                     backgroundColor: 'background.default',
                     minHeight: '100%',
-                    py: 8
+                    // py: 8,
+                    p:4
                 }}
             >
                 <Container maxWidth='xl'>
@@ -121,7 +122,7 @@ const MemberList: FC = () => {
                         </Grid>
 
                     </Grid>
-                    <Box sx={{ mt: 3 }}>
+                    <Box sx={{ mt: 3 , p:1}}>
                         <PeopleList /*customers={customers}*/ />
                     </Box>
                 </Container>

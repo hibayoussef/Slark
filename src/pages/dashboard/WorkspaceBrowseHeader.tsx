@@ -32,7 +32,9 @@ const WorkspaceBrowseHeader: FC = () => {
                 sx={{
                     backgroundColor: 'background.default',
                     minHeight: '100%',
-                    py: 8
+                    // py: 8,
+                    pl:4,
+                    pr:4
                 }}
             >
                 <Container maxWidth='xl'>
