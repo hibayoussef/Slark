@@ -76,7 +76,7 @@ const SpaceComponent:FC = () => {
                         </Grid>
                     </Grid>
                     <Box sx={{ mt: 3  }}>
-                        <Space />
+                        {/*<Space />*/}
                     </Box>
                 </Container>
             </Box>

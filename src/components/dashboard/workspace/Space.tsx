@@ -15,6 +15,7 @@ import {deepOrange, deepPurple} from '@material-ui/core/colors';
 import ChipToDo from './chipTodo';
 import ChipComplete from './chipComplete';
 import OpenInNewTwoToneIcon from '@material-ui/icons/OpenInNewTwoTone';
+import type {Space} from '../workspace/types/workspace';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -32,17 +33,29 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const defaultProps = {
 
-    style: {height: '21rem' },
+    style: {height: '21rem'},
     borderColor: '#7b68ee',
     borderRadius: 1
 };
 
-const SpaceForm: FC = (props) => {
+interface SpaceCardProps {
+    space: Space;
+}
+
+const SpaceForm: FC<SpaceCardProps> = (props) => {
 
     const classes = useStyles()
-    const workspaceData = useWorkspaceModule((state) => state.workspace)
+    const {space} = props;
 
-    console.log("inside component 1: ", workspaceData);
+    const spaceData = useWorkspaceModule((state) => state.spaceData)
+
+    console.log("inside component 1: ", spaceData);
+
+    console.log('space', spaceData.name)
+
+    const fileUploadHandler = () => {
+
+    }
 
 
     return (
@@ -71,7 +84,6 @@ const SpaceForm: FC = (props) => {
                             }}
 
 
-
                                  style={{borderLeft: 1, borderColor: 'red'}}>
                                 <Box
                                     sx={{
@@ -79,13 +91,17 @@ const SpaceForm: FC = (props) => {
                                         flexDirection: 'row',
                                     }}
                                 >
-                                    <Avatar style={{
-                                        width: '2.3rem',
-                                        height: '2.3rem',
-                                        borderRadius: 10,
-                                        backgroundColor: 'red',
-                                    }}
-                                            className={classes.orange}>S</Avatar>
+                                    <Avatar
+                                        onClick={fileUploadHandler}
+                                        // onChange={fileSelectedHandler}
+                                        src="https://t4.ftcdn.net/jpg/01/42/10/39/360_F_142103920_HX5XxEAHvaHG4uP7YfgHMM05A25Jjm2q.jpg"
+                                        style={{
+                                            width: '2.3rem',
+                                            height: '2.3rem',
+                                            borderRadius: 10,
+                                            backgroundColor: 'red',
+                                        }}
+                                        className={classes.orange}>S</Avatar>
                                     <Typography style={{
                                         marginLeft: '1rem',
                                         marginTop: '0.2rem',
@@ -101,7 +117,8 @@ const SpaceForm: FC = (props) => {
                                         flexDirection: 'row',
                                     }}
                                 >
-                                    <OpenInNewTwoToneIcon style={{marginTop: '0.5rem', marginLeft: '1.4rem' ,  color: '#7b68ee' }}/>
+                                    <OpenInNewTwoToneIcon
+                                        style={{marginTop: '0.5rem', marginLeft: '1.4rem', color: '#7b68ee'}}/>
                                     <Typography style={{
 
                                         marginLeft: '0.5rem',

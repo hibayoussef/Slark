@@ -10,6 +10,7 @@ import Container from '@material-ui/core/Box';
 import {Link as RouterLink} from "react-router-dom";
 import PlusIcon from "../../../icons/Plus";
 import {CardMedia} from "@material-ui/core";
+import {useWorkspaceModule} from './zustand';
 
 
 
@@ -42,6 +43,7 @@ const useStyles = makeStyles((theme) => ({
     }),
 );
 
+
 export default function FormDialog() {
     // const theme = useTheme();
     // const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
@@ -55,6 +57,16 @@ export default function FormDialog() {
     const handleClose = () => {
         setOpen(false);
     };
+
+
+    const spaceData = useWorkspaceModule((state) => state.space)
+
+    console.log("inside component 1: ", spaceData);
+    const createSpace = useWorkspaceModule(
+        (state) => state.createSpace
+    );
+
+
 
     return (
         <div>
@@ -136,6 +148,7 @@ export default function FormDialog() {
                         <DialogActions style={{paddingLeft: '2rem', paddingRight: '2rem', paddingBottom: '2rem'}}>
 
                             <Button
+                                onClick={ createSpace }
                                 style={{
 
                                     marginTop: "1rem",

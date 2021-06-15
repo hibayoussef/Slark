@@ -15,6 +15,7 @@ const initialState = {
     userEmail:null,
     Invitemessage:null,
     file: '',
+    space:null,
     workspaceImageId: null,
     selectedFile: null,
     //upload image,
@@ -36,6 +37,23 @@ const config = (set) => ({
 
             set(state =>{
                 state.workspace = res.data;
+            })
+            console.log('response data: ', res.data)
+        }).catch(err =>{
+            console.log(err)
+        })
+    },
+
+    createSpace: async (spaceData , workspaceId) => {
+        console.log('we are inside zustand 1: ', spaceData)
+        const response = await api.post(
+            "space" , spaceData , workspaceId
+        ).then(res=>{
+            console.log('values inside zustand 2: ',spaceData ,workspaceId)
+            console.log('response inside zustand 3: ', res);
+
+            set(state =>{
+                state.space = res.data;
             })
             console.log('response data: ', res.data)
         }).catch(err =>{
