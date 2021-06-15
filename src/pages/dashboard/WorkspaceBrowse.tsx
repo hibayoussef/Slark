@@ -22,7 +22,7 @@ const WorkspaceBrowseResults: FC = () => {
                     alignItems: 'center',
                     display: 'flex',
                     flexWrap: 'wrap',
-                    justifyContent: 'space-between',
+                    justifyContent: 'space-between'
                 }}
             >
                 <Typography
@@ -55,6 +55,7 @@ const WorkspaceBrowseResults: FC = () => {
                 spacing={1}
                 md={12}
                 xs={12}
+                style={{ marginTop:6}}
             >
                 {workspace.map(workspace => (
                     <Grid

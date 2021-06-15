@@ -1,5 +1,5 @@
 import type {FC} from 'react';
-import {Link as RouterLink} from 'react-router-dom';
+import {Link as RouterLink, useNavigate} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {
     Container,
@@ -8,71 +8,78 @@ import {
     Card,
     Divider,
     Link,
-    Typography
+    Typography, Button
 } from '@material-ui/core';
 import UsersIcon from '../../../icons/Users';
-import type {Workspace} from '../workspace/types/workspace';
+import type { Workspace } from '../workspace/types/workspace';
 import ViewComfyRoundedIcon from '@material-ui/icons/ViewComfyRounded';
 import {useAuthModule} from "../../../modules/authentication/zustand";
-// import {makeStyles} from "@material-ui/core/styles";
+import {useWorkspaceModule} from "./zustand";
 
 
 interface WorkspaceCardProps {
     workspace: Workspace;
 }
 
-// const useStyles = makeStyles((theme) => ({
-//         root: {
-//             maxWidth: '24rem',
-//             [theme.breakpoints.down("md")]: {
-//                 maxWidth: '24rem'
-//             },
-//             [theme.breakpoints.down("sm")]: {
-//                 maxWidth: '24rem'
-//             }
-//         },
-//     }),
-// );
-
-
 const WorkspaceCard: FC<WorkspaceCardProps> = (props) => {
-    // const classes = useStyles();
-    const {workspace} = props;
+
+    const { workspace } = props;
 
     const user = useAuthModule((state) => state.user.user);
-    console.log('user', user.name)
+    // const workspace = useAuthModule((state) => state.user.user._workspaces
+    // );
+    console.log('user workspace: ', workspace)
+
+    console.log('user' , user.name)
     const fileSelectedHandler = event => {
         console.log(event)
     }
+    //
+    // const WorkspaceInformation = useWorkspaceModule(
+    //     (state) => state.WorkspaceInformation(workspace)
+    // );
 
-    const fileUploadHandler = () => {
+    const navigation =  useNavigate();
+
+    // const WorkspaceInfo  = ()=>{
+    //     console.log('Clicked on My settings');
+    //     navigation(`/workspaces/${workspace}`);
+    // }
+
+    const fileUploadHandler = ()=>{
 
     }
 
     return (
 
-        <Container
-            // className={classes.root}
-            style={{maxWidth: "24rem"}}
-            sx={{py: '4px' , pt: '4rem'}}
+        <Box
+            sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                p: 3
+            }}
+
         >
-            <Card>
-                <Box sx={{p: 3}}>
+            <Card
+                style={{maxWidth: "24rem"}}
+                sx={{py: '20px'}}>
+                <Box
+                     sx={{
+                         pl: 3,
+                         pr:3,
+                         pb:3,
+                         pt:2
+                     }}
+
+                >
 
                     <Box
                         sx={{
                             alignItems: 'center',
                             display: 'flex',
-                            mt: 2
                         }}
                     >
                         <Avatar
-                            // sx={{
-                            //     alignItems: 'center',
-                            //     display: 'flex',
-                            //     justifyContent: 'center',
-                            //     mb: 3
-                            // }}
                             onClick={fileUploadHandler}
                             onChange={fileSelectedHandler}
                             style={{height: "5.6rem", width: "5.6rem"}}
@@ -80,8 +87,7 @@ const WorkspaceCard: FC<WorkspaceCardProps> = (props) => {
                             src="https://t4.ftcdn.net/jpg/01/42/10/39/360_F_142103920_HX5XxEAHvaHG4uP7YfgHMM05A25Jjm2q.jpg"
                             //    src={workspace.author.avatar}
                         >
-                            {/*{getInitials(workspace.author.name)}*/}
-                            {/*hhhh*/}
+
                         </Avatar>
 
                         <Box sx={{ml: 2}}>
@@ -110,8 +116,6 @@ const WorkspaceCard: FC<WorkspaceCardProps> = (props) => {
                                     to="#"
                                     variant="subtitle2"
                                 >
-                                    {/*{workspace.author.name}*/}
-                                    {/*hiba youssef*/}
                                     {user.name}
                                 </Link>
 
@@ -121,24 +125,16 @@ const WorkspaceCard: FC<WorkspaceCardProps> = (props) => {
                 </Box>
 
 
-                <Divider/>
+                <Divider />
                 <Box
                     sx={{
                         alignItems: 'center',
                         display: 'flex',
                         pl: 2,
                         pr: 3,
-                        py: 2
+                        pt:2
                     }}
                 >
-                    <Box
-                        sx={{
-                            alignItems: 'center',
-                            display: 'flex'
-                        }}
-                    >
-
-                    </Box>
                     <Box
                         sx={{
                             alignItems: 'center',
@@ -163,20 +159,15 @@ const WorkspaceCard: FC<WorkspaceCardProps> = (props) => {
                     }}
                     >
 
-                        {/*<Link*/}
-                        {/*    color="textSecondary"*/}
-                        {/*    component={RouterLink}*/}
-                        {/*    to="/authentication/loginfinal"*/}
-                        {/*    variant="body2"*/}
-                        {/*    style = {{ marginLeft:"9rem"}}*/}
-                        {/*>*/}
-                        <ViewComfyRoundedIcon style={{fontSize: 30}}/>
-                        {/*</Link>*/}
+                        <Button>
+                            <ViewComfyRoundedIcon  style={{fontSize: 30}}/>
+                        </Button>
+
                     </Box>
 
                 </Box>
             </Card>
-        </Container>
+        </Box>
     );
 };
 

@@ -1,26 +1,41 @@
-import {useState} from 'react';
+import React, {useState} from 'react';
 import type {FC} from 'react';
-import {useNavigate} from 'react-router-dom';
-import * as Yup from 'yup';
-import {Formik} from 'formik';
-import {useSnackbar} from 'notistack';
 import {
-    Box,
-    Button,
     Card,
     CardContent,
     CardHeader,
-    Checkbox,
-    FormControlLabel,
-    FormHelperText,
     Grid,
-    TextField,
-    Typography
 } from '@material-ui/core';
 import FileDropzone from '../../FileDropzone';
-import {useWorkspaceModule} from './zustand';
+import {createStyles, makeStyles, Theme} from "@material-ui/core/styles";
+
+const useStyles = makeStyles((theme: Theme) =>
+    createStyles({
+        root: {
+            flexGrow: 1
+        },
+        dot: {
+            height: '25px',
+            width: '25px',
+            borderRadius: '50%',
+            display: 'inline-block',
+            transition: 'all .2s cubic-bezier(.785,.135,.15,.86) 0s'
+        },
+        dotBig: {
+            height: '10rem',
+            width: '10rem',
+            borderRadius: '50%',
+            display: 'inline-block',
+            transition: 'all .2s cubic-bezier(.785,.135,.15,.86) 0s'
+        },
+
+    }),
+);
+
 
 const WorkspacesUploadImage: FC = (props) => {
+
+    const classes = useStyles();
 
     const [files, setFiles] = useState<any[]>([]);
 
@@ -38,9 +53,10 @@ const WorkspacesUploadImage: FC = (props) => {
         setFiles([]);
     };
 
+
     return (<>
         <Card>
-            <CardHeader title="Upload Images"/>
+            <CardHeader title="Customize your Workspaces avatar"/>
             <CardContent>
                 <FileDropzone
                     accept="image/*"
@@ -49,6 +65,7 @@ const WorkspacesUploadImage: FC = (props) => {
                     onRemove={handleRemove}
                     onRemoveAll={handleRemoveAll}
                 />
+
             </CardContent>
         </Card>
     </>)

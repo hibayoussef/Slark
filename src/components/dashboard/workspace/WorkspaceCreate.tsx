@@ -16,6 +16,7 @@ import {
 import {useWorkspaceModule} from './zustand';
 import WorkspaceUploadImage from './WorkspaceUploadImage'
 import useIsMountedRef from "../../../hooks/useIsMountedRef";
+import {useAuthModule} from "../../../modules/authentication/zustand";
 
 const WorkspacesCreateForm: FC = (props) => {
     const isMountedRef = useIsMountedRef();
@@ -81,7 +82,7 @@ const WorkspacesCreateForm: FC = (props) => {
                         },
                         variant: 'success'
                     });
-                    navigate('/dashboard/workspaces/header');
+                    navigate('/workspace-settings/workspaces');
                 } catch (err) {
                     console.error(err);
                     if (isMountedRef.current) {
@@ -127,7 +128,7 @@ const WorkspacesCreateForm: FC = (props) => {
                                         name="name"
                                         onBlur={handleBlur}
                                         onChange={handleChange}
-                                        value={values.name}
+                                        value={values.name }
                                         variant="outlined"
                                         placeholder="Workspace Name"
                                     />
@@ -140,7 +141,6 @@ const WorkspacesCreateForm: FC = (props) => {
                                 <WorkspaceUploadImage/>
                             </Box>
 
-                            {/*invite User*/}
                             <Box sx={{mt: 3}}>
 
                                 <Card>
@@ -174,15 +174,7 @@ const WorkspacesCreateForm: FC = (props) => {
                                             {/*    </Box>*/}
                                             {/*)}*/}
                                             <Box sx={{flexGrow: 1}}/>
-                                            {/*<Button*/}
-                                            {/*    color="primary"*/}
-                                            {/*    onClick={onNext}*/}
-                                            {/*    disabled={isSubmitting}*/}
-                                            {/*    type="submit"*/}
-                                            {/*    variant="contained"*/}
-                                            {/*>*/}
-                                            {/*    invite*/}
-                                            {/*</Button>*/}
+
                                         </Box>
                                     </CardContent>
                                 </Card>

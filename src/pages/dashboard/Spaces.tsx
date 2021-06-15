@@ -1,131 +1,87 @@
-import React from 'react';
-import {makeStyles} from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import Box from '@material-ui/core/Box';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
-import { useTheme } from '@material-ui/core/styles';
+import { useEffect } from 'react';
+import type { FC } from 'react';
+import { Link as RouterLink } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
+import {
+    Box,
+    Breadcrumbs,
+    Button,
+    Container,
+    Grid,
+    Link,
+    Typography
+} from '@material-ui/core';
+import  Space from '../../components/dashboard/workspace/Space';
+import ArrowLeftIcon from '../../icons/ArrowLeft';
+import ChevronRightIcon from '../../icons/ChevronRight';
+import ModalCreateSpace from '../../../src/components/dashboard/workspace/modalCreateSpace';
 
-const useStyles = makeStyles((theme)=>({
-    dialogPaper: {
-        // minWidth: '54rem',
-        [theme.breakpoints.down('sm')]: {
-            minWidth: '10rem',
-        },
+const SpaceComponent:FC = () => {
 
-        // height: '43rem',
-    },
-    dialogContent:{
-        [theme.breakpoints.down('sm')]: {
-           width: '20rem'
-            // height:'20rem',
-
-        },
-    },
-    border: {
-        borderRadius: 0,
-        borderBottomLeftRadius: '10rem',
-        borderBottomRightRadius: '10rem'
-    },
-    resize: {
-        fontSize: 24,
-        color: '#BDBDBD'
-    },
-    oneEdgeShadow: {
-        background: '#384047',
-        boxShadow: '0 0 0 4px #384047, 0 4px 4px black',
-    }
-    }),
-);
-
-export default function FormDialog() {
-    // const theme = useTheme();
-    // const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
-    const classes = useStyles();
-    const [open, setOpen] = React.useState(false);
-
-    const handleClickOpen = () => {
-        setOpen(true);
-    };
-
-    const handleClose = () => {
-        setOpen(false);
-    };
 
     return (
-        <div>
-            <Button variant="outlined" color="primary" onClick={handleClickOpen}>
-                Open form dialog
-            </Button>
-            <Dialog
-                // fullScreen={fullScreen}
-                classes={{paper: classes.dialogPaper}} open={open} onClose={handleClose}
-                    aria-labelledby="form-dialog-title">
-                <Box sx={{
-                    // p: 8
+        <>
+            <Helmet>
+                <title>Dashboard: Space Component</title>
+            </Helmet>
+            <Box
+                sx={{
+                    backgroundColor: 'background.default',
+                    minHeight: '100%',
+                   pl:4,
+                    pr:5
                 }}
-                     style={{backgroundColor: '#384047'}}
-                     className={classes.oneEdgeShadow}
-                >
-                    <DialogContent className={classes.dialogContent} >
+            >
+                <Container maxWidth= 'xl' >
+                    <Grid
+                        container
+                        justifyContent="space-between"
+                        spacing={3}
+                    >
+                        <Grid item>
+                            <Typography
+                                color="textPrimary"
+                                variant="h5"
+                            >
+                                See Spaces
+                            </Typography>
+                            <Breadcrumbs
+                                aria-label="breadcrumb"
+                                separator={<ChevronRightIcon fontSize="small" />}
+                                sx={{ mt: 1 }}
+                            >
+                                <Link
+                                    color="textPrimary"
+                                    component={RouterLink}
+                                    to="/dashboard"
+                                    variant="subtitle2"
+                                >
+                                    Dashboard
+                                </Link>
+                                <Link
+                                    color="textPrimary"
+                                    component={RouterLink}
+                                    to="/workspaces"
+                                    variant="subtitle2"
+                                >
+                                    Spaces
+                                </Link>
 
-                        <img src="/static/images/globe-image.jpg"  alt="Contemplative Reptile"/>
+                            </Breadcrumbs>
+                        </Grid>
+                        <Grid item>
+                            <Box sx={{ m: -1 , mr:1 }}>
+                                <ModalCreateSpace />
+                            </Box>
+                        </Grid>
+                    </Grid>
+                    <Box sx={{ mt: 3  }}>
+                        <Space />
+                    </Box>
+                </Container>
+            </Box>
+        </>
+    );
+};
 
-                    </DialogContent>
-                </Box>
-
-                {/*<Divider/>*/}
-
-                <Box>
-                    <DialogContent style={{paddingLeft: '4.5rem', paddingRight: '4.5rem'}}>
-                        <label style={{fontFamily: 'Arial, Helvetica, sans-serif', color: '#d5d6d7', fontSize: 19}}>Space
-                            name</label>
-                        <TextField
-                            style={{width: '100%', paddingTop: '1rem'}}
-                            InputProps={{
-                                classes: {
-                                    input: classes.resize,
-                                },
-                            }}
-                            autoFocus
-                            id="name"
-                            type="text"
-                            fullWidth
-                            placeholder="Enter Space name"
-                            variant="standard"
-                        />
-                    </DialogContent>
-                </Box>
-                <Box sx={{p: 5}}>
-
-                    <DialogActions style={{paddingLeft: '2rem', paddingRight: '2rem', paddingBottom: '2rem'}}>
-
-                        <Button
-                            style={{
-
-                                marginTop: "1rem",
-                                maxHeight: "4.8rem",
-                                minHeight: "4.8rem",
-                                borderRadius: 3,
-                                fontSize: '1.5rem',
-                                backgroundColor: '#7b68ee'
-                            }}
-                            color="primary"
-                            // disabled={isSubmitting}
-                            fullWidth
-                            size="large"
-                            type="submit"
-                            variant="contained"
-                        >
-                            Next
-                        </Button>
-                    </DialogActions>
-                </Box>
-            </Dialog>
-        </div>
-    )
-        ;
-}
+export default SpaceComponent;

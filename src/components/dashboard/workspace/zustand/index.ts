@@ -2,6 +2,7 @@ import create from 'zustand';
 import {devtools} from 'zustand/middleware';
 import {combineAndImmer, zustandLogger} from "@scandinavia/ts-zustand";
 import api from "../../../../axiosWithDelimiterFile";
+import {useNavigate} from "react-router-dom";
 
 const initialState = {
     selectedCustomers:null,
@@ -20,9 +21,11 @@ const initialState = {
     loading: false,
     platform: 'Firebase',
 };
+
 // config like action
 const config = (set) => ({
     //function signUp
+
     createWorkspace: async (workspaceData) => {
         console.log('we are inside zustand 1: ', workspaceData)
         const response = await api.post(
@@ -56,6 +59,20 @@ const config = (set) => ({
             })
         console.log(response);
     },
+
+    // WorkspaceInformation: async(id) =>{
+    //     console.log('Workspce Information...')
+    //     const response = await api.get('workspace/:id',id)
+    //         .then(res=>{
+    //             console.log('value inside zustand workspace Information....', id);
+    //             console.log('response inside zustand workspace information....', res)
+    //         })
+    //         .catch(err=>{
+    //             console.log(err)
+    //         })
+    //         console.log(response)
+    //
+    // },
 
     WorkspaceUploadImage: async (WorkspaceImage) =>{
         console.log('Workspcae image inside zustand is: ', WorkspaceImage);
