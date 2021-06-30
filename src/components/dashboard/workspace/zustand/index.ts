@@ -13,6 +13,8 @@ const initialState = {
     Members: null,
     workspace: null,
     userEmail:null,
+    spaceData:null,
+    selectedWorkspace: '',
     Invitemessage:null,
     file: '',
     space:null,
@@ -60,7 +62,22 @@ const config = (set) => ({
             console.log(err)
         })
     },
+    createList: async (listData , spaceId) => {
+        console.log('we are inside zustand 1: ', listData)
+        const response = await api.post(
+            "space" , listData , spaceId
+        ).then(res=>{
+            console.log('values inside zustand 2: ',listData ,spaceId)
+            console.log('response inside zustand 3: ', res);
 
+            set(state =>{
+                state.space = res.data;
+            })
+            console.log('response data: ', res.data)
+        }).catch(err =>{
+            console.log(err)
+        })
+    },
     inviteUsersByEmail: async(userEmail) =>{
         console.log('User Email invite to workspace is: ', userEmail);
         const response = await api.post('workspace/invite-user', {userEmail})
@@ -78,19 +95,19 @@ const config = (set) => ({
         console.log(response);
     },
 
-    // WorkspaceInformation: async(id) =>{
-    //     console.log('Workspce Information...')
-    //     const response = await api.get('workspace/:id',id)
-    //         .then(res=>{
-    //             console.log('value inside zustand workspace Information....', id);
-    //             console.log('response inside zustand workspace information....', res)
-    //         })
-    //         .catch(err=>{
-    //             console.log(err)
-    //         })
-    //         console.log(response)
-    //
-    // },
+    WorkspaceInformation: async(id) =>{
+        console.log('Workspce Information...')
+        const response = await api.get(`workspace/${id}`)
+            .then(res=>{
+                console.log('value inside zustand workspace Information....', id);
+                console.log('response inside zustand workspace information....', res)
+            })
+            .catch(err=>{
+                console.log(err)
+            })
+            console.log(response)
+
+    },
 
     WorkspaceUploadImage: async (WorkspaceImage) =>{
         console.log('Workspcae image inside zustand is: ', WorkspaceImage);

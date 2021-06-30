@@ -16,17 +16,15 @@ import WorkspaceBrowseResults from "./WorkspaceBrowse";
 import WorkspaceBrowseFilter from '../../components/dashboard/workspace/WorkspaceFilter'
 import {useAuthModule} from "../../modules/authentication/zustand";
 
-
 const WorkspaceBrowseHeader: FC = () => {
-
-    const workspaces = useAuthModule((state) => state.user.user._workspaces);
+    const workspaces = useAuthModule((state) => state.user);
     console.log('user workspace: ', workspaces)
 
 
     return (
         <>
             <Helmet>
-                <title>Dashboard: Project Browse</title>
+                <title>Dashboard: Workspace Browse</title>
             </Helmet>
             <Box
                 sx={{
@@ -37,7 +35,7 @@ const WorkspaceBrowseHeader: FC = () => {
                     pr:3
                 }}
             >
-                <Container maxWidth='xl'>
+                <Container  maxWidth={ 'xl' }>
                     <Grid
                         alignItems="center"
                         container

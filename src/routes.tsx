@@ -54,6 +54,8 @@ const WorkspaceSettings = Loadable(lazy(() => import('./pages/dashboard/Settings
 const People = Loadable(lazy(() => import('./pages/dashboard/People')));
 const Space = Loadable(lazy(() => import('./pages/dashboard/Spaces')));
 const MySettings = Loadable(lazy(() => import('./pages/dashboard/MySettings')));
+const List = Loadable(lazy(() => import('./pages/dashboard/List')));
+const ListBrowse = Loadable(lazy(() => import('./pages/dashboard/ListBrowse')));
 const WorkspaceSideBar = Loadable(lazy(() => import('./components/dashboard/WorkspaceSideBarNav')));
 // Error pages
 
@@ -237,6 +239,14 @@ const routes: PartialRouteObject[] = [
                 path: 'kanban',
                 element: <Kanban/>
             },
+            {
+                path: 'list',
+                element: <List/>
+            },
+            {
+                path:'listBrowse',
+                element:<ListBrowse />
+            },
             //
             // {
             //     path: 'settings-sidebar/twoLineSettings',
@@ -249,14 +259,11 @@ const routes: PartialRouteObject[] = [
             // {
             //     path: 'workspaces',
             //     children: [
-            //         // {
-            //         //     path: '/',
-            //         //     element: <ProductList />
-            //         // },
             //         {
-            //             path: 'new',
-            //             element: <WorkspaceCreate />
-            //         }
+            //             path: '/',
+            //             element: <ProductList />
+            //         },
+            //
             //     ]
             // },
 

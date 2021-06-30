@@ -16,6 +16,7 @@ import ChipToDo from './chipTodo';
 import ChipComplete from './chipComplete';
 import OpenInNewTwoToneIcon from '@material-ui/icons/OpenInNewTwoTone';
 import type {Space} from '../workspace/types/workspace';
+import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -51,7 +52,7 @@ const SpaceForm: FC<SpaceCardProps> = (props) => {
 
     console.log("inside component 1: ", spaceData);
 
-    console.log('space', spaceData.name)
+    // console.log('space', spaceData.name)
 
     const fileUploadHandler = () => {
 
@@ -190,6 +191,10 @@ const SpaceForm: FC<SpaceCardProps> = (props) => {
                                             <ChipToDo/>
                                             <ChipComplete/>
                                         </Box>
+                                    </Box>
+
+                                    <Box>
+                                        <MoreHorizIcon />
                                     </Box>
                                 </Box>
 

@@ -10,7 +10,7 @@ import {useAuthModule} from "../../modules/authentication/zustand";
 
 const WorkspaceBrowseResults: FC = () => {
 
-    const space = useAuthModule((state) => state.user.user._workspaces._spaces);
+    const space = useAuthModule((state) => state.user)
 
 
     console.log('user workspace: ', space)
@@ -43,8 +43,8 @@ const WorkspaceBrowseResults: FC = () => {
                 >
                     Showing
                     {' '}
-                    {space.length}
-
+                    {/*{space.length}*/}
+                    4
                     {' '}
                     Spaces
                 </Typography>

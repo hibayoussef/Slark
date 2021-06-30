@@ -34,17 +34,6 @@ const WorkspaceCard: FC<WorkspaceCardProps> = (props) => {
     const fileSelectedHandler = event => {
         console.log(event)
     }
-    //
-    // const WorkspaceInformation = useWorkspaceModule(
-    //     (state) => state.WorkspaceInformation(workspace)
-    // );
-
-    const navigation =  useNavigate();
-
-    // const WorkspaceInfo  = ()=>{
-    //     console.log('Clicked on My settings');
-    //     navigation(`/workspaces/${workspace}`);
-    // }
 
     const fileUploadHandler = ()=>{
 
@@ -53,6 +42,8 @@ const WorkspaceCard: FC<WorkspaceCardProps> = (props) => {
     return (
 
         <Box
+            maxWidth="24rem"
+            minWidth="20rem"
             sx={{
                 display: 'flex',
                 flexDirection: 'column',
@@ -61,22 +52,20 @@ const WorkspaceCard: FC<WorkspaceCardProps> = (props) => {
 
         >
             <Card
-                style={{maxWidth: "24rem"}}
+                // style={{maxWidth: "24rem"}}
                 sx={{py: '20px'}}>
                 <Box
                      sx={{
                          pl: 3,
-                         pr:3,
                          pb:3,
                          pt:2
                      }}
-
                 >
 
                     <Box
                         sx={{
                             alignItems: 'center',
-                            display: 'flex',
+                            display: 'flex'
                         }}
                     >
                         <Avatar
@@ -90,23 +79,26 @@ const WorkspaceCard: FC<WorkspaceCardProps> = (props) => {
 
                         </Avatar>
 
-                        <Box sx={{ml: 2}}>
-
+                        <Box sx={{ml: 2 , pr: 4}}>
                             <Link
                                 color="textPrimary"
                                 component={RouterLink}
                                 to="#"
                                 variant="h6"
-                                style={{textAlign: "center", fontSize: "1.9rem", paddingLeft: "0.8rem"}}
+                                style={{
+                                    textAlign: "center", fontSize: "1.4rem",
+                                    paddingLeft: "0.8rem",
+                                }}
+                                noWrap
                             >
                                 {workspace.name}
-                                {/*Slark*/}
                             </Link>
+
 
                             <Typography
                                 color="textSecondary"
                                 variant="body2"
-                                style={{textAlign: "center", paddingLeft: "0.8rem"}}
+                                style={{textAlign: "center", paddingLeft: "0.7rem"}}
                             >
                                 by
                                 {'  '}
@@ -160,7 +152,9 @@ const WorkspaceCard: FC<WorkspaceCardProps> = (props) => {
                     >
 
                         <Button>
+                            <a href={`/workspace-settings/settings/${workspace._id}`} >
                             <ViewComfyRoundedIcon  style={{fontSize: 30}}/>
+                            </a>
                         </Button>
 
                     </Box>

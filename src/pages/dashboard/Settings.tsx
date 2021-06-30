@@ -5,6 +5,7 @@ import {
 } from '@material-ui/core';
 import WorkspaceSettingsCom from "../../components/dashboard/WorkspaceSettings/Settings/Settings";
 import {createStyles, makeStyles, Theme} from "@material-ui/core/styles";
+//import {useRouteMatch} from 'react-router-dom';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -35,7 +36,8 @@ const useStyles = makeStyles((theme: Theme) =>
 
 
 const Settings: FC = () => {
-
+//    let match=useRouteMatch();
+//    console.log(match);
     const classes = useStyles();
 
     console.log('Hi')

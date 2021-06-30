@@ -13,6 +13,7 @@ import Avatar from '@material-ui/core/Avatar';
 import Box from '@material-ui/core/Box';
 import Globe from '../../../public/static/globe.jpg';
 import InputAdornment from "@material-ui/core/InputAdornment";
+import {useWorkspaceModule} from "../../components/dashboard/workspace/zustand";
 
 const useStyles = makeStyles({
     dialogPaper: {
@@ -36,6 +37,17 @@ export default function FormDialog() {
     const classes = useStyles();
     const [open, setOpen] = React.useState(false);
 
+    //----------------------------------------
+    const [listName, setListName] = React.useState('');
+
+    const listData = useWorkspaceModule((state) => state.list)
+
+    console.log("inside component 1: ", listData);
+    const createList = useWorkspaceModule(
+        (state) => state.createList
+    );
+
+    //----------------------------------
     const handleClickOpen = () => {
         setOpen(true);
     };
@@ -59,7 +71,9 @@ export default function FormDialog() {
                 >
                     <DialogContent>
 
-                        <DialogContentText style={{ fontFamily: 'Arial, Helvetica, sans-serif' , color: '#d5d6d7' , fontSize:33}}>
+                        <DialogContentText
+
+                            style={{ fontFamily: 'Arial, Helvetica, sans-serif' , color: '#d5d6d7' , fontSize:33}}>
                             Create List
                         </DialogContentText>
 
@@ -72,6 +86,8 @@ export default function FormDialog() {
                     <DialogContent  style={{paddingLeft:'2.6rem' , paddingRight: '2.6rem' , paddingTop:'3rem'}}>
                         <label style={{ fontFamily: 'Arial, Helvetica, sans-serif' , color: '#d5d6d7' , fontSize:18}}>List name</label>
                         <TextField
+                            value={listName}
+                            onChange={(e)=>setListName(e.target.value)}
                             style ={{ paddingTop:'1rem' ,
 
                                 // borderColor: 'red',
@@ -127,7 +143,9 @@ export default function FormDialog() {
                                 fontSize: '1.3rem',
                                 backgroundColor: '#7b68ee'
                             }}
-                            color="primary"
+
+                            onClick={()=> createList({'name':listName,'_list':'60cf00454c3c59001c620bfe'}) }
+                           color="primary"
                             // disabled={isSubmitting}
                             size="large"
                             type="submit"

@@ -11,12 +11,8 @@ import {
     Link,
     Typography
 } from '@material-ui/core';
-import  SpaceCard from '../../components/dashboard/workspace/Space';
-import ArrowLeftIcon from '../../icons/ArrowLeft';
 import ChevronRightIcon from '../../icons/ChevronRight';
-import ModalCreateSpace from '../../../src/components/dashboard/workspace/modalCreateSpace';
 import {useAuthModule} from "../../modules/authentication/zustand";
-import SpaceBrowse from "./SpaceBrowse";
 
 
 const SpaceComponent:FC = () => {
@@ -35,8 +31,10 @@ const SpaceComponent:FC = () => {
                 sx={{
                     backgroundColor: 'background.default',
                     minHeight: '100%',
-                   pl:4,
-                    pr:5
+                    mt: 3,
+                    pt: 3,
+                    pl: 4,
+                    pr: 5
                 }}
             >
                 <Container maxWidth= 'xl' >
@@ -73,18 +71,23 @@ const SpaceComponent:FC = () => {
                                 >
                                     Spaces
                                 </Link>
+                                <Link
+                                    color="textPrimary"
+                                    component={RouterLink}
+                                    to="/lists"
+                                    variant="subtitle2"
+                                >
+                                    Lists
+                                </Link>
 
                             </Breadcrumbs>
                         </Grid>
                         <Grid item>
-                            <Box sx={{ m: -1 , mr:1 }}>
-                                <ModalCreateSpace />
-                            </Box>
+
                         </Grid>
                     </Grid>
                     <Box sx={{ mt: 3  }}>
-                        <SpaceCard space={space} />
-                        {/*<SpaceBrowse />*/}
+
                     </Box>
                 </Container>
             </Box>

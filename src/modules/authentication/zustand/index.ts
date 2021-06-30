@@ -14,6 +14,7 @@ const initialState = {
     shouldNavigate: true,
     loginError: '',
     signupError: '',
+    selectedWorkspace: null
 };
 // config like action
 const config = (set) => ({
@@ -40,6 +41,8 @@ const config = (set) => ({
             "account/login", userData
         ).then(res => {
             const token = res.data.token
+            const workspaces = res.data.user._workspaces;
+
             localStorage.setItem('token', token);
             console.log('values inside zustand: ', userData)
             console.log('token: ', token)
@@ -48,6 +51,7 @@ const config = (set) => ({
                 state.user = res.data;
                 state.isAuthenticated = true;
                 state.loginError = '';
+                state.selectedWorkspace = workspaces ? workspaces[0] : null;
             })
         }).catch(err => {
             console.error('Error while signing: ', err.response.data.message);

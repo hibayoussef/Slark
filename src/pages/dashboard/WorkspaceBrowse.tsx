@@ -7,13 +7,19 @@ import {
 } from '@material-ui/core';
 import WorkspaceCard from '../../components/dashboard/workspace/WorkspaceCard';
 import {useAuthModule} from "../../modules/authentication/zustand";
+import {useEffect, useState} from "react";
+
 
 const WorkspaceBrowseResults: FC = () => {
 
     const workspace = useAuthModule((state) => state.user.user._workspaces);
-
+    const [mode, setMode] = useState<string>('grid');
 
     console.log('user workspace: ', workspace)
+
+    // useEffect(() => {
+    //     workspace
+    // }, [workspace]);
 
     return (
         <div>
@@ -61,9 +67,11 @@ const WorkspaceBrowseResults: FC = () => {
                     <Grid
                         item
                         key={workspace.id}
-                        md={3}
-                        // sm={mode === 'grid' ? 6 : 12}
-                        xs={12}
+                        xs={mode === 'grid' ? 10 : 12}
+                        sm={mode === 'grid' ? 6 : 12}
+                        md={mode === 'grid' ? 4 : 12}
+                        lg={mode === 'grid' ? 3 : 12}
+                        // xs={12}
                     >
                         <WorkspaceCard workspace={workspace}/>
                     </Grid>

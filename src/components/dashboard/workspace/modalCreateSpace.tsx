@@ -11,6 +11,7 @@ import {Link as RouterLink} from "react-router-dom";
 import PlusIcon from "../../../icons/Plus";
 import {CardMedia} from "@material-ui/core";
 import {useWorkspaceModule} from './zustand';
+import {useAuthModule} from "../../../modules/authentication/zustand";
 
 
 
@@ -49,6 +50,7 @@ export default function FormDialog() {
     // const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
     const classes = useStyles();
     const [open, setOpen] = React.useState(false);
+    const [spaceName, setSpaceName] = React.useState('');
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -60,13 +62,11 @@ export default function FormDialog() {
 
 
     const spaceData = useWorkspaceModule((state) => state.space)
-
+    const selectedWorkspace = useAuthModule(state => state.selectedWorkspace);
     console.log("inside component 1: ", spaceData);
     const createSpace = useWorkspaceModule(
         (state) => state.createSpace
     );
-
-
 
     return (
         <div>
@@ -137,6 +137,8 @@ export default function FormDialog() {
                                 autoFocus
                                 id="name"
                                 type="text"
+                                value={spaceName}
+                                onChange={(e)=>setSpaceName(e.target.value)}
                                 fullWidth
                                 placeholder="Enter Space name"
                                 variant="standard"
@@ -148,7 +150,7 @@ export default function FormDialog() {
                         <DialogActions style={{paddingLeft: '2rem', paddingRight: '2rem', paddingBottom: '2rem'}}>
 
                             <Button
-                                onClick={ createSpace }
+                                onClick={()=> createSpace({'name':spaceName,'_workspace':selectedWorkspace._id}) }
                                 style={{
 
                                     marginTop: "1rem",
