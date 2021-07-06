@@ -135,11 +135,11 @@ use the data from the payload.
 In the file `src/store/rootReducer.js` use the reducer from your newly created slice.
 
 ```js
-import { reducer as blogReducer } from 'src/slices/blog';
+import {reducer as blogReducer} from 'src/zustand/blog';
 
 const rootReducer = combineReducers({
-  // other reducers
-  blog: blogReducer
+    // other reducers
+    blog: blogReducer
 });
 ```
 
@@ -174,31 +174,31 @@ action and update the slice state. Once the action sets the new state, the app w
 current component, and the articles will be displayed.
 
 ```jsx
-import { useDispatch, useSelector } from 'react-redux';
-import { getArticles } from 'src/slices/blog';
+import {useDispatch, useSelector} from 'react-redux';
+import {getArticles} from 'src/zustand/blog';
 
 const Blog = () => {
-  const dispatch = useDispatch();
-  const { articles } = useSelector((state) => state.blog);
+    const dispatch = useDispatch();
+    const {articles} = useSelector((state) => state.blog);
 
-  const handleClick = () => {
-    dispatch(getArticles());
-  };
+    const handleClick = () => {
+        dispatch(getArticles());
+    };
 
-  return (
-    <div>
-      <div>
-        {articles.map((article) => (
-          <div>
-            Article ID: {article.id}
-          </div>
-        ))}
-      </div>
-      <Button onClick={handleClick}>
-        Load articles
-      </Button>
-    </div>
-  );
+    return (
+        <div>
+            <div>
+                {articles.map((article) => (
+                    <div>
+                        Article ID: {article.id}
+                    </div>
+                ))}
+            </div>
+            <Button onClick={handleClick}>
+                Load articles
+            </Button>
+        </div>
+    );
 };
 ```
 

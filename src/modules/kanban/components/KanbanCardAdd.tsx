@@ -4,20 +4,24 @@ import PropTypes from 'prop-types';
 import { useSnackbar } from 'notistack';
 import { Box, Button, TextField } from '@material-ui/core';
 import {useKanban} from "../zustand";
+import {useSpaceModule} from "../../spaces/zustand";
+
+
 
 interface KanbanCardAddProps {
-  columnId: string;
+  listId: string;
 }
 
 const KanbanCardAdd: FC<KanbanCardAddProps> = (props) => {
-  const { columnId, ...other } = props;
+  const { listId, ...other } = props;
   const { enqueueSnackbar } = useSnackbar();
   const [isExpanded, setIsExpanded] = useState<boolean>(false);
   const [name, setName] = useState<string>('');
-  const { createCard } = useKanban(state => state);
+
   const handleChange = (event: ChangeEvent<HTMLInputElement>): void => {
     setName(event.target.value);
   };
+  const  createCard  = useKanban(state => state.createCard);
 
   const handleAddInit = (): void => {
     setIsExpanded(true);
@@ -30,7 +34,7 @@ const KanbanCardAdd: FC<KanbanCardAddProps> = (props) => {
 
   const handleAddConfirm = async (): Promise<void> => {
     try {
-      await createCard(columnId, name || 'Untitled Card');
+      await createCard( name , listId);
       setIsExpanded(false);
       setName('');
       enqueueSnackbar('Card created', {
@@ -112,7 +116,7 @@ const KanbanCardAdd: FC<KanbanCardAddProps> = (props) => {
 };
 
 KanbanCardAdd.propTypes = {
-  columnId: PropTypes.string.isRequired
+  listId: PropTypes.string.isRequired
 };
 
 export default KanbanCardAdd;

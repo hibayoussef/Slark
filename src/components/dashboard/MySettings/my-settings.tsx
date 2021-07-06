@@ -255,7 +255,7 @@ const MySettings: FC = () => {
     {/*/!*            background: 'none'*!/*/
     }
 
-    {/*/!*        }}>Delete Workspace</Button>*!/*/
+    {/*/!*        }}>Delete Space</Button>*!/*/
     }
 
     {/*/!*    </Grid>*!/*/

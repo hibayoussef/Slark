@@ -1,34 +1,45 @@
+import { useEffect } from 'react';
 import type { FC } from 'react';
-import { Link as RouterLink } from 'react-router-dom';
+import {Link as RouterLink, useNavigate} from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import {
     Box,
     Breadcrumbs,
+    Button,
     Container,
     Grid,
     Link,
     Typography
 } from '@material-ui/core';
-import  PlaySlarkComp from '../components/playWithSlarkComp';
+import  SpaceCard from '../components/Space';
 import ChevronRightIcon from '../../../icons/ChevronRight';
+import ModalCreateSpace from '../components/modalCreateSpace';
+import {useAuthModule} from "../../../modules/authentication/zustand";
+import SpaceBrowse from "./SpaceBrowse";
 
-const WorkspaceCreateDetails: FC = () => {
+
+const SpaceComponent:FC = () => {
+
+    const space = useAuthModule((state) => state.user)
+
+
+    console.log('user workspace: ', space)
 
     return (
         <>
             <Helmet>
-                <title>Dashboard: Create Workspace</title>
+                <title>Dashboard: Space Component</title>
             </Helmet>
             <Box
                 sx={{
                     backgroundColor: 'background.default',
                     minHeight: '100%',
-                    py: 8
+                   pl:4,
+                    pr:5
                 }}
             >
-                <Container>
+                <Container maxWidth= 'xl' >
                     <Grid
-                        alignItems="center"
                         container
                         justifyContent="space-between"
                         spacing={3}
@@ -38,7 +49,7 @@ const WorkspaceCreateDetails: FC = () => {
                                 color="textPrimary"
                                 variant="h5"
                             >
-                                Create Workspace
+                                See Spaces
                             </Typography>
                             <Breadcrumbs
                                 aria-label="breadcrumb"
@@ -53,17 +64,25 @@ const WorkspaceCreateDetails: FC = () => {
                                 >
                                     Dashboard
                                 </Link>
-                                <Typography
-                                    color="textSecondary"
+                                <Link
+                                    color="textPrimary"
+                                    component={RouterLink}
+                                    to="/workspaces"
                                     variant="subtitle2"
                                 >
-                                    Workspaces
-                                </Typography>
+                                    Spaces
+                                </Link>
+
                             </Breadcrumbs>
                         </Grid>
+                        <Grid item>
+                            <Box sx={{ m: -1 , mr:1 }}>
+                                <ModalCreateSpace />
+                            </Box>
+                        </Grid>
                     </Grid>
-                    <Box sx={{ mt: 3 }}>
-                        <PlaySlarkComp />
+                    <Box sx={{ mt: 3  }}>
+                        <SpaceBrowse />
                     </Box>
                 </Container>
             </Box>
@@ -71,4 +90,4 @@ const WorkspaceCreateDetails: FC = () => {
     );
 };
 
-export default WorkspaceCreateDetails;
+export default SpaceComponent;

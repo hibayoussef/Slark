@@ -66,7 +66,7 @@ const Settings: FC = () => {
                                 className={ classes.text }
                             >
                                 Workspace Settings
-                                {/*Edit Workspace*/}
+                                {/*Edit Space*/}
                             </Typography>
 
                         </Grid>

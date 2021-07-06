@@ -20,7 +20,7 @@ import EyeIcon from '../../../icons/Eye';
 import EyeOffIcon from '../../../icons/EyeOff';
 import TemplateIcon from '../../../icons/Template';
 import UsersIcon from '../../../icons/Users';
-import type {Card, Column} from '../models/kanban';
+import type {Card, Column, ITask} from '../models/kanban';
 import KanbanCardAction from './KanbanCardAction';
 import KanbanChecklist from './KanbanChecklist';
 import KanbanComment from './KanbanComment';
@@ -32,6 +32,7 @@ interface KanbanCardModalProps {
     column: Column;
     onClose?: () => void;
     open: boolean;
+    task: ITask;
 }
 
 const KanbanCardModal: FC<KanbanCardModalProps> = (props) => {
@@ -39,15 +40,20 @@ const KanbanCardModal: FC<KanbanCardModalProps> = (props) => {
         card,
         column,
         onClose,
+        task,
         open,
         ...other
     } = props;
-    const {addChecklist, deleteCard, updateCard} = useKanban(state => state);
+    const {addChecklist, deleteCard, updateCard, updateTask} = useKanban(state => state);
     const {enqueueSnackbar} = useSnackbar();
 
     const handleDetailsUpdate = debounce(async (update) => {
         try {
-            await updateCard(card.id, update);
+            // await updateCard(card.id, update);
+            await updateTask({
+                ...task,
+                ...update
+            })
             enqueueSnackbar('Card updated', {
                 anchorOrigin: {
                     horizontal: 'right',
@@ -174,7 +180,7 @@ const KanbanCardModal: FC<KanbanCardModalProps> = (props) => {
                         xs={12}
                     >
                         <TextField
-                            defaultValue={card.name}
+                            defaultValue={task.name}
                             fullWidth
                             label="Title"
                             onChange={(event): Promise<void> => handleDetailsUpdate({name: event.target.value})}
@@ -182,7 +188,7 @@ const KanbanCardModal: FC<KanbanCardModalProps> = (props) => {
                         />
                         <Box sx={{mt: 3}}>
                             <TextField
-                                defaultValue={card.description}
+                                defaultValue={task.description}
                                 fullWidth
                                 multiline
                                 onChange={(event): Promise<void> => handleDetailsUpdate({description: event.target.value})}
@@ -192,18 +198,18 @@ const KanbanCardModal: FC<KanbanCardModalProps> = (props) => {
                                 variant="outlined"
                             />
                         </Box>
-                        {card.checklists.length > 0 && (
-                            <Box sx={{mt: 5}}>
-                                {card.checklists.map((checklist) => (
-                                    <KanbanChecklist
-                                        card={card}
-                                        checklist={checklist}
-                                        key={checklist.id}
-                                        sx={{mb: 3}}
-                                    />
-                                ))}
-                            </Box>
-                        )}
+                        {/*{card.checklists && card.checklists.length > 0 && (*/}
+                        {/*    <Box sx={{mt: 5}}>*/}
+                        {/*        {card.checklists.map((checklist) => (*/}
+                        {/*            <KanbanChecklist*/}
+                        {/*                card={card}*/}
+                        {/*                checklist={checklist}*/}
+                        {/*                key={checklist.id}*/}
+                        {/*                sx={{mb: 3}}*/}
+                        {/*            />*/}
+                        {/*        ))}*/}
+                        {/*    </Box>*/}
+                        {/*)}*/}
                         <Box sx={{mt: 3}}>
                             <Typography
                                 color="textPrimary"
@@ -213,7 +219,7 @@ const KanbanCardModal: FC<KanbanCardModalProps> = (props) => {
                             </Typography>
                             <Box sx={{mt: 2}}>
                                 <KanbanCommentAdd cardId={card.id}/>
-                                {card.comments.length > 0 && (
+                                {card.comments && card.comments.length > 0 && (
                                     <Box sx={{mt: 3}}>
                                         {card.comments.map((comment) => (
                                             <KanbanComment

@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import type { FC } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
@@ -11,36 +10,34 @@ import {
     Link,
     Typography
 } from '@material-ui/core';
-import  SpaceCard from '../../components/dashboard/workspace/Space';
-import ArrowLeftIcon from '../../icons/ArrowLeft';
-import ChevronRightIcon from '../../icons/ChevronRight';
-import ModalCreateSpace from '../../../src/components/dashboard/workspace/modalCreateSpace';
-import {useAuthModule} from "../../modules/authentication/zustand";
-import SpaceBrowse from "./SpaceBrowse";
+import ChevronRightIcon from '../../../icons/ChevronRight';
+import PlusIcon from '../../../icons/Plus';
+import WorkspaceBrowseResults from "./WorkspaceBrowse";
+import WorkspaceBrowseFilter from '../components/WorkspaceFilter'
+import {useAuthModule} from "../../authentication/zustand";
 
+const WorkspaceBrowseHeader: FC = () => {
+    const workspaces = useAuthModule((state) => state.user);
+    console.log('user workspace: ', workspaces)
 
-const SpaceComponent:FC = () => {
-
-    const space = useAuthModule((state) => state.user)
-
-
-    console.log('user workspace: ', space)
 
     return (
         <>
             <Helmet>
-                <title>Dashboard: Space Component</title>
+                <title>Dashboard: Workspace Browse</title>
             </Helmet>
             <Box
                 sx={{
                     backgroundColor: 'background.default',
                     minHeight: '100%',
-                   pl:4,
-                    pr:5
+                    // py: 8
+                    pl:4,
+                    pr:3
                 }}
             >
-                <Container maxWidth= 'xl' >
+                <Container  maxWidth={ 'xl' }>
                     <Grid
+                        alignItems="center"
                         container
                         justifyContent="space-between"
                         spacing={3}
@@ -50,7 +47,7 @@ const SpaceComponent:FC = () => {
                                 color="textPrimary"
                                 variant="h5"
                             >
-                                See Spaces
+                                See WorkSpaces
                             </Typography>
                             <Breadcrumbs
                                 aria-label="breadcrumb"
@@ -68,23 +65,39 @@ const SpaceComponent:FC = () => {
                                 <Link
                                     color="textPrimary"
                                     component={RouterLink}
-                                    to="/workspaces"
+                                    to="/dashboard/workspaces"
                                     variant="subtitle2"
                                 >
-                                    Spaces
+                                    Workspaces
                                 </Link>
-
+                                <Typography
+                                    color="textSecondary"
+                                    variant="subtitle2"
+                                >
+                                    Browse
+                                </Typography>
                             </Breadcrumbs>
                         </Grid>
                         <Grid item>
-                            <Box sx={{ m: -1 , mr:1 }}>
-                                <ModalCreateSpace />
+                            <Box sx={{ m: -1 }}>
+                                <Button
+                                    color="primary"
+                                    component={RouterLink}
+                                    startIcon={<PlusIcon fontSize="small" />}
+                                    sx={{ m: 1 }}
+                                    to="/dashboard/workspaces/new"
+                                    variant="contained"
+                                >
+                                    New Workspace
+                                </Button>
                             </Box>
                         </Grid>
                     </Grid>
-                    <Box sx={{ mt: 3  }}>
-                        <SpaceCard space={space} />
-                        {/*<SpaceBrowse />*/}
+                    <Box sx={{ mt: 3 }}>
+                        <WorkspaceBrowseFilter />
+                    </Box>
+                    <Box sx={{ mt: 6 }}>
+                        <WorkspaceBrowseResults />
                     </Box>
                 </Container>
             </Box>
@@ -92,4 +105,4 @@ const SpaceComponent:FC = () => {
     );
 };
 
-export default SpaceComponent;
+export default WorkspaceBrowseHeader;

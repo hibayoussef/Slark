@@ -1,44 +1,39 @@
-import { useEffect } from 'react';
 import type { FC } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import {
     Box,
     Breadcrumbs,
-    Button,
     Container,
     Grid,
     Link,
     Typography
 } from '@material-ui/core';
-import ChevronRightIcon from '../../icons/ChevronRight';
-import {useAuthModule} from "../../modules/authentication/zustand";
+import  WorkspaceFinishAllComp from '../components/WorkspaceFinishAll';
+import ChevronRightIcon from '../../../icons/ChevronRight';
 
+const WorkspaceFinishAll: FC = () => {
 
-const SpaceComponent:FC = () => {
-
-    const space = useAuthModule((state) => state.user)
-
-
-    console.log('user workspace: ', space)
+    // useEffect(() => {
+    //     gtm.push({ event: 'page_view' });
+    // }, []);
 
     return (
         <>
             <Helmet>
-                <title>Dashboard: Space Component</title>
+                <title>Dashboard: Create Workspace</title>
             </Helmet>
+
             <Box
                 sx={{
                     backgroundColor: 'background.default',
                     minHeight: '100%',
-                    mt: 3,
-                    pt: 3,
-                    pl: 4,
-                    pr: 5
+                    py: 8
                 }}
             >
-                <Container maxWidth= 'xl' >
+                <Container maxWidth='xl'>
                     <Grid
+                        alignItems="center"
                         container
                         justifyContent="space-between"
                         spacing={3}
@@ -48,7 +43,7 @@ const SpaceComponent:FC = () => {
                                 color="textPrimary"
                                 variant="h5"
                             >
-                                See Spaces
+                                Create Workspace
                             </Typography>
                             <Breadcrumbs
                                 aria-label="breadcrumb"
@@ -63,31 +58,17 @@ const SpaceComponent:FC = () => {
                                 >
                                     Dashboard
                                 </Link>
-                                <Link
-                                    color="textPrimary"
-                                    component={RouterLink}
-                                    to="/workspaces"
+                                <Typography
+                                    color="textSecondary"
                                     variant="subtitle2"
                                 >
-                                    Spaces
-                                </Link>
-                                <Link
-                                    color="textPrimary"
-                                    component={RouterLink}
-                                    to="/lists"
-                                    variant="subtitle2"
-                                >
-                                    Lists
-                                </Link>
-
+                                    Workspaces
+                                </Typography>
                             </Breadcrumbs>
                         </Grid>
-                        <Grid item>
-
-                        </Grid>
                     </Grid>
-                    <Box sx={{ mt: 3  }}>
-
+                    <Box sx={{ mt: 3 }}>
+                        <WorkspaceFinishAllComp />
                     </Box>
                 </Container>
             </Box>
@@ -95,4 +76,4 @@ const SpaceComponent:FC = () => {
     );
 };
 
-export default SpaceComponent;
+export default WorkspaceFinishAll;

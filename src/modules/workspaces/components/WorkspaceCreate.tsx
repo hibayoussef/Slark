@@ -13,34 +13,38 @@ import {
     Grid,
     TextField,
 } from '@material-ui/core';
-import {useWorkspaceModule} from './zustand';
+import {useWorkspaceModule} from '../zustand';
 import WorkspaceUploadImage from './WorkspaceUploadImage'
 import useIsMountedRef from "../../../hooks/useIsMountedRef";
 import {useAuthModule} from "../../../modules/authentication/zustand";
+import InviteUser from './WorkspaceInviteUser';
+import React from "react";
 
 const WorkspacesCreateForm: FC = (props) => {
-    const isMountedRef = useIsMountedRef();
     const navigate = useNavigate();
     const {enqueueSnackbar} = useSnackbar();
+    const isMountedRef = useIsMountedRef();
 
 
-    const workspaceData = useWorkspaceModule((state) => state.workspace)
 
-    console.log("inside component 1: ", workspaceData);
+    const [workspaceName , setWorkspaceName] = React.useState('');
+    const [email , setEmail] = React.useState('');
+
+    //  1-  We define a var to store uploaded file
+    const [file , setFile] = React.useState(null);
+
     const createWorkspace = useWorkspaceModule(
         (state) => state.createWorkspace
     );
 
-    const inviteUserByEmail = useWorkspaceModule(
-        (state) => state.inviteUsersByEmail
-    );
-
+    // const image = useWorkspaceModule(
+    //     (state)=> state.
+    // )
     return (
         <Formik
             initialValues={{
                 // images: [],
                 name: '',
-                userEmail:'',
                 submit: null
             }}
             validationSchema={
@@ -49,9 +53,6 @@ const WorkspacesCreateForm: FC = (props) => {
                     .shape({
                         // images: Yup.array(),
                         name: Yup.string().max(255).required(),
-                        userEmail: Yup.string()
-                            .email("Must be a valid email")
-                            .max(255)
                     })
             }
             onSubmit={async (values, {
@@ -61,17 +62,14 @@ const WorkspacesCreateForm: FC = (props) => {
             }): Promise<void> => {
                 try {
                     // NOTE: Make API request
-                    await createWorkspace(
-                        values
-                    )
+                    // await createWorkspace(
+                    //     values
+                    // )
 
-                    await inviteUserByEmail(
-                        values
-                    )
-
+                    console.log('values: ', values);
 
                     if (isMountedRef.current) {
-                        setStatus({ success: true });
+                        setStatus({success: true});
                         setSubmitting(false);
                     }
 
@@ -113,12 +111,12 @@ const WorkspacesCreateForm: FC = (props) => {
                     >
                         <Grid
                             item
-                            lg={8}
-                            md={6}
+                            lg={12}
+                            md={12}
                             xs={12}
                         >
                             <Card>
-                                <CardHeader title="Name your Workspace:"/>
+                                <CardHeader title="Name your Space:"/>
                                 <CardContent>
 
                                     <TextField
@@ -127,65 +125,41 @@ const WorkspacesCreateForm: FC = (props) => {
                                         helperText={touched.name && errors.name}
                                         name="name"
                                         onBlur={handleBlur}
-                                        onChange={handleChange}
-                                        value={values.name }
+                                        onChange={($event) => {
+                                            setWorkspaceName($event.target.value);
+                                            handleChange($event);
+                                        }}
+                                        value={values.name}
                                         variant="outlined"
-                                        placeholder="Workspace Name"
+                                        placeholder="Space Name"
                                     />
 
                                 </CardContent>
                             </Card>
 
-                            {/*Upload Image*/}
                             <Box sx={{mt: 3}}>
-                                <WorkspaceUploadImage/>
+                                // We provide a call back to the following component "onImageUploaded"
+                                // Once this function invoked we call setFile(with response coming back)
+                                <WorkspaceUploadImage onImageUploaded={(file) => {
+                                    console.log({file})
+                                    setFile(file);
+                                }} />
                             </Box>
 
-                            <Box sx={{mt: 3}}>
+                            {/*<Box sx={{mt: 3}}>*/}
+                            {/*    <InviteUser onEmailSend={(email) => {*/}
+                            {/*        console.log({email})*/}
+                            {/*        setEmail(email);*/}
+                            {/*    }} />*/}
+                            {/*</Box>*/}
 
-                                <Card>
-                                    <CardHeader title="  Invite people to your Workspace"/>
-                                    <CardContent>
 
-                                        <TextField
-                                            error={Boolean(touched.userEmail && errors.userEmail)}
-                                            fullWidth
-                                            helperText={touched.userEmail && errors.userEmail}
-                                            name="userEmail"
-                                            onBlur={handleBlur}
-                                            onChange={handleChange}
-                                            value={values.userEmail}
-                                            variant="outlined"
-                                            placeholder="Enter email addresses (or past multiple)"
-                                        />
-
-                                        <Box
-                                            sx={{
-                                                display: 'flex',
-                                                mt: 3
-                                            }}
-                                        >
-
-                                            {/*{errors.submit && (*/}
-                                            {/*    <Box sx={{mt: 3}}>*/}
-                                            {/*        <FormHelperText error>*/}
-                                            {/*            {errors.submit}*/}
-                                            {/*        </FormHelperText>*/}
-                                            {/*    </Box>*/}
-                                            {/*)}*/}
-                                            <Box sx={{flexGrow: 1}}/>
-
-                                        </Box>
-                                    </CardContent>
-                                </Card>
-
-                            </Box>
 
                         </Grid>
                         <Grid
                             item
-                            lg={4}
-                            md={6}
+                            lg={12}
+                            md={12}
                             xs={12}
                         >
 
@@ -204,12 +178,13 @@ const WorkspacesCreateForm: FC = (props) => {
                                 }}
                             >
                                 <Button
+                                    onClick={()=> createWorkspace({'name':workspaceName,'image': file._id}) }
                                     color="primary"
                                     disabled={isSubmitting}
                                     type="submit"
                                     variant="contained"
                                 >
-                                    Create Workspace
+                                    Create Space
                                 </Button>
                             </Box>
                         </Grid>

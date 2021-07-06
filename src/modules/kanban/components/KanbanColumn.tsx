@@ -1,4 +1,4 @@
-import {useRef, useState} from 'react';
+import {useEffect, useRef, useState} from 'react';
 import type {FC, ChangeEvent} from 'react';
 import PropTypes from 'prop-types';
 import {useSnackbar} from 'notistack';
@@ -18,6 +18,7 @@ import DotsHorizontalIcon from '../../../icons/DotsHorizontal';
 import KanbanCard from './KanbanCard';
 import KanbanCardAdd from './KanbanCardAdd';
 import {useKanban} from "../zustand";
+import {ITask} from "../models/kanban";
 
 interface KanbanColumnProps {
     columnId: string;
@@ -26,14 +27,22 @@ interface KanbanColumnProps {
 
 const KanbanColumn: FC<KanbanColumnProps> = (props) => {
     const {columnId, ...other} = props;
-    const {clearColumn, deleteColumn, updateColumn, columns} = useKanban(state => state);
+    const {clearColumn, deleteColumn, updateColumn, lists , getAllTasks} = useKanban(state => state);
     const moreRef = useRef<HTMLButtonElement | null>(null);
-    const column = columns.byId[columnId];
+    const column = lists.filter(l => l._id === columnId)[0]; // columns.byId[columnId];
     const {enqueueSnackbar} = useSnackbar();
     const [openMenu, setOpenMenu] = useState<boolean>(false);
     const [name, setName] = useState<string>(column.name);
     const [isRenaming, setIsRenaming] = useState<boolean>(false);
 
+    const [tasks , setTasks] = useState(null);
+    useEffect(()=>{
+        getAllTasks(columnId)
+            .then((tasks: ITask[])=>{
+                console.log('tasks: ', tasks)
+                setTasks(tasks)
+            })
+    },[])
     const handleMenuOpen = (): void => {
         setOpenMenu(true);
     };
@@ -201,19 +210,22 @@ const KanbanColumn: FC<KanbanColumnProps> = (props) => {
                                 py: 1
                             }}
                         >
-                            {column.cardIds.map((cardId, index) => (
+                            {
+                                tasks &&
+                                tasks.map((t, index) => (
                                 <Draggable
-                                    draggableId={cardId}
+                                    draggableId={t._id}
                                     index={index}
-                                    key={cardId}
+                                    key={t._id}
                                 >
                                     {(_provided, snapshot): JSX.Element => (
                                         <KanbanCard
-                                            cardId={cardId}
+                                            cardId={t._id}
                                             dragging={snapshot.isDragging}
                                             index={index}
-                                            key={cardId}
+                                            key={t._id}
                                             column={column}
+                                            task={t}
                                             ref={_provided.innerRef}
                                             style={{..._provided.draggableProps.style}}
                                             {..._provided.draggableProps}
@@ -228,7 +240,7 @@ const KanbanColumn: FC<KanbanColumnProps> = (props) => {
                 </Droppable>
                 <Divider/>
                 <Box sx={{p: 2}}>
-                    <KanbanCardAdd columnId={column.id}/>
+                    <KanbanCardAdd listId={columnId}/>
                 </Box>
                 <Menu
                     anchorEl={moreRef.current}

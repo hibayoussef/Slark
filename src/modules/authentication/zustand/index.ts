@@ -3,6 +3,7 @@ import {devtools} from 'zustand/middleware';
 import {User} from "../../../types/user";
 import {combineAndImmer, zustandLogger} from "@scandinavia/ts-zustand";
 import api from "../../../axiosWithDelimiterFile";
+import {useSpaceModule} from "../../spaces/zustand";
 
 
 const initialState = {
@@ -22,7 +23,7 @@ const config = (set) => ({
     createUserWithNameAndEmailAndPassword: async (userData) => {
         console.log('we are insideeeeeeeeee: ', userData)
         const response = await api.post(
-            "account/signup", userData
+            "accounts/signup", userData
         ).then(res => {
             console.log('values inside zustand: ', userData)
             console.log('response inside zustand: ', res);
@@ -38,24 +39,32 @@ const config = (set) => ({
 
     loginUserWithEmailAndPassword: async (userData) => {
         const response = await api.post(
-            "account/login", userData
-        ).then(res => {
+            "accounts/login", userData
+        ).then(async (res) => {
+            console.log('res.data: ', res.data);
             const token = res.data.token
             const workspaces = res.data.user._workspaces;
-
             localStorage.setItem('token', token);
-            console.log('values inside zustand: ', userData)
-            console.log('token: ', token)
-            console.log('response inside zustand: ', res)
+            localStorage.setItem('user', JSON.stringify(res.data.user));
+            const defaultWorkspace = workspaces ? workspaces[0] : null;
+
+            console.log('defaultWorkspace: ', defaultWorkspace);
             set(state => {
-                state.user = res.data;
+                state.user = res.data.user;
                 state.isAuthenticated = true;
                 state.loginError = '';
-                state.selectedWorkspace = workspaces ? workspaces[0] : null;
+                state.selectedWorkspace = defaultWorkspace;
+
+                // const getAllSpaces = useSpaceModule(state => state.getAllSpaces);
+                // console.log('getAllSpaces: ', getAllSpaces)
+                // const spaces = await getAllSpaces(defaultWorkspace._id);
+                // localStorage.setItem('spaces', JSON.stringify(spaces));
+
             })
         }).catch(err => {
             console.error('Error while signing: ', err.response.data.message);
-            const { message } = err.response.data;
+            const {message} = err.response.data;
+            localStorage.removeItem('user')
             set(state => {
                 state.loginError = message;
             })
@@ -95,5 +104,5 @@ const config = (set) => ({
         })
     }
 });
-const createState = combineAndImmer(initialState, zustandLogger(config));
+const createState = combineAndImmer(initialState, config);
 export const useAuthModule = create(devtools(createState));

@@ -6,12 +6,11 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import Box from '@material-ui/core/Box';
-import Container from '@material-ui/core/Box';
-import {Link as RouterLink} from "react-router-dom";
 import PlusIcon from "../../../icons/Plus";
-import {CardMedia} from "@material-ui/core";
-import {useWorkspaceModule} from './zustand';
+import {useWorkspaceModule} from '../../workspaces/zustand';
 import {useAuthModule} from "../../../modules/authentication/zustand";
+import {useSpaceModule} from "../zustand";
+import {useNavigate} from "react-router-dom";
 
 
 
@@ -49,6 +48,7 @@ export default function FormDialog() {
     // const theme = useTheme();
     // const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
     const classes = useStyles();
+
     const [open, setOpen] = React.useState(false);
     const [spaceName, setSpaceName] = React.useState('');
 
@@ -60,13 +60,11 @@ export default function FormDialog() {
         setOpen(false);
     };
 
-
-    const spaceData = useWorkspaceModule((state) => state.space)
     const selectedWorkspace = useAuthModule(state => state.selectedWorkspace);
-    console.log("inside component 1: ", spaceData);
-    const createSpace = useWorkspaceModule(
+    const createSpace = useSpaceModule(
         (state) => state.createSpace
     );
+
 
     return (
         <div>
@@ -150,7 +148,7 @@ export default function FormDialog() {
                         <DialogActions style={{paddingLeft: '2rem', paddingRight: '2rem', paddingBottom: '2rem'}}>
 
                             <Button
-                                onClick={()=> createSpace({'name':spaceName,'_workspace':selectedWorkspace._id}) }
+                                onClick={()=> createSpace(spaceName, selectedWorkspace._id) }
                                 style={{
 
                                     marginTop: "1rem",

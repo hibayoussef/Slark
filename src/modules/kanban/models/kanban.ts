@@ -54,3 +54,17 @@ export interface Board {
   columns: Column[];
   members: Member[];
 }
+
+
+
+export interface ITask {
+  _id: string;
+  name: string;
+  priority: number;
+  _assignedUsers: any[];
+  comments: string[];
+  assets: any[];
+  description: string;
+  _subTasks: any[];
+  _list: any;
+}

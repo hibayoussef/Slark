@@ -14,6 +14,7 @@ import Box from '@material-ui/core/Box';
 import Globe from '../../../public/static/globe.jpg';
 import InputAdornment from "@material-ui/core/InputAdornment";
 import {useWorkspaceModule} from "../../components/dashboard/workspace/zustand";
+import {useAuthModule} from "../../modules/authentication/zustand";
 
 const useStyles = makeStyles({
     dialogPaper: {
@@ -36,9 +37,9 @@ const useStyles = makeStyles({
 export default function FormDialog() {
     const classes = useStyles();
     const [open, setOpen] = React.useState(false);
-
     //----------------------------------------
     const [listName, setListName] = React.useState('');
+    const selectedSpace = useWorkspaceModule(state => state.selectedSpace);
 
     const listData = useWorkspaceModule((state) => state.list)
 
@@ -144,7 +145,7 @@ export default function FormDialog() {
                                 backgroundColor: '#7b68ee'
                             }}
 
-                            onClick={()=> createList({'name':listName,'_list':'60cf00454c3c59001c620bfe'}) }
+                            onClick={()=> createList({'name':listName,'_space':selectedSpace._id}) }
                            color="primary"
                             // disabled={isSubmitting}
                             size="large"

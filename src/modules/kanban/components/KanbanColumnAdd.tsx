@@ -3,12 +3,17 @@ import type { FC, ChangeEvent } from 'react';
 import { useSnackbar } from 'notistack';
 import { Box, Button, Card, TextField } from '@material-ui/core';
 import {useKanban} from "../zustand";
+interface Props {
+  spaceId: string
+}
+const KanbanColumnAdd: FC<Props> = (props) => {
 
-const KanbanColumnAdd: FC = (props) => {
+  const { spaceId } = props;
   const { enqueueSnackbar } = useSnackbar();
   const [isExpanded, setIsExpanded] = useState<boolean>(false);
   const [name, setName] = useState<string>('');
-  const createColumn = useKanban(state => state.createColumn);
+  const createList = useKanban(state => state.createList);
+
   const handleChange = (event: ChangeEvent<HTMLInputElement>): void => {
     setName(event.target.value);
   };
@@ -24,7 +29,8 @@ const KanbanColumnAdd: FC = (props) => {
 
   const handleAddConfirm = async (): Promise<void> => {
     try {
-      await createColumn(name || 'Untitled column');
+      // await createColumn(name || 'Untitled column', null);
+      await createList(name , spaceId)
       setIsExpanded(false);
       setName('');
       enqueueSnackbar('Column created', {

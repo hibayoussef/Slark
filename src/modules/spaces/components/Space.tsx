@@ -1,12 +1,12 @@
 import type {FC} from 'react';
 import {
-    Box,
+    Box, Button,
     Card,
     CardContent,
     CardHeader,
-    Grid, Typography
+    Grid, Menu, MenuItem, Typography
 } from '@material-ui/core';
-import {useWorkspaceModule} from './zustand';
+import {useWorkspaceModule} from '../../workspaces/zustand';
 import React from 'react';
 import {makeStyles, createStyles, Theme} from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
@@ -15,8 +15,11 @@ import {deepOrange, deepPurple} from '@material-ui/core/colors';
 import ChipToDo from './chipTodo';
 import ChipComplete from './chipComplete';
 import OpenInNewTwoToneIcon from '@material-ui/icons/OpenInNewTwoTone';
-import type {Space} from '../workspace/types/workspace';
+import type {Space} from '../types/space';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
+import {useSpaceModule} from "../zustand";
+import {useAuthModule} from "../../authentication/zustand";
+import {useNavigate} from "react-router-dom";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -44,26 +47,38 @@ interface SpaceCardProps {
 }
 
 const SpaceForm: FC<SpaceCardProps> = (props) => {
-
+    const {space } = props;
     const classes = useStyles()
-    const {space} = props;
-
-    const spaceData = useWorkspaceModule((state) => state.spaceData)
-
-    console.log("inside component 1: ", spaceData);
-
-    // console.log('space', spaceData.name)
+    const setSelectedSpace = useSpaceModule(state => state.setSelectedSpace);
+    const navigate = useNavigate();
+    const navigateToKanban = () => {
+        setSelectedSpace(space);
+        navigate('/dashboard/kanban');
+    }
 
     const fileUploadHandler = () => {
 
     }
 
+    const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+
+    const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+        setAnchorEl(event.currentTarget);
+    };
+
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
+
+    const selectedWorkspace = useAuthModule(state => state.selectedWorkspace);
+    const deleteSpace = useSpaceModule((state) => state.deleteSpace);
 
     return (
         <>
             <Grid
                 container
                 spacing={3}
+                style={{ marginBottom:10 , marginTop: 1}}
 
             >
                 <Grid
@@ -109,7 +124,7 @@ const SpaceForm: FC<SpaceCardProps> = (props) => {
                                         color: '#d5d6d7',
                                         fontSize: '1.4rem',
                                         fontWeight: 500
-                                    }}>Slark</Typography>
+                                    }}>{props.space.name}</Typography>
 
                                 </Box>
                                 <Box
@@ -120,16 +135,20 @@ const SpaceForm: FC<SpaceCardProps> = (props) => {
                                 >
                                     <OpenInNewTwoToneIcon
                                         style={{marginTop: '0.5rem', marginLeft: '1.4rem', color: '#7b68ee'}}/>
-                                    <Typography style={{
+                                    <Button
+                                        style={{
+                                            marginLeft: '0.5rem',
+                                            marginTop: '0.8rem',
+                                            color: '#7b68ee',
+                                            lineHeight: '15px',
+                                            display: 'block',
+                                            fontSize: '1rem',
+                                            fontWeight: 400
+                                        }}
+                                        onClick={ navigateToKanban }>
+                                        Go to Space
+                                    </Button>
 
-                                        marginLeft: '0.5rem',
-                                        marginTop: '0.8rem',
-                                        color: '#7b68ee',
-                                        lineHeight: '15px',
-                                        display: 'block',
-                                        fontSize: '1rem',
-                                        fontWeight: 400
-                                    }}>Go to Space</Typography>
                                 </Box>
 
                             </Box>
@@ -194,7 +213,21 @@ const SpaceForm: FC<SpaceCardProps> = (props) => {
                                     </Box>
 
                                     <Box>
-                                        <MoreHorizIcon />
+                                        <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
+                                            <MoreHorizIcon />
+                                        </Button>
+
+                                        <Menu
+                                            id="simple-menu"
+                                            anchorEl={anchorEl}
+                                            keepMounted
+                                            open={Boolean(anchorEl)}
+                                            onClose={handleClose}
+                                        >
+                                            <MenuItem
+                                                onClick={()=> deleteSpace(space._id, selectedWorkspace._id) }>Delete Space</MenuItem>
+                                            <MenuItem onClick={handleClose}>Archive Space</MenuItem>
+                                        </Menu>
                                     </Box>
                                 </Box>
 

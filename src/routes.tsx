@@ -33,29 +33,28 @@ const LogIn = Loadable(lazy(() => import('./modules/authentication/pages/Login-P
 const SignUp = Loadable(lazy(() => import('./modules/authentication/pages/Register-Pag')));
 const ConfirmEmail = Loadable(lazy(() => import('./modules/authentication/pages/ConfirmEmail')));
 
-const WorkspacePlayWithSlark = Loadable(lazy(() => import('./modules/workspaces/pages/playWithSlark')));
+// const WorkspacePlayWithSlark = Loadable(lazy(() => import('./modules/workspaces/pages/playWithSlark')));
 
 // Dashboard pages
 const Account = Loadable(lazy(() => import('./pages/dashboard/Account')));
 const Kanban = Loadable(lazy(() => import('./modules/kanban/Kanban')));
 
-const WorkspaceCreate = Loadable(lazy(() => import('./pages/dashboard/WorkspaceCreate')));
+const WorkspaceCreate = Loadable(lazy(() => import('./modules/workspaces/pages/WorkspaceCreate')));
 // const WorkspaceUploadImage = Loadable(lazy(() => import('./pages/dashboard/WorkspaceUploadImage')));
-const WorkspaceFinishAll = Loadable(lazy(() => import('./pages/dashboard/WorkspaceFinishAll')));
-const WorkspaceCard = Loadable(lazy(() => import('./components/dashboard/workspace/WorkspaceCard')));
-const WorkspaceBrowseHeader = Loadable(lazy(() => import('./pages/dashboard/WorkspaceBrowseHeader')));
-const WorkspaceInviteUser = Loadable(lazy(() => import('./components/dashboard/workspace/WorkspaceInviteUser')));
+const WorkspaceFinishAll = Loadable(lazy(() => import('./modules/workspaces/pages/WorkspaceFinishAll')));
+const WorkspaceCard = Loadable(lazy(() => import('./modules/workspaces/components/WorkspaceCard')));
+const WorkspaceBrowseHeader = Loadable(lazy(() => import('./modules/workspaces/pages/WorkspaceBrowseHeader')));
+const WorkspaceInviteUser = Loadable(lazy(() => import('./modules/workspaces/components/WorkspaceInviteUser')));
 
-const WorkspacePage = Loadable(lazy(() => import('./modules/workspaces/pages/WorkspaceCreate-Page')));
-const WorkspaceBrowse = Loadable(lazy(() => import('./pages/dashboard/WorkspaceBrowse')));
-const WorkspaceDetails = Loadable(lazy(() => import('./modules/workspaces/pages/CreateWorkspaceDetails-Page')));
+// const WorkspacePage = Loadable(lazy(() => import('./modules/workspaces/pages/WorkspaceCreate-Page')));
+const WorkspaceBrowse = Loadable(lazy(() => import('./modules/workspaces/pages/WorkspaceBrowse')));
+// const WorkspaceDetails = Loadable(lazy(() => import('./modules/workspaces/pages/CreateWorkspaceDetails-Page')));
 //settings
 const WorkspaceSettings = Loadable(lazy(() => import('./pages/dashboard/Settings')));
 const People = Loadable(lazy(() => import('./pages/dashboard/People')));
-const Space = Loadable(lazy(() => import('./pages/dashboard/Spaces')));
+const Space = Loadable(lazy(() => import('./modules/spaces/pages/Spaces')));
 const MySettings = Loadable(lazy(() => import('./pages/dashboard/MySettings')));
 const List = Loadable(lazy(() => import('./pages/dashboard/List')));
-const ListBrowse = Loadable(lazy(() => import('./pages/dashboard/ListBrowse')));
 const WorkspaceSideBar = Loadable(lazy(() => import('./components/dashboard/WorkspaceSideBarNav')));
 // Error pages
 
@@ -72,12 +71,12 @@ const routes: PartialRouteObject[] = [
     {
         path: '/setting',
         children: [
-            {
-                path: 'Workspace',
-                element: (
-                    <WorkspacePage/>
-                )
-            },
+            // {
+            //     path: 'Space',
+            //     element: (
+            //         <WorkspacePage/>
+            //     )
+            // },
             {
                 path: 'WorkspaceCard',
                 element: (
@@ -96,20 +95,20 @@ const routes: PartialRouteObject[] = [
                 )
             }
             ,
-            {
-                path: 'WorkspaceDetails',
-                element: (
-                    <WorkspaceDetails/>
-                )
-            },
+            // {
+            //     path: 'WorkspaceDetails',
+            //     element: (
+            //         <WorkspaceDetails/>
+            //     )
+            // },
 
 
-            {
-                path: 'WorkspacePlayWithSlark',
-                element: (
-                    <WorkspacePlayWithSlark/>
-                )
-            },
+            // {
+            //     path: 'WorkspacePlayWithSlark',
+            //     element: (
+            //         <WorkspacePlayWithSlark/>
+            //     )
+            // },
 
         ]
     },
@@ -229,7 +228,12 @@ const routes: PartialRouteObject[] = [
         children: [
             {
                 path: '/',
-                element: <Kanban/>
+                element: (
+                    <Navigate
+                        to="kanban"
+                        replace
+                    />
+                )
             },
             {
                 path: 'account',
@@ -243,10 +247,10 @@ const routes: PartialRouteObject[] = [
                 path: 'list',
                 element: <List/>
             },
-            {
-                path:'listBrowse',
-                element:<ListBrowse />
-            },
+            // {
+            //     path:'listBrowse',
+            //     element:<ListBrowse />
+            // },
             //
             // {
             //     path: 'settings-sidebar/twoLineSettings',

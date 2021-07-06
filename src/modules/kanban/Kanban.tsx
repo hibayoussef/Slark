@@ -1,6 +1,6 @@
-import {useEffect} from 'react';
+import {useEffect, useState} from 'react';
 import type {FC} from 'react';
-import {Link as RouterLink} from 'react-router-dom';
+import {Link as RouterLink,} from 'react-router-dom';
 import {Helmet} from 'react-helmet-async';
 import {DragDropContext} from 'react-beautiful-dnd';
 import type {DropResult} from 'react-beautiful-dnd';
@@ -10,9 +10,40 @@ import {KanbanColumn, KanbanColumnAdd} from './components';
 import ChevronRightIcon from '../../icons/ChevronRight';
 import gtm from '../../lib/gtm';
 import {useKanban} from "./zustand";
+import {Space} from "../spaces/types/space";
+import {useLocation} from "react-router-dom";
+import {useSpaceModule} from "../spaces/zustand";
+import {useWorkspaceModule} from "../workspaces/zustand";
 
-const Kanban: FC = () => {
-    const {columns, getBoard, moveCard} = useKanban(state => state);
+const Kanban: FC = (props) => {
+    const [lists, setLists] = useState(null);
+    const selectedSpace = useSpaceModule(state => state.selectedSpace);
+    const setSelectedSpace = useSpaceModule(state => state.setSelectedSpace);
+    const getAllSpaces = useSpaceModule(state => state.getAllSpaces);
+    const selectedWorkspace = useWorkspaceModule(state => state.selectedWorkspace);
+    const getSpaceLists = useKanban(state => state.getSpaceLists);
+    useEffect(() => {
+        if (selectedSpace) {
+            console.log(selectedSpace);
+            getSpaceLists(selectedSpace._id)
+                .then(async (lists) => {
+                    console.log('lists: ', lists);
+                    setLists(lists);
+                })
+
+        } else {
+            if (selectedWorkspace) {
+                console.log('selectedWorkspace: ', selectedWorkspace);
+                getAllSpaces(selectedWorkspace['_id'])
+                    .then(spaces => {
+                        console.log('spaces: ', spaces);
+                        setSelectedSpace(spaces && spaces.length > 0 ? spaces[0] : null);
+                    });
+            }
+        }
+    }, [selectedSpace]);
+
+    const {columns, moveCard} = useKanban(state => state);
     const {enqueueSnackbar} = useSnackbar();
 
     useEffect(() => {
@@ -20,7 +51,7 @@ const Kanban: FC = () => {
     }, []);
 
     useEffect(() => {
-        getBoard().then();
+        // getBoard().then();
     }, []);
 
     const handleDragEnd = async ({
@@ -128,13 +159,23 @@ const Kanban: FC = () => {
                                 py: 3
                             }}
                         >
-                            {columns.allIds.map((columnId: string) => (
-                                <KanbanColumn
-                                    columnId={columnId}
-                                    key={columnId}
-                                />
-                            ))}
-                            <KanbanColumnAdd/>
+                            {/*{columns.allIds.map((columnId: string) => (*/}
+                            {/*    <KanbanColumn*/}
+                            {/*        columnId={columnId}*/}
+                            {/*        key={columnId}*/}
+                            {/*    />*/}
+                            {/*))}*/}
+                            {
+                                lists && lists.map(l => (
+                                    <KanbanColumn
+                                        columnId={l._id}
+                                        key={l._id}
+                                    />
+                                ))
+                            }
+                            {
+                                selectedSpace && <KanbanColumnAdd spaceId={selectedSpace._id}/>
+                            }
                         </Box>
                     </Box>
                 </DragDropContext>

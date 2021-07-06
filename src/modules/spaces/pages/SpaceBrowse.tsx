@@ -5,16 +5,20 @@ import {
     Pagination,
     Typography
 } from '@material-ui/core';
-import SpaceCard from '../../components/dashboard/workspace/Space';
-import {useAuthModule} from "../../modules/authentication/zustand";
+import SpaceCard from '../components/Space';
+import {useAuthModule} from "../../../modules/authentication/zustand";
+import {useSpaceModule} from "../zustand";
+import {useEffect, useState} from "react";
+import {useWorkspaceModule} from "../../workspaces/zustand";
 
 const WorkspaceBrowseResults: FC = () => {
 
-    const space = useAuthModule((state) => state.user)
-
-
-    console.log('user workspace: ', space)
-
+    const getAllSpaces = useSpaceModule((state) => state.getAllSpaces);
+    const selectedWorkspace = useWorkspaceModule(state => state.selectedWorkspace);
+    const spaces = useSpaceModule(state => state.spaces);
+    useEffect(() => {
+        getAllSpaces(selectedWorkspace['_id'])
+    }, [])
     return (
         <div>
             <Box
@@ -43,8 +47,7 @@ const WorkspaceBrowseResults: FC = () => {
                 >
                     Showing
                     {' '}
-                    {/*{space.length}*/}
-                    4
+                    {spaces && spaces.length}
                     {' '}
                     Spaces
                 </Typography>
@@ -53,17 +56,15 @@ const WorkspaceBrowseResults: FC = () => {
             <Grid
                 container
                 spacing={1}
+                lg={12}
                 md={12}
                 xs={12}
-                style={{ marginTop:6}}
+                style={{ marginTop:6 }}
             >
-                {space.map(space => (
+                {spaces && spaces.map(space => (
                     <Grid
                         item
                         key={space.id}
-                        md={3}
-                        // sm={mode === 'grid' ? 6 : 12}
-                        xs={12}
                     >
                         <SpaceCard space={space}/>
                     </Grid>

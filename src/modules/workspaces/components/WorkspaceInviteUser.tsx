@@ -10,10 +10,10 @@ import {
     TextField
 } from '@material-ui/core';
 import useIsMountedRef from "../../../hooks/useIsMountedRef";
-import {useWorkspaceModule} from '../workspace/zustand';
+import {useWorkspaceModule} from '../zustand';
 
 
-const WorkspacesInviteUser: FC = (props) => {
+const WorkspacesInviteUser: FC = () => {
     const isMountedRef = useIsMountedRef();
     const inviteUserByEmail = useWorkspaceModule(
         (state) => state.inviteUsersByEmail
@@ -40,10 +40,6 @@ const WorkspacesInviteUser: FC = (props) => {
                 setSubmitting
             }): Promise<void> => {
                 try {
-                    await inviteUserByEmail(
-                        values
-                    )
-
                     if (isMountedRef.current) {
                         setStatus({ success: true });
                         setSubmitting(false);
@@ -73,11 +69,10 @@ const WorkspacesInviteUser: FC = (props) => {
               }): JSX.Element => (
                 <form
                     onSubmit={handleSubmit}
-                    {...props}
                 >
 
                     <Card>
-                        <CardHeader title="  Invite people to your Workspace"/>
+                        <CardHeader title="  Invite people to your Space"/>
                         <CardContent>
 
                             <TextField
@@ -110,6 +105,7 @@ const WorkspacesInviteUser: FC = (props) => {
                                 <Button
                                     color="primary"
                                     // onClick={onNext}
+                                    // onClick={()=> inviteUserByEmail({'workspaceId':,'workspaceName': file._id , 'userEmail':email}) }
                                     disabled={isSubmitting}
                                     type="submit"
                                     variant="contained"

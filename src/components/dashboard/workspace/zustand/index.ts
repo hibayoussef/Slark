@@ -15,6 +15,7 @@ const initialState = {
     userEmail:null,
     spaceData:null,
     selectedWorkspace: '',
+    selectedSpace: '',
     Invitemessage:null,
     file: '',
     space:null,
@@ -54,21 +55,6 @@ const config = (set) => ({
             console.log('values inside zustand 2: ',spaceData ,workspaceId)
             console.log('response inside zustand 3: ', res);
 
-            set(state =>{
-                state.space = res.data;
-            })
-            console.log('response data: ', res.data)
-        }).catch(err =>{
-            console.log(err)
-        })
-    },
-    createList: async (listData , spaceId) => {
-        console.log('we are inside zustand 1: ', listData)
-        const response = await api.post(
-            "space" , listData , spaceId
-        ).then(res=>{
-            console.log('values inside zustand 2: ',listData ,spaceId)
-            console.log('response inside zustand 3: ', res);
 
             set(state =>{
                 state.space = res.data;
@@ -78,6 +64,7 @@ const config = (set) => ({
             console.log(err)
         })
     },
+
     inviteUsersByEmail: async(userEmail) =>{
         console.log('User Email invite to workspace is: ', userEmail);
         const response = await api.post('workspace/invite-user', {userEmail})
@@ -101,6 +88,10 @@ const config = (set) => ({
             .then(res=>{
                 console.log('value inside zustand workspace Information....', id);
                 console.log('response inside zustand workspace information....', res)
+                const spaces = res.data.workspace._spaces;
+                set(state=>{
+                    state.selectedSpace = spaces ? spaces[0] : null;
+                })
             })
             .catch(err=>{
                 console.log(err)

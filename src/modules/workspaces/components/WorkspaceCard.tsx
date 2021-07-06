@@ -11,10 +11,10 @@ import {
     Typography, Button
 } from '@material-ui/core';
 import UsersIcon from '../../../icons/Users';
-import type { Workspace } from '../workspace/types/workspace';
+import type { Workspace } from '../types/workspace';
 import ViewComfyRoundedIcon from '@material-ui/icons/ViewComfyRounded';
-import {useAuthModule} from "../../../modules/authentication/zustand";
-import {useWorkspaceModule} from "./zustand";
+import {useAuthModule} from "../../authentication/zustand";
+import {useWorkspaceModule} from "../zustand";
 
 
 interface WorkspaceCardProps {

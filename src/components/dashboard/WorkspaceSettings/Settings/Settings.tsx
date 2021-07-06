@@ -189,7 +189,7 @@ const Settings: FC = () => {
                         className={classes.textField}
                         fullWidth
                         name="workspaceName"
-                        placeholder="Workspace Name"
+                        placeholder="Space Name"
                         variant="standard"
                         style={{
                             // paddingTop:'2.3rem',
@@ -224,7 +224,7 @@ const Settings: FC = () => {
 
                     }}
                         onClick={handleClickOpen}
-                    >Delete Workspace
+                    >Delete Space
                     </Button>
 
                     { open && <ModalDelete onCancel={ cancelHandler } onConfirm={ confirmHandler } />  }

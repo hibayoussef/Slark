@@ -1,8 +1,8 @@
 import create from "zustand";
 import {devtools} from "zustand/middleware";
-import {Board, Card, CheckItem, Checklist, Column, Comment} from "../models/kanban";
+import {Board, Card, CheckItem, Checklist, Column, Comment, ITask} from "../models/kanban";
 import objFromArray from "../../../utils/objFromArray";
-import axios from "../../../lib/axios";
+import api from "../../../axiosWithDelimiterFile";
 import {combineAndImmer, zustandLogger} from "@scandinavia/ts-zustand";
 
 
@@ -12,6 +12,9 @@ const initialState = {
         byId: {},
         allIds: []
     },
+    selectedTask: null,
+    lists: [],
+    tasks: [],
     cards: {
         byId: {},
         allIds: []
@@ -24,34 +27,69 @@ const initialState = {
 
 
 const config = (set) => ({
-        async getBoard() {
-            const response = await axios.get<{ board: Board }>('/api/kanban/board');
-            const {board} = response.data;
-            set(state => {
-                state.columns.byId = objFromArray(board.columns);
-                state.columns.allIds = Object.keys(state.columns.byId);
-                state.cards.byId = objFromArray(board.cards);
-                state.cards.allIds = Object.keys(state.cards.byId);
-                state.members.byId = objFromArray(board.members);
-                state.members.allIds = Object.keys(state.members.byId);
-                state.isLoaded = true;
-            })
+        // async getBoard() {
+        //     const response = await api.get<{ board: Board }>('/api/kanban/board');
+        //     const {board} = response.data;
+        //     set(state => {
+        //         state.columns.byId = objFromArray(board.columns);
+        //         state.columns.allIds = Object.keys(state.columns.byId);
+        //         state.cards.byId = objFromArray(board.cards);
+        //         state.cards.allIds = Object.keys(state.cards.byId);
+        //         state.members.byId = objFromArray(board.members);
+        //         state.members.allIds = Object.keys(state.members.byId);
+        //         state.isLoaded = true;
+        //     })
+        // },
+        getSpaceLists: async (spaceId) => {
+            return await api.get('lists', {
+                params: {
+                    _space: spaceId
+                }
+            }).then(r => {
+                console.log('getSpaceLists r: ', r);
+                const lists = r.data;
+                set(state => {
+                    state.lists = lists;
+                })
+                return lists;
+            }).catch(console.error);
         },
-        async createColumn(name: string) {
-            const response = await axios.post<{ column: Column }>(
-                '/api/kanban/columns/new',
+
+
+        //base
+        async createColumn(name: string, spaceId: string) {
+            // const response = await api.post<{ column: Column }>(
+            //     'lists',
+            //     {
+            //         name ,
+            //         spaceId
+            //     }
+            // );
+            // const {column} = response.data;
+            // set(state => {
+            //     state.columns.byId[column.id] = column;
+            //     state.columns.allIds.push(column.id);
+            // })
+        },
+
+        async createList(name: string, spaceId: string) {
+            const response = await api.post(
+                'lists',
                 {
-                    name
+                    name,
+                    _space: spaceId
                 }
             );
-            const {column} = response.data;
+            const list = response.data;
+            console.log('list: ', list)
             set(state => {
-                state.columns.byId[column.id] = column;
-                state.columns.allIds.push(column.id);
+                state.lists.push(list)
             })
+            return list;
         },
+
         async updateColumn(columnId: string, update: any) {
-            const response = await axios.post<{ column: Column }>(
+            const response = await api.post<{ column: Column }>(
                 '/api/kanban/columns/update',
                 {
                     columnId,
@@ -65,7 +103,7 @@ const config = (set) => ({
         },
         async clearColumn(columnId: string) {
 
-            await axios.post(
+            await api.post(
                 '/api/kanban/columns/clear',
                 {
                     columnId
@@ -86,9 +124,10 @@ const config = (set) => ({
                 state.cards.allIds = state.cards.allIds.filter((cardId) => cardIds.includes(cardId));
             })
         },
+        //delete column
         async deleteColumn(columnId: string) {
-            await axios.post(
-                '/api/kanban/columns/remove',
+            await api.post(
+                '/lists',
                 {
                     columnId
                 }
@@ -98,37 +137,43 @@ const config = (set) => ({
                 state.columns.allIds = state.columns.allIds.filter((_listId) => _listId !== columnId);
             })
         },
-        async createCard(columnId: string, name: string) {
-            const response = await axios.post<{ card: Card }>(
-                '/api/kanban/cards/new',
+        //base
+        async createCard(name: string, listId) {
+            const response = await api.post(
+                'tasks',
                 {
-                    columnId,
-                    name
+                    name,
+                    _list: listId
                 }
             );
-            const {card} = response.data;
-            set(state => {
-                state.cards.byId[card.id] = card;
-                state.cards.allIds.push(card.id);
-                // Add the cardId reference to the column
-                state.columns.byId[card.columnId].cardIds.push(card.id);
-            })
+            const card = response.data;
+            // set(state => {
+            //     state.cards.byId[card.id] = card;
+            //     state.cards.allIds.push(card.id);
+            //     // Add the cardId reference to the column
+            //     state.columns.byId[card.columnId].cardIds.push(card._id);
+            // })
+            console.log('card:', card)
         },
+        //base
         async updateCard(cardId: string, update: any) {
-            const response = await axios.post<{ card: Card }>(
-                '/api/kanban/cards/update',
+            const response = await api.put<{ card: Card }>(
+                '/tasks',
                 {
                     cardId,
                     update
                 }
             );
             const {card} = response.data;
+            //update
             set(state => {
                 Object.assign(state.cards.byId[card.id], card);
             })
         },
+
+
         async moveCard(cardId: string, position: number, columnId?: string) {
-            await axios.post(
+            await api.post(
                 '/api/kanban/cards/move',
                 {
                     cardId,
@@ -157,9 +202,10 @@ const config = (set) => ({
             })
         }
         ,
+        //base
         async deleteCard(cardId: string) {
-            await axios.post(
-                '/api/kanban/cards/remove',
+            await api.post(
+                '/tasks',
                 {
                     cardId
                 }
@@ -173,9 +219,69 @@ const config = (set) => ({
                 );
             })
         },
+
+        getAllTasks: async (listId) => {
+            console.log('listId for task:', listId)
+            return await api.get(
+                "tasks", {
+                    params: {
+                        listId: listId
+                    }
+                }
+            ).then(res => {
+                return res.data;
+            }).catch(err => {
+                console.error(err)
+            })
+        },
+
+
+        async updateTask(task: ITask) {
+            // Sanitize data
+            if(task) {
+                if(task._subTasks) {
+                    task._subTasks = task._subTasks.map(e => {
+                        if(typeof e !== 'string') {
+                            return e._id
+                        }
+                        return e;
+                    });
+                }
+                if(task._assignedUsers) {
+                    task._assignedUsers = task._assignedUsers.map(e => {
+                        if(typeof e !== 'string') {
+                            return e._id
+                        }
+                        return e;
+                    });
+                }
+                if(task.assets) {
+                    task.assets = task.assets.map(e => {
+                        if(typeof e !== 'string') {
+                            return e._id
+                        }
+                        return e;
+                    });
+                }
+                if(task._list) {
+                    task._list = task._list._id;
+                }
+            }
+            return await api.put(`tasks/${task._id}`, task)
+                .then(res => {
+                    const updatedTask = res.data;
+                    set(state => {
+                        state.tasks = state.tasks.map(t => {
+                            if(t._id === updatedTask._id) return updatedTask;
+                            return t;
+                        })
+                    })
+                })
+        },
+
         async addComment(cardId: string,
                          message: string) {
-            const response = await axios.post<{ comment: Comment }>(
+            const response = await api.post<{ comment: Comment }>(
                 '/api/kanban/comments/new',
                 {
                     cardId,
@@ -189,7 +295,7 @@ const config = (set) => ({
             })
         },
         async addChecklist(cardId: string, name: string) {
-            const response = await axios.post<{ checklist: Checklist }>(
+            const response = await api.post<{ checklist: Checklist }>(
                 '/api/kanban/checklists/new',
                 {
                     cardId,
@@ -205,7 +311,7 @@ const config = (set) => ({
         async updateChecklist(cardId: string,
                               checklistId: string,
                               update: any) {
-            const response = await axios.post<{ checklist: Checklist }>(
+            const response = await api.post<{ checklist: Checklist }>(
                 '/api/kanban/checklists/update',
                 {
                     cardId,
@@ -226,7 +332,7 @@ const config = (set) => ({
             })
         },
         async deleteChecklist(cardId: string, checklistId: string) {
-            await axios.post(
+            await api.post(
                 '/api/kanban/checklists/remove',
                 {
                     cardId,
@@ -239,7 +345,7 @@ const config = (set) => ({
             })
         },
         async addCheckItem(cardId: string, checklistId: string, name: string) {
-            const response = await axios.post<{ checkItem: CheckItem }>(
+            const response = await api.post<{ checkItem: CheckItem }>(
                 '/api/kanban/check-items/new',
                 {
                     cardId,
@@ -255,7 +361,7 @@ const config = (set) => ({
             })
         },
         async updateCheckItem(cardId: string, checklistId: string, checkItemId: string, update: any) {
-            const response = await axios.post<{ checkItem: CheckItem }>(
+            const response = await api.post<{ checkItem: CheckItem }>(
                 '/api/kanban/check-items/update',
                 {
                     cardId,
@@ -282,7 +388,7 @@ const config = (set) => ({
                               checklistId: string,
                               checkItemId: string) {
 
-            await axios.post(
+            await api.post(
                 '/api/kanban/check-items/remove',
                 {
                     cardId,
@@ -302,6 +408,6 @@ const config = (set) => ({
     })
 ;
 
-const createState = combineAndImmer(initialState, zustandLogger(config));
+const createState = combineAndImmer(initialState, config);
 export const useKanban = create(devtools(createState));
 

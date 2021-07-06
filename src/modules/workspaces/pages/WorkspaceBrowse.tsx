@@ -5,15 +5,21 @@ import {
     Pagination,
     Typography
 } from '@material-ui/core';
-import WorkspaceCard from '../../workspaces/pages/WorkspaceCard';
-import {useAuthModule} from "../../authentication/zustand";
+import WorkspaceCard from '../components/WorkspaceCard';
+import {useAuthModule} from "../../../modules/authentication/zustand";
+import {useEffect, useState} from "react";
+
 
 const WorkspaceBrowseResults: FC = () => {
 
-    const user = useAuthModule((state) => state.user);
+    const workspace = useAuthModule((state) => state.user.user._workspaces);
+    const [mode, setMode] = useState<string>('grid');
 
+    console.log('user workspace: ', workspace)
 
-    console.log('user workspace: ', user)
+    // useEffect(() => {
+    //     workspace
+    // }, [workspace]);
 
     return (
         <div>
@@ -22,8 +28,7 @@ const WorkspaceBrowseResults: FC = () => {
                     alignItems: 'center',
                     display: 'flex',
                     flexWrap: 'wrap',
-                    justifyContent: 'space-between',
-                    mb: 2
+                    justifyContent: 'space-between'
                 }}
             >
                 <Typography
@@ -44,7 +49,8 @@ const WorkspaceBrowseResults: FC = () => {
                 >
                     Showing
                     {' '}
-                    {user._workspaces.length}
+                    {workspace.length}
+
                     {' '}
                     workspaces
                 </Typography>
@@ -52,15 +58,20 @@ const WorkspaceBrowseResults: FC = () => {
             </Box>
             <Grid
                 container
-                spacing={3}
+                spacing={1}
+                md={12}
+                xs={12}
+                style={{ marginTop:6}}
             >
-                {user._workspaces.map(workspace => (
+                {workspace.map(workspace => (
                     <Grid
                         item
                         key={workspace.id}
-                        md={4}
-                        // sm={mode === 'grid' ? 6 : 12}
-                        xs={12}
+                        xs={mode === 'grid' ? 10 : 12}
+                        sm={mode === 'grid' ? 6 : 12}
+                        md={mode === 'grid' ? 4 : 12}
+                        lg={mode === 'grid' ? 3 : 12}
+                        // xs={12}
                     >
                         <WorkspaceCard workspace={workspace}/>
                     </Grid>
@@ -73,7 +84,7 @@ const WorkspaceBrowseResults: FC = () => {
                     mt: 6
                 }}
             >
-                <Pagination count={3}/>
+                <Pagination count={4}/>
             </Box>
         </div>
     );

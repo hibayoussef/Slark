@@ -6,7 +6,7 @@ import {
     CardHeader,
     Grid,
 } from '@material-ui/core';
-import FileDropzone from '../../FileDropzone';
+import FileDropzone from '../../../components/FileDropzone';
 import {createStyles, makeStyles, Theme} from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -33,8 +33,9 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 
-const WorkspacesUploadImage: FC = (props) => {
+const WorkspacesUploadImage = ({onImageUploaded}: any) => {
 
+    // onImageUploaded we invoke it with uploaded file so parent detect it
     const classes = useStyles();
 
     const [files, setFiles] = useState<any[]>([]);
@@ -64,6 +65,7 @@ const WorkspacesUploadImage: FC = (props) => {
                     onDrop={handleDrop}
                     onRemove={handleRemove}
                     onRemoveAll={handleRemoveAll}
+                    onUpload={onImageUploaded} // We inject it here as well so FileDropzone will invoke it
                 />
 
             </CardContent>

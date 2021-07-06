@@ -11,9 +11,9 @@ import {
     Link,
     Typography
 } from '@material-ui/core';
-import  WorkspaceCreateComp from '../../components/dashboard/workspace/WorkspaceCreate';
-import ArrowLeftIcon from '../../icons/ArrowLeft';
-import ChevronRightIcon from '../../icons/ChevronRight';
+import  WorkspaceCreateComp from '../../workspaces/components/WorkspaceCreate';
+import ArrowLeftIcon from '../../../icons/ArrowLeft';
+import ChevronRightIcon from '../../../icons/ChevronRight';
 
 const WorkspaceCreate:FC = () => {
 

@@ -1,5 +1,6 @@
 import axios from 'axios';
 
-axios.defaults.baseURL = 'https://slark-backend.herokuapp.com' ;
+axios.defaults.baseURL = 'https://api-slark.herokuapp.com' ;
+
 
 export default axios;
