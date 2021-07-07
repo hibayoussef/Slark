@@ -5,3 +5,7 @@ export interface Workspace {
     updatedAt: string;
     createdAt: string;
 }
+
+export interface Email {
+
+}

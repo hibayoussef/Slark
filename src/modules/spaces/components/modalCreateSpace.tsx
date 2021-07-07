@@ -60,7 +60,7 @@ export default function FormDialog() {
         setOpen(false);
     };
 
-    const selectedWorkspace = useAuthModule(state => state.selectedWorkspace);
+    const selectedWorkspace = useWorkspaceModule(state => state.selectedWorkspace);
     const createSpace = useSpaceModule(
         (state) => state.createSpace
     );
@@ -105,9 +105,7 @@ export default function FormDialog() {
                            margin: ' 0 auto'
                        }}>
                            <DialogContent >
-
                                <img src="/static/images/globe-image.jpg"  className={classes.dialogContent} alt="Contemplative Reptile"/>
-
                            </DialogContent>
                        </Box>
                     </Box>

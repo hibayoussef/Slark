@@ -63,7 +63,7 @@ const config = (set) => ({
     //new
     inviteUsersByEmail: async(userEmail , workspaceId , workspaceName) =>{
         console.log('User Email invite to workspace is: ', userEmail, workspaceId , workspaceName);
-        const response = await api.post('/workspaces/invite-user', {userEmail  , workspaceId , workspaceName})
+        const response = await api.post('workspaces/invite-user', {userEmail  , workspaceId , workspaceName})
             .then(res =>{
                 console.log('values inside zustand 4: ', userEmail);
                 console.log('response inside zustand 5: ', res);
@@ -73,30 +73,36 @@ const config = (set) => ({
                 })
                 console.log('res.data.messageeeeeeeee:' , res.data.message)
             }).catch(err =>{
-                console.log(err);
+                console.error(err);
             })
         console.log(response);
     },
 
+    //
+    // createSpace: async (spaceData , workspaceId) => {
+    //     console.log('we are inside zustand 1: ', spaceData)
+    //     const response = await api.post(
+    //         "space" , spaceData , workspaceId
+    //     ).then(res=>{
+    //         console.log('values inside zustand 2: ',spaceData ,workspaceId)
+    //         console.log('response inside zustand 3: ', res);
+    //
+    //
+    //         set(state =>{
+    //             state.space = res.data;
+    //         })
+    //         console.log('response data: ', res.data)
+    //     }).catch(err =>{
+    //         console.log(err)
+    //     })
+    // },
 
-    createSpace: async (spaceData , workspaceId) => {
-        console.log('we are inside zustand 1: ', spaceData)
-        const response = await api.post(
-            "space" , spaceData , workspaceId
-        ).then(res=>{
-            console.log('values inside zustand 2: ',spaceData ,workspaceId)
-            console.log('response inside zustand 3: ', res);
 
-
-            set(state =>{
-                state.space = res.data;
-            })
-            console.log('response data: ', res.data)
-        }).catch(err =>{
-            console.log(err)
+    setSelectedWorkspace: (workspace) => {
+        set(state => {
+            state.selectedWorkspace = workspace;
         })
     },
-
 
     WorkspaceInformation: async(id) =>{
         console.log('Workspce Information...')
@@ -116,11 +122,17 @@ const config = (set) => ({
 
     },
 
-    setSelectedWorkspace: (workspace) => {
-        set(state => {
-            state.selectedWorkspace = workspace;
+    deleteWorkspace: async (workspaceId) => {
+        console.log('workspaceId for space:' , workspaceId )
+        return await api.delete(
+            `workspaces/${workspaceId}`
+        ).then(res=>{
+            console.log(res)
+        }).catch(err =>{
+            console.error(err)
         })
     }
+
 
 });
 const createState = combineAndImmer(initialState, config);

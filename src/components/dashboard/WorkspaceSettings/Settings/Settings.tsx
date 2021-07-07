@@ -4,6 +4,9 @@ import Grid from '@material-ui/core/Grid';
 import {Avatar, TextField,  Button } from "@material-ui/core";
 import {Link as RouterLink} from "react-router-dom";
 import ModalDelete from '../../../../components/dashboard/workspace/ModalDelete';
+import {Space} from "../../../../modules/spaces/types/space";
+import {Workspace} from "../../../../modules/workspaces/types/workspace";
+import {useWorkspaceModule} from "../../../../modules/workspaces/zustand";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -22,49 +25,49 @@ const useStyles = makeStyles((theme: Theme) =>
         },
         button:{
             [theme.breakpoints.down('sm')]: {
-                width: '6rem',
-                fontSize: '0.9rem',
+                width: '5rem',
+                fontSize: '1rem',
                 height: '20px',
             },
             [theme.breakpoints.between('sm', 'md')]: {
                 Width: '10rem',
-                fontSize: '1.6rem',
+                fontSize: '1rem',
                 height: '44px',
             },
             [theme.breakpoints.up('md')]: {
                 Width: '10rem',
-                fontSize: '1.8rem',
+                fontSize: '1rem',
                 height: '44px',
             },
             [theme.breakpoints.between('md', 'lg')]: {
-                Width: '10rem',
-                fontSize: '1.7rem',
+                Width: '5rem',
+                fontSize: '1rem',
                 height: '44px',
 
             },
             [theme.breakpoints.between('lg', 'xl')]: {
                 Width: '10rem',
-                fontSize: '1.7rem',
+                fontSize: '1.4rem',
                 height: '44px',
             }
 
         },
         textField:{
             [theme.breakpoints.down('sm')]: {
-                fontSize:2,
+                fontSize:1,
                 paddingTop:'1.3rem',
             },
             [theme.breakpoints.between('sm', 'md')]: {
-                fontSize:3,
+                fontSize:1,
                 paddingTop:'1.3rem',
             },
             [theme.breakpoints.between('md', 'lg')]: {
-                fontSize:4,
+                fontSize:1,
                 paddingTop:'1.4rem',
             },
             [theme.breakpoints.between('lg', 'xl')]: {
-                fontSize:4.5,
-                paddingTop:'1.3rem',
+                fontSize:1,
+                paddingTop:'1rem',
             }
         },
         avatar:{
@@ -74,20 +77,20 @@ const useStyles = makeStyles((theme: Theme) =>
                //      height: '4rem',
                // },
             [theme.breakpoints.down('sm')]: {
-                minWidth: '3.6rem',
-                height: '3.6rem',
+                minWidth: '3rem',
+                height: '3rem',
             },
             [theme.breakpoints.between('sm', 'md')]: {
-                minWidth: '5.2rem',
-                height: '5.2rem',
+                minWidth: '4.1rem',
+                height: '4.1rem',
             },
             [theme.breakpoints.between('md', 'lg')]: {
-                minWidth: '5.6rem',
-                height: '5.6rem',
+                minWidth: '4.3rem',
+                height: '4.3rem',
             },
             [theme.breakpoints.between('lg', 'xl')]: {
-                minWidth: '5.9rem',
-                height: '5.9rem',
+                minWidth: '4.5rem',
+                height: '4.5rem',
             }
 
         },
@@ -154,31 +157,35 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 );
 
-const Settings: FC = () => {
+interface WorkspaceProps {
+    workspace: Workspace;
+}
+
+const Settings: FC<WorkspaceProps> = (props) => {
+    const { workspace } = props;
     const [open, setOpen] = React.useState(false);
 
     console.log('THIAN ABK ')
-    const handleClickOpen = () => {
-        console.log('Open the Dialog...')
-        setOpen(true);
-    };
-
-    function cancelHandler(){
-        console.log('Close');
-        setOpen(false)
-    }
-
-    function confirmHandler(){
-        console.log('Close');
-        setOpen(false)
-    }
+    const  deleteWorkspace =  useWorkspaceModule(state => state.deleteWorkspace)
+    const selectedWorkspace = useWorkspaceModule(state => state.selectedWorkspace)
+    console.log('selectedWorkspace', selectedWorkspace)
+    //
+    // function cancelHandler(){
+    //     console.log('Close');
+    //     setOpen(false)
+    // }
+    //
+    // function confirmHandler(){
+    //     console.log('Close');
+    //     setOpen(false)
+    // }
 
     const classes = useStyles();
 
     return (
         <div className={classes.root}>
             {/*<Container maxWidth="lg" style={{backgroundColor: 'red'}}>*/}
-            <Grid container spacing={2} direction="row" xs={12} md={12}>
+            <Grid container spacing={2} direction="row" /*xs={12} md={12}*/>
                 <Grid item >
                     <Avatar className={classes.avatar}  alt="Remy Sharp"
                             src="https://thumbs.dreamstime.com/b/c-converted-174454105.jpg"/>
@@ -189,7 +196,7 @@ const Settings: FC = () => {
                         className={classes.textField}
                         fullWidth
                         name="workspaceName"
-                        placeholder="Space Name"
+                        placeholder="workspace name"
                         variant="standard"
                         style={{
                             // paddingTop:'2.3rem',
@@ -205,7 +212,7 @@ const Settings: FC = () => {
                                 input: classes.button
                             },
                         }}
-                        defaultValue="nameeeee"
+                        defaultValue={selectedWorkspace.name}
                     />
                 </Grid>
 
@@ -223,11 +230,11 @@ const Settings: FC = () => {
                         background: 'none'
 
                     }}
-                        onClick={handleClickOpen}
-                    >Delete Space
+                        onClick={()=> deleteWorkspace(selectedWorkspace._id)}
+                    >Delete Workspace
                     </Button>
 
-                    { open && <ModalDelete onCancel={ cancelHandler } onConfirm={ confirmHandler } />  }
+                    {/*{ open && <ModalDelete onCancel={ cancelHandler } onConfirm={ confirmHandler } />  }*/}
 
 
                 </Grid>

@@ -26,16 +26,24 @@ const WorkspacesCreateForm: FC = (props) => {
     const isMountedRef = useIsMountedRef();
 
 
-
-    const [workspaceName , setWorkspaceName] = React.useState('');
-    const [email , setEmail] = React.useState('');
+    const [workspaceName, setWorkspaceName] = React.useState('');
+    const [email, setEmail] = React.useState(null);
 
     //  1-  We define a var to store uploaded file
-    const [file , setFile] = React.useState(null);
+    const [file, setFile] = React.useState(null);
+
 
     const createWorkspace = useWorkspaceModule(
         (state) => state.createWorkspace
     );
+
+    const inviteUserByEmail = useWorkspaceModule(
+        (state) => state.inviteUsersByEmail
+    );
+
+    const selectedWorkspace = useWorkspaceModule((state) => state.selectedWorkspace);
+
+    console.log('selectedWorkspace>>>selectedWorkspace>>>selectedWorkspace:' , selectedWorkspace)
 
     // const image = useWorkspaceModule(
     //     (state)=> state.
@@ -138,22 +146,49 @@ const WorkspacesCreateForm: FC = (props) => {
                             </Card>
 
                             <Box sx={{mt: 3}}>
-                                // We provide a call back to the following component "onImageUploaded"
-                                // Once this function invoked we call setFile(with response coming back)
+                                {/*// We provide a call back to the following component "onImageUploaded"*/}
+                                {/*// Once this function invoked we call setFile(with response coming back)*/}
                                 <WorkspaceUploadImage onImageUploaded={(file) => {
                                     console.log({file})
                                     setFile(file);
-                                }} />
+                                }}/>
                             </Box>
 
-                            {/*<Box sx={{mt: 3}}>*/}
-                            {/*    <InviteUser onEmailSend={(email) => {*/}
-                            {/*        console.log({email})*/}
-                            {/*        setEmail(email);*/}
-                            {/*    }} />*/}
-                            {/*</Box>*/}
+                            <Box sx={{mt: 3}}>
+                                <Card>
+                                    <CardHeader title="  Invite people to your Space"/>
+                                    <CardContent>
 
+                                        <TextField
+                                            fullWidth
+                                            name="userEmail"
+                                            onChange={(e)=>setEmail(e.target.value)}
+                                            value={email}
+                                            variant="outlined"
+                                            placeholder="Enter email addresses (or past multiple)"
+                                        />
 
+                                        <Box
+                                            sx={{
+                                                display: 'flex',
+                                                mt: 3
+                                            }}
+                                        >
+                                            <Box sx={{flexGrow: 1}}/>
+                                            <Button
+                                                color="primary"
+                                                // onClick={onNext}
+                                                onClick={() => inviteUserByEmail(email, selectedWorkspace._id, selectedWorkspace.name)}
+                                                type="submit"
+                                                variant="contained"
+                                            >
+                                                invite
+                                            </Button>
+                                        </Box>
+                                    </CardContent>
+                                </Card>
+
+                            </Box>
 
                         </Grid>
                         <Grid
@@ -178,13 +213,13 @@ const WorkspacesCreateForm: FC = (props) => {
                                 }}
                             >
                                 <Button
-                                    onClick={()=> createWorkspace({'name':workspaceName,'image': file._id}) }
+                                    onClick={() => createWorkspace({'name': workspaceName, 'image': file._id})}
                                     color="primary"
                                     disabled={isSubmitting}
                                     type="submit"
                                     variant="contained"
                                 >
-                                    Create Space
+                                    Create Workspace
                                 </Button>
                             </Box>
                         </Grid>

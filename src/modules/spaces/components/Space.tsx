@@ -181,7 +181,6 @@ const SpaceForm: FC<SpaceCardProps> = (props) => {
                                         }}>
                                         <Typography style={{marginBottom: '2rem', color: 'rgba(213,214,215,.4)'}}>
                                             SHARED WITH
-
                                         </Typography>
                                         <Typography style={{color: '#d5d6d7'}} className={classes.text}>
                                             Everyone.

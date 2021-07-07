@@ -70,6 +70,7 @@ const FileDropzone: FC<FileDropzoneProps> = (props) => {
         data.append('image', uploadImage.selectedImage, uploadImage?.selectedImage?.name || 'file.png');
         console.log('dwdadw')
         const uploadedImage = await uploadImage.WorkspaceUploadImage(data)
+        console.log(uploadedImage)
         onUpload(uploadedImage)
     }
 

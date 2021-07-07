@@ -11,13 +11,23 @@ import {
 } from '@material-ui/core';
 import useIsMountedRef from "../../../hooks/useIsMountedRef";
 import {useWorkspaceModule} from '../zustand';
+import {useState} from "react";
+import { Email } from "../types/workspace";
 
+interface EmailProps
+{
+    email: Email
+}
 
-const WorkspacesInviteUser: FC = () => {
+const WorkspacesInviteUser: FC<EmailProps> = (props) => {
+    const { email } = props;
     const isMountedRef = useIsMountedRef();
+    // const [email , setEmail] = useState(null)
     const inviteUserByEmail = useWorkspaceModule(
         (state) => state.inviteUsersByEmail
     );
+    const selectedWorkspace = useWorkspaceModule((state) => state.selectedWorkspace);
+
 
     return (<>
         <Formik
@@ -105,7 +115,7 @@ const WorkspacesInviteUser: FC = () => {
                                 <Button
                                     color="primary"
                                     // onClick={onNext}
-                                    // onClick={()=> inviteUserByEmail({'workspaceId':,'workspaceName': file._id , 'userEmail':email}) }
+                                    onClick={()=> inviteUserByEmail( email ,selectedWorkspace._id,selectedWorkspace.name ) }
                                     disabled={isSubmitting}
                                     type="submit"
                                     variant="contained"

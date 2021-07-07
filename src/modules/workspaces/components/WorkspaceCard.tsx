@@ -15,6 +15,7 @@ import type { Workspace } from '../types/workspace';
 import ViewComfyRoundedIcon from '@material-ui/icons/ViewComfyRounded';
 import {useAuthModule} from "../../authentication/zustand";
 import {useWorkspaceModule} from "../zustand";
+import {useSpaceModule} from "../../spaces/zustand";
 
 
 interface WorkspaceCardProps {
@@ -25,7 +26,8 @@ const WorkspaceCard: FC<WorkspaceCardProps> = (props) => {
 
     const { workspace } = props;
 
-    const user = useAuthModule((state) => state.user.user);
+    const user = useAuthModule((state) => state.user);
+    const setSelectedWorkspace = useWorkspaceModule(state => state.setSelectedWorkspace);
     // const workspace = useAuthModule((state) => state.user.user._workspaces
     // );
     console.log('user workspace: ', workspace)
@@ -33,6 +35,12 @@ const WorkspaceCard: FC<WorkspaceCardProps> = (props) => {
     console.log('user' , user.name)
     const fileSelectedHandler = event => {
         console.log(event)
+    }
+
+    const navigate = useNavigate();
+    const navigateToKanban = () => {
+        setSelectedWorkspace(workspace);
+        navigate('/workspace-settings/settings');
     }
 
     const fileUploadHandler = ()=>{
@@ -152,9 +160,11 @@ const WorkspaceCard: FC<WorkspaceCardProps> = (props) => {
                     >
 
                         <Button>
-                            <a href={`/workspace-settings/settings/${workspace._id}`} >
-                            <ViewComfyRoundedIcon  style={{fontSize: 30}}/>
-                            </a>
+                            {/*<a href={`/workspace-settings/settings/${workspace._id}`} >*/}
+                            <ViewComfyRoundedIcon
+                                onClick={ navigateToKanban }
+                                style={{fontSize: 30}}/>
+                            {/*</a>*/}
                         </Button>
 
                     </Box>
