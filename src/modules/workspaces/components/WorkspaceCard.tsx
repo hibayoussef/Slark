@@ -15,8 +15,6 @@ import type { Workspace } from '../types/workspace';
 import ViewComfyRoundedIcon from '@material-ui/icons/ViewComfyRounded';
 import {useAuthModule} from "../../authentication/zustand";
 import {useWorkspaceModule} from "../zustand";
-import {useSpaceModule} from "../../spaces/zustand";
-
 
 interface WorkspaceCardProps {
     workspace: Workspace;
@@ -81,7 +79,7 @@ const WorkspaceCard: FC<WorkspaceCardProps> = (props) => {
                             onChange={fileSelectedHandler}
                             style={{height: "5.6rem", width: "5.6rem"}}
                             alt="Author"
-                            src="https://t4.ftcdn.net/jpg/01/42/10/39/360_F_142103920_HX5XxEAHvaHG4uP7YfgHMM05A25Jjm2q.jpg"
+                            src={workspace?.image?.url || "https://t4.ftcdn.net/jpg/01/42/10/39/360_F_142103920_HX5XxEAHvaHG4uP7YfgHMM05A25Jjm2q.jpg"}
                             //    src={workspace.author.avatar}
                         >
 
@@ -164,7 +162,6 @@ const WorkspaceCard: FC<WorkspaceCardProps> = (props) => {
                             <ViewComfyRoundedIcon
                                 onClick={ navigateToKanban }
                                 style={{fontSize: 30}}/>
-                            {/*</a>*/}
                         </Button>
 
                     </Box>

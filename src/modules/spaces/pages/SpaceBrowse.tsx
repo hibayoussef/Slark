@@ -13,7 +13,7 @@ import {useWorkspaceModule} from "../../workspaces/zustand";
 
 const WorkspaceBrowseResults: FC = () => {
 
-    const getAllSpaces = useSpaceModule((state) => state.getAllSpaces);
+    const {getAllSpaces, addSpaceToState} = useSpaceModule((state) => state);
     const selectedWorkspace = useWorkspaceModule(state => state.selectedWorkspace);
     const spaces = useSpaceModule(state => state.spaces);
     useEffect(() => {
@@ -56,14 +56,15 @@ const WorkspaceBrowseResults: FC = () => {
             <Grid
                 container
                 spacing={1}
-                lg={12}
-                md={12}
-                xs={12}
+
                 style={{ marginTop:6 }}
             >
                 {spaces && spaces.map(space => (
                     <Grid
                         item
+                        lg={12}
+                        md={12}
+                        xs={12}
                         key={space.id}
                     >
                         <SpaceCard space={space}/>

@@ -7,20 +7,21 @@ import React from "react";
 
 const initialState = {
     selectedImage: null,
-    selectedCustomers:null,
+    selectedCustomers: null,
     page: null,
     limit: null,
     query: null,
-    filters:null,
+    users: null,
+    filters: null,
     Members: null,
     workspace: null,
-    userEmail:null,
-    spaceData:null,
+    userEmail: null,
+    spaceData: null,
     selectedWorkspace: null,
     selectedSpace: '',
-    Invitemessage:null,
+    Invitemessage: null,
     file: '',
-    space:null,
+    space: null,
     workspaceImageId: null,
     selectedFile: null,
     //upload image,
@@ -32,28 +33,22 @@ const initialState = {
 const config = (set) => ({
 
     //new
-    createWorkspace: async (workspaceData ) => {
-
-        console.log('we are inside zustand 1 inside create workspace: ', workspaceData )
-
-        const response = await api.post(
-            "workspaces" , workspaceData
-        ).then(res=>{
-            console.log('values inside zustand 2: ',workspaceData)
-            console.log('response inside zustand 3: ', res);
-
-            set(state =>{
+    createWorkspace: async (workspaceData) => {
+        return await api.post(
+            "workspaces", workspaceData
+        ).then(res => {
+            set(state => {
                 state.workspace = res.data;
             })
-            console.log('response data: ', res.data)
-        }).catch(err =>{
+            return res.data;
+        }).catch(err => {
             console.log(err)
         })
     },
 
-    WorkspaceUploadImage: async (formData) =>{
+    WorkspaceUploadImage: async (formData) => {
         // console.log('Workspcae image inside zustand is: ', );
-        return await api.post('uploads' , formData,
+        return await api.post('uploads', formData,
             {
                 headers: {
                     "Content-Type": "multipart/form-data" // This means change content type from default or json to multipart-form data
@@ -61,18 +56,18 @@ const config = (set) => ({
             }).then(r => r.data)
     },
     //new
-    inviteUsersByEmail: async(userEmail , workspaceId , workspaceName) =>{
-        console.log('User Email invite to workspace is: ', userEmail, workspaceId , workspaceName);
-        const response = await api.post('workspaces/invite-user', {userEmail  , workspaceId , workspaceName})
-            .then(res =>{
+    inviteUsersByEmail: async (userEmail, workspaceId, workspaceName) => {
+        console.log('User Email invite to workspace is: ', userEmail, workspaceId, workspaceName);
+        const response = await api.post('workspaces/invite-user', {userEmail, workspaceId, workspaceName})
+            .then(res => {
                 console.log('values inside zustand 4: ', userEmail);
                 console.log('response inside zustand 5: ', res);
 
-                set(state =>{
+                set(state => {
                     state.message = res.data.message
                 })
-                console.log('res.data.messageeeeeeeee:' , res.data.message)
-            }).catch(err =>{
+                console.log('res.data.messageeeeeeeee:', res.data.message)
+            }).catch(err => {
                 console.error(err);
             })
         console.log(response);
@@ -104,34 +99,66 @@ const config = (set) => ({
         })
     },
 
-    WorkspaceInformation: async(id) =>{
+    WorkspaceInformation: async (id) => {
         console.log('Workspce Information...')
         const response = await api.get(`workspace/${id}`)
-            .then(res=>{
+            .then(res => {
                 console.log('value inside zustand workspace Information....', id);
                 console.log('response inside zustand workspace information....', res)
                 const spaces = res.data.workspace._spaces;
-                set(state=>{
+                set(state => {
                     state.selectedSpace = spaces ? spaces[0] : null;
                 })
             })
-            .catch(err=>{
+            .catch(err => {
                 console.log(err)
             })
         console.log(response)
 
     },
 
+    deleteUserFromWorkspace: async (userId, workspaceId) => {
+        return await api.delete(
+            `/workspaces/remove-user`, {
+                params: {
+                    userId,
+                    workspaceId
+                }
+            }
+        ).then(r => r.data);
+    },
+
     deleteWorkspace: async (workspaceId) => {
-        console.log('workspaceId for space:' , workspaceId )
+        console.log('workspaceId for space:', workspaceId)
         return await api.delete(
             `workspaces/${workspaceId}`
-        ).then(res=>{
+        ).then(res => {
             console.log(res)
-        }).catch(err =>{
+        }).catch(err => {
             console.error(err)
         })
-    }
+    },
+
+    getAllUser: async (workspace) => {
+        console.log('workspaceId for user:', workspace)
+        return await api.get(
+            "workspaces/all-users", {
+                params: {
+                    workspace: workspace
+                }
+
+            }
+        ).then(res => {
+            console.log('[getAllUser] method: ', res);
+            set(state => {
+                state.users = res.data;
+                // state.selectedUser = state.users && state.users.length > 0 ? state.users[0] : null;
+            })
+            return res.data;
+        }).catch(err => {
+            console.error(err)
+        })
+    },
 
 
 });

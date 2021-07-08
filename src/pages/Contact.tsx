@@ -16,7 +16,7 @@ const Contact: FC = () => {
   return (
     <>
       <Helmet>
-        <title>Contact | Material Kit Pro</title>
+        <title>Contact | Slark</title>
       </Helmet>
       <Box
         sx={{

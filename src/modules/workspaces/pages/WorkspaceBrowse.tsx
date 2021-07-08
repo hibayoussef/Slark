@@ -12,11 +12,10 @@ import {useEffect, useState} from "react";
 
 const WorkspaceBrowseResults: FC = () => {
 
-    const workspace = useAuthModule((state) => state.user._workspaces);
-    console.log('llllllllllll', workspace)
-    const [mode, setMode] = useState<string>('grid');
+    const {user} = useAuthModule((state) => state);
 
-    console.log('user workspace: ', workspace)
+    const {_workspaces} = user;
+    const [mode, setMode] = useState<string>('grid');
 
 
 
@@ -48,8 +47,7 @@ const WorkspaceBrowseResults: FC = () => {
                 >
                     Showing
                     {' '}
-                    {workspace.length}
-
+                    {_workspaces.length}
                     {' '}
                     workspaces
                 </Typography>
@@ -60,9 +58,9 @@ const WorkspaceBrowseResults: FC = () => {
                 spacing={1}
                 // md={12}
                 // xs={12}
-                style={{ marginTop:6}}
+                style={{marginTop: 6}}
             >
-                {workspace.map(workspace => (
+                {_workspaces && _workspaces.map(workspace => (
                     <Grid
                         item
                         key={workspace.id}

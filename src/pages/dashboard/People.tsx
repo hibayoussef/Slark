@@ -96,9 +96,6 @@ const MemberList: FC = () => {
 
                         </Grid>
 
-
-
-
                         <Grid  container spacing={1} direction="row" style={{ paddingTop: '2rem' }}>
 
                             <Grid item xs={5}>

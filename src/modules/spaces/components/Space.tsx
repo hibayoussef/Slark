@@ -47,7 +47,7 @@ interface SpaceCardProps {
 }
 
 const SpaceForm: FC<SpaceCardProps> = (props) => {
-    const {space } = props;
+    const {space} = props;
     const classes = useStyles()
     const setSelectedSpace = useSpaceModule(state => state.setSelectedSpace);
     const navigate = useNavigate();
@@ -78,7 +78,7 @@ const SpaceForm: FC<SpaceCardProps> = (props) => {
             <Grid
                 container
                 spacing={3}
-                style={{ marginBottom:10 , marginTop: 1}}
+                style={{marginBottom: 10, marginTop: 1}}
 
             >
                 <Grid
@@ -145,7 +145,7 @@ const SpaceForm: FC<SpaceCardProps> = (props) => {
                                             fontSize: '1rem',
                                             fontWeight: 400
                                         }}
-                                        onClick={ navigateToKanban }>
+                                        onClick={navigateToKanban}>
                                         Go to Space
                                     </Button>
 
@@ -211,9 +211,12 @@ const SpaceForm: FC<SpaceCardProps> = (props) => {
                                         </Box>
                                     </Box>
 
-                                    <Box>
+                                    <Box
+                                        flex={1}
+                                        // flexDirection='row-reverse'
+                                    >
                                         <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
-                                            <MoreHorizIcon />
+                                            <MoreHorizIcon/>
                                         </Button>
 
                                         <Menu
@@ -224,7 +227,9 @@ const SpaceForm: FC<SpaceCardProps> = (props) => {
                                             onClose={handleClose}
                                         >
                                             <MenuItem
-                                                onClick={()=> deleteSpace(space._id, selectedWorkspace._id) }>Delete Space</MenuItem>
+
+                                                onClick={() => deleteSpace(space._id, selectedWorkspace._id)}>Delete
+                                                Space</MenuItem>
                                             <MenuItem onClick={handleClose}>Archive Space</MenuItem>
                                         </Menu>
                                     </Box>

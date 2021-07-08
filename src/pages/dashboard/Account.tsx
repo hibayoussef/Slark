@@ -46,7 +46,7 @@ const Account: FC = () => {
   return (
     <>
       <Helmet>
-        <title>Dashboard: Account | Material Kit Pro</title>
+        <title>Dashboard: Account | Slark</title>
       </Helmet>
       <Box
         sx={{

@@ -103,7 +103,7 @@ const Kanban: FC = (props) => {
     return (
         <>
             <Helmet>
-                <title>Dashboard: Kanban | Material Kit Pro</title>
+                <title>Dashboard: Kanban | Slark</title>
             </Helmet>
             <Box
                 sx={{

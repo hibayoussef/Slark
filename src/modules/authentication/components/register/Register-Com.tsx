@@ -59,7 +59,7 @@ import Login from '../../../authentication/pages/Login-Pag';
                   .max(255)
                   .required("Email is required"),
               password: Yup.string()
-                  .min(7)
+                  .min(6)
                   .max(255)
                   .required("Password is required"),
           })}
@@ -100,13 +100,13 @@ import Login from '../../../authentication/pages/Login-Pag';
             }): JSX.Element => (
         <form noValidate onSubmit={handleSubmit}>
           <TextField
-              InputProps={{
-                startAdornment: (
-                    <InputAdornment position="start">
-                      <PersonOutlineOutlinedIcon />
-                    </InputAdornment>
-                ),
-              }}
+              // InputProps={{
+              //   startAdornment: (
+              //       <InputAdornment position="start">
+              //         <PersonOutlineOutlinedIcon />
+              //       </InputAdornment>
+              //   ),
+              // }}
               error={Boolean(touched.name && errors.name)}
               helperText={touched.name && errors.name}
               onBlur={handleBlur}
@@ -117,16 +117,16 @@ import Login from '../../../authentication/pages/Login-Pag';
               name="name"
               type="name"
               variant="outlined"
-              placeholder="George Dawod"
+              placeholder="User Name"
           />
           <TextField
-              InputProps={{
-                startAdornment: (
-                    <InputAdornment position="start">
-                      <DraftsOutlinedIcon />
-                    </InputAdornment>
-                ),
-              }}
+              // InputProps={{
+              //   startAdornment: (
+              //       <InputAdornment position="start">
+              //         <DraftsOutlinedIcon />
+              //       </InputAdornment>
+              //   ),
+              // }}
               error={Boolean(touched.email && errors.email)}
               helperText={touched.email && errors.email}
               onBlur={handleBlur}
@@ -140,13 +140,13 @@ import Login from '../../../authentication/pages/Login-Pag';
               variant="outlined"
           />
           <TextField
-              InputProps={{
-                startAdornment: (
-                    <InputAdornment position="start">
-                      <LockOutlinedIcon />
-                    </InputAdornment>
-                ),
-              }}
+              // InputProps={{
+              //   startAdornment: (
+              //       <InputAdornment position="start">
+              //         <LockOutlinedIcon />
+              //       </InputAdornment>
+              //   ),
+              // }}
               error={Boolean(touched.password && errors.password)}
               helperText={touched.password && errors.password}
               onBlur={handleBlur}
@@ -167,17 +167,17 @@ import Login from '../../../authentication/pages/Login-Pag';
                 mt: 2,
               }}
           >
-            <Checkbox
-                // checked={values.policy}
-                color="primary"
-                name="policy"
-            />
-            <Typography color="textSecondary" variant="body2">
-              I have read the{" "}
-              <Link color="primary" component="a" href="#">
-                Terms and Conditions
-              </Link>
-            </Typography>
+            {/*<Checkbox*/}
+            {/*    // checked={values.policy}*/}
+            {/*    color="primary"*/}
+            {/*    name="policy"*/}
+            {/*/>*/}
+            {/*<Typography color="textSecondary" variant="body2">*/}
+            {/*  I have read the{" "}*/}
+            {/*  <Link color="primary" component="a" href="#">*/}
+            {/*    Terms and Conditions*/}
+            {/*  </Link>*/}
+            {/*</Typography>*/}
           </Box>
             <Box sx={{ mt: 3 }}>
                 <FormHelperText error>{errors.submit}</FormHelperText>

@@ -95,13 +95,13 @@ const LoginFirebase: FC = (props) => {
                         onSubmit={handleSubmit}
                     >
                         <TextField
-                            InputProps={{
-                                startAdornment: (
-                                    <InputAdornment position="start">
-                                        <DraftsOutlinedIcon />
-                                    </InputAdornment>
-                                ),
-                            }}
+                            // InputProps={{
+                            //     startAdornment: (
+                            //         <InputAdornment position="start">
+                            //             <DraftsOutlinedIcon />
+                            //         </InputAdornment>
+                            //     ),
+                            // }}
                             error={Boolean(touched.email && errors.email)}
                             helperText={touched.email && errors.email}
                             onBlur={handleBlur}
@@ -115,13 +115,13 @@ const LoginFirebase: FC = (props) => {
                             variant="outlined"
                         />
                         <TextField
-                            InputProps={{
-                                startAdornment: (
-                                    <InputAdornment position="start">
-                                        <LockOutlinedIcon />
-                                    </InputAdornment>
-                                ),
-                            }}
+                            // InputProps={{
+                            //     startAdornment: (
+                            //         <InputAdornment position="start">
+                            //             <LockOutlinedIcon />
+                            //         </InputAdornment>
+                            //     ),
+                            // }}
                             placeholder="Enter password"
                             error={Boolean(touched.password && errors.password)}
                             helperText={touched.password && errors.password}

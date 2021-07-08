@@ -58,7 +58,7 @@ export default function FormDialog() {
 
     const onMySettings=() =>{
         console.log('Clicked on My settings');
-        navigation('/workspace-settings');
+        navigation('/workspace-settings/workspaces');
     }
 
     const handleClose = () => {

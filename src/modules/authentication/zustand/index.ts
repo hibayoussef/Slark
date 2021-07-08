@@ -1,9 +1,8 @@
 import create from 'zustand';
 import {devtools} from 'zustand/middleware';
 import {User} from "../../../types/user";
-import {combineAndImmer, zustandLogger} from "@scandinavia/ts-zustand";
+import {combineAndImmer} from "@scandinavia/ts-zustand";
 import api from "../../../axiosWithDelimiterFile";
-import {useSpaceModule} from "../../spaces/zustand";
 
 
 const initialState = {
@@ -21,45 +20,42 @@ const initialState = {
 const config = (set) => ({
     //function signUp
     createUserWithNameAndEmailAndPassword: async (userData) => {
-        console.log('we are insideeeeeeeeee: ', userData)
-        const response = await api.post(
+        return await api.post(
             "accounts/signup", userData
         ).then(res => {
-            console.log('values inside zustand: ', userData)
-            console.log('response inside zustand: ', res);
-
             set(state => {
                 state.shouldNavigate = false;
                 state.user = res.data;
             })
+            return res.data;
         }).catch(err => {
             console.log(err)
         })
     },
-
+    addWorkspace(w) {
+        set(state => {
+            state.user._workspaces.push(w)
+        })
+    },
+    removeWorkspace(w) {
+      set(state => {
+          state.user._workspaces = state.user._workspaces.filter(workspace => workspace._id !== w._id);
+      })
+    },
     loginUserWithEmailAndPassword: async (userData) => {
         const response = await api.post(
             "accounts/login", userData
         ).then(async (res) => {
-            console.log('res.data: ', res.data);
-            const token = res.data.token
-            const workspaces = res.data.user._workspaces;
+            const { token, user } = res.data;
+            const workspaces = user._workspaces;
             localStorage.setItem('token', token);
             localStorage.setItem('user', JSON.stringify(res.data.user));
-            const defaultWorkspace = workspaces ? workspaces[0] : null;
-
-            console.log('defaultWorkspace: ', defaultWorkspace);
+            const defaultWorkspace = workspaces && workspaces.length > 0 ? workspaces[0] : null;
             set(state => {
-                state.user = res.data.user;
+                state.user = user;
                 state.isAuthenticated = true;
                 state.loginError = '';
                 state.selectedWorkspace = defaultWorkspace;
-
-                // const getAllSpaces = useSpaceModule(state => state.getAllSpaces);
-                // console.log('getAllSpaces: ', getAllSpaces)
-                // const spaces = await getAllSpaces(defaultWorkspace._id);
-                // localStorage.setItem('spaces', JSON.stringify(spaces));
-
             })
         }).catch(err => {
             console.error('Error while signing: ', err.response.data.message);

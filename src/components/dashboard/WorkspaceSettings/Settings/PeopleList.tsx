@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {makeStyles} from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -11,9 +11,15 @@ import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import Box from '@material-ui/core/Box';
 import Avatar from '@material-ui/core/Avatar';
-import {Typography, InputAdornment, TextField , Grid} from "@material-ui/core";
+import {Typography, InputAdornment, TextField, Grid, Button, Menu, MenuItem} from "@material-ui/core";
 import SearchIcon from '../../../../icons/Search';
 import ButtonGroup from './ButtonGroup';
+import {useWorkspaceModule} from "../../../../modules/workspaces/zustand";
+import {useSpaceModule} from "../../../../modules/spaces/zustand";
+import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
+import {useAuthModule} from "../../../../modules/authentication/zustand";
+import {Space} from "../../../../modules/spaces/types/space";
+import {Workspace} from "../../workspace/types/workspace";
 
 const useStyles = makeStyles({
     table: {
@@ -31,21 +37,32 @@ const useStyles = makeStyles({
     }
 });
 
-function createData(name: string, email: string, role: string, settings: number) {
-    return {name, email, role, settings};
-}
-
-const rows = [
-    createData('Frozen yoghurt', 'hhhhhh', 'kjhi', 24),
-    createData('Frozen yoghurt', 'hhhhhh', 'kjhi', 24),
-    createData('Frozen yoghurt', 'hhhhhh', 'kjhi', 24),
-    createData('Frozen yoghurt', 'hhhhhh', 'kjhi', 24),
-    createData('Frozen yoghurt', 'hhhhhh', 'kjhi', 24),
-];
 
 export default function BasicTable() {
     const classes = useStyles();
+    const getAllUser = useWorkspaceModule(state => state.getAllUser);
+    const selectedWorkspace = useWorkspaceModule(state => state.selectedWorkspace);
+    const users = useWorkspaceModule(state => state.users);
 
+
+    const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+
+    const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+        setAnchorEl(event.currentTarget);
+    };
+
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
+
+    const deleteUserFromWorkspace = useWorkspaceModule((state) => state.deleteUserFromWorkspace);
+
+
+    useEffect(() => {
+        if (selectedWorkspace) {
+            getAllUser(selectedWorkspace['_id'])
+        }
+    }, [])
     return (
         <>
             <Box
@@ -86,12 +103,12 @@ export default function BasicTable() {
                                 <TableRow>
                                     <TableCell style={{fontSize: '1.1rem'}}>NAME</TableCell>
                                     <TableCell style={{fontSize: '1.1rem'}} align="left">EMAIL</TableCell>
-                                    <TableCell style={{fontSize: '1.1rem'}} align="center">ROLE</TableCell>
+                                    {/*<TableCell style={{fontSize: '1.1rem'}} align="center">ROLE</TableCell>*/}
                                     <TableCell style={{fontSize: '1.1rem'}} align="right">SETTINGS</TableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>
-                                {rows.map((row) => (
+                                {users && users.map((row) => (
                                     <TableRow style={{fontSize: '4rem'}} key={row.name}>
 
                                         <TableCell align="left" component="th" scope="row">
@@ -110,8 +127,29 @@ export default function BasicTable() {
 
                                         {/*<TableCell align="right">{row.name}</TableCell>*/}
                                         <TableCell align="left">{row.email}</TableCell>
-                                        <TableCell align="center">{row.role}</TableCell>
-                                        <TableCell align="right">{row.settings}</TableCell>
+                                        {/*<TableCell align="center">{row.role}</TableCell>*/}
+                                        <TableCell align="right">
+
+                                            <Button aria-controls="simple-menu" aria-haspopup="true"
+                                                    onClick={handleClick}>
+                                                <MoreHorizIcon/>
+                                            </Button>
+
+
+                                            <Menu
+                                                id="simple-menu"
+                                                anchorEl={anchorEl}
+                                                keepMounted
+                                                open={Boolean(anchorEl)}
+                                                onClose={handleClose}
+                                            >
+                                                <MenuItem
+                                                    onClick={() => deleteUserFromWorkspace(row._id, selectedWorkspace._id)}>Delete
+                                                    member
+                                                </MenuItem>
+                                            </Menu>
+
+                                        </TableCell>
                                     </TableRow>
                                 ))}
                             </TableBody>

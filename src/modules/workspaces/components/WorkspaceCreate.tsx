@@ -16,16 +16,15 @@ import {
 import {useWorkspaceModule} from '../zustand';
 import WorkspaceUploadImage from './WorkspaceUploadImage'
 import useIsMountedRef from "../../../hooks/useIsMountedRef";
-import {useAuthModule} from "../../../modules/authentication/zustand";
-import InviteUser from './WorkspaceInviteUser';
 import React from "react";
+import {useAuthModule} from "../../authentication/zustand";
 
 const WorkspacesCreateForm: FC = (props) => {
     const navigate = useNavigate();
     const {enqueueSnackbar} = useSnackbar();
     const isMountedRef = useIsMountedRef();
 
-
+    const addWorkspace = useAuthModule(state => state.addWorkspace);
     const [workspaceName, setWorkspaceName] = React.useState('');
     const [email, setEmail] = React.useState(null);
 
@@ -42,8 +41,6 @@ const WorkspacesCreateForm: FC = (props) => {
     );
 
     const selectedWorkspace = useWorkspaceModule((state) => state.selectedWorkspace);
-
-    console.log('selectedWorkspace>>>selectedWorkspace>>>selectedWorkspace:' , selectedWorkspace)
 
     // const image = useWorkspaceModule(
     //     (state)=> state.
@@ -213,7 +210,12 @@ const WorkspacesCreateForm: FC = (props) => {
                                 }}
                             >
                                 <Button
-                                    onClick={() => createWorkspace({'name': workspaceName, 'image': file._id})}
+                                    onClick={async () => {
+                                        const w = await createWorkspace({'name': workspaceName, 'image': file ? file._id : undefined});
+                                        if(w) {
+                                            addWorkspace(w);
+                                        }
+                                    }}
                                     color="primary"
                                     disabled={isSubmitting}
                                     type="submit"

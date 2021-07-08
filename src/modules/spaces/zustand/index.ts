@@ -8,14 +8,14 @@ import {useWorkspaceModule} from "../../workspaces/zustand";
 
 const initialState = {
     selectedImage: null,
-    selectedCustomers:null,
+    selectedCustomers: null,
     page: null,
     limit: null,
     query: null,
-    filters:null,
+    filters: null,
     Members: null,
     workspace: null,
-    userEmail:null,
+    userEmail: null,
     selectedSpace: null,
     spaces: null,
     loading: false,
@@ -25,26 +25,24 @@ const initialState = {
 // config like action
 const config = (set) => ({
 
-    createSpace: async (spaceData , workspaceId) => {
-        console.log('we are inside zustand 1: ', spaceData)
-        const response = await api.post(
-            "spaces" , spaceData, workspaceId
-        ).then(res=>{
-            console.log('values inside zustand 2: ',spaceData ,workspaceId)
-            console.log('response inside zustand 3: ', res);
-
-
-            set(state =>{
+    createSpace: async (name, workspaceId) => {
+        return await api.post(
+            "spaces", {
+                name,
+                _workspace: workspaceId
+            }
+        ).then(res => {
+            set(state => {
                 state.space = res.data;
-            })
-            console.log('response data: ', res.data)
-        }).catch(err =>{
+            });
+            return res.data;
+        }).catch(err => {
             console.log(err)
         })
     },
 
     getAllSpaces: async (workspaceId) => {
-        console.log('workspaceId for space:' , workspaceId)
+        console.log('workspaceId for space:', workspaceId)
         return await api.get(
             "spaces", {
                 params: {
@@ -52,31 +50,39 @@ const config = (set) => ({
                 }
 
             }
-        ).then(res=>{
-            console.log('[getAllSpaces] method: ', res  );
-            set(state =>{
+        ).then(res => {
+            console.log('[getAllSpaces] method: ', res);
+            set(state => {
                 state.spaces = res.data;
                 state.selectedSpace = state.spaces && state.spaces.length > 0 ? state.spaces[0] : null;
             })
             return res.data;
-        }).catch(err =>{
+        }).catch(err => {
             console.error(err)
         })
     },
-    getSpace: async(id) => {
+    getSpace: async (id) => {
         return await api.get(`spaces/${id}`)
             .then(r => r.data)
             .catch(e => {
                 console.error(e)
             });
     },
-    setSelectedSpace: (space) => {
-      set(state => {
-          state.selectedSpace = space;
-      })
+    addSpaceToState: (s) => {
+        set(state => {
+            if (!state.spaces) {
+                state.spaces = [];
+            }
+            state.spaces.push(s);
+        })
     },
-    deleteSpace: async (spaceId , workspace) => {
-        console.log('workspaceId for space:' , spaceId , workspace)
+    setSelectedSpace: (space) => {
+        set(state => {
+            state.selectedSpace = space;
+        })
+    },
+    deleteSpace: async (spaceId, workspace) => {
+        console.log('workspaceId for space:', spaceId, workspace)
         return await api.delete(
             `spaces/${spaceId}`, {
                 params: {
@@ -85,13 +91,13 @@ const config = (set) => ({
                 }
 
             }
-        ).then(res=>{
-            if(res && res.status >= 200 && res.status <= 399) {
+        ).then(res => {
+            if (res && res.status >= 200 && res.status <= 399) {
                 set(state => {
                     state.spaces = state.spaces.filter(s => s._id !== spaceId);
                 })
             }
-        }).catch(err =>{
+        }).catch(err => {
             console.error(err)
         })
     }

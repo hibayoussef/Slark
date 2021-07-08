@@ -17,10 +17,6 @@ import WorkspaceBrowseFilter from '../components/WorkspaceFilter'
 import {useAuthModule} from "../../authentication/zustand";
 
 const WorkspaceBrowseHeader: FC = () => {
-    const workspaces = useAuthModule((state) => state.user);
-    console.log('user workspace: ', workspaces)
-
-
     return (
         <>
             <Helmet>

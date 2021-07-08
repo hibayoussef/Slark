@@ -61,9 +61,7 @@ export default function FormDialog() {
     };
 
     const selectedWorkspace = useWorkspaceModule(state => state.selectedWorkspace);
-    const createSpace = useSpaceModule(
-        (state) => state.createSpace
-    );
+    const {createSpace, addSpaceToState} = useSpaceModule((state) => state);
 
 
     return (
@@ -146,7 +144,11 @@ export default function FormDialog() {
                         <DialogActions style={{paddingLeft: '2rem', paddingRight: '2rem', paddingBottom: '2rem'}}>
 
                             <Button
-                                onClick={()=> createSpace(spaceName, selectedWorkspace._id) }
+                                onClick={async () => {
+                                    const s = await createSpace(spaceName, selectedWorkspace._id)
+                                    addSpaceToState(s);
+
+                                }}
                                 style={{
 
                                     marginTop: "1rem",
